@@ -1,14 +1,24 @@
-#resistance/shiny/shinyGame1/server.r
+#shinyGame1/server.r
 #andy south 18/6/15
 #first go at a simple IRM 'game'
 
 library(shiny)
-#library(resistance)
+
 
 #global dataframe to hold results
 runNum <- 0
 maxGos <- 20
 dF <- NULL
+#logistic model params
+K <- 1
+# now set from input boxes
+# rateGrowth <- 0.4
+# rateInsecticideKill <- 1.2
+# #allows changing the effect of resistance
+# resistanceModifier <- 1.5
+
+#if I scale all measures between 0 & 1 that may make life a lot easier later on
+
 
 shinyServer(function(input, output) {
   
@@ -19,17 +29,20 @@ shinyServer(function(input, output) {
     runNum <<- 0
     
     dF <<- data.frame( pyrUse = rep(NA,maxGos),
-                      ddtUse = rep(NA,maxGos),
-                      opsUse = rep(NA,maxGos),
-                      carUse = rep(NA,maxGos),
-                      vectorPop = rep(NA,maxGos),
-                      pyrResist = rep(NA,maxGos),
-                      cost = rep(NA,maxGos) )
+                       ddtUse = rep(NA,maxGos),
+                       opsUse = rep(NA,maxGos),
+                       carUse = rep(NA,maxGos),
+                       vectorPop = rep(NA,maxGos),
+                       pyrResist = rep(NA,maxGos),
+                       cost = rep(NA,maxGos) )
+    
+    
+    #if I scale all measures between 0 & 1 that may make life a lot easier later on
     
     #set start value for vector popn
-    dF$vectorPop[1] <<- 100
+    dF$vectorPop[1] <<- 0.3
     #set start value for pyrethroid resistance
-    dF$pyrResist[1] <<- 0.2
+    dF$pyrResist[1] <<- 0.01
     #set start for cost
     dF$cost[1] <<- 0
     
@@ -38,7 +51,7 @@ shinyServer(function(input, output) {
   
   
   
-  # run mortality seeking  ##########################
+  # advance one timestep  ##########################
   runApply <- reactive({
     
     cat("in runApply button=",input$aButtonRun,"\n")
@@ -66,7 +79,13 @@ shinyServer(function(input, output) {
  
       #i could get runs to restart when they get to maxGos ?
       #or could I extend the dF and allow it to go on indefinitely
-      #
+      if (runNum >= nrow(dF))
+      {
+        dF <<- rbind(dF,dF[1,]) #copy row 1 on end
+        dF[nrow(dF),] <<- NA #set to NA just in case
+        maxGos <<- maxGos+1 #increment
+      }
+
       
       #record which insecticide used (for plotting)
       if ( input$pyrOn ) dF$pyrUse[runNum] <<- 1 
@@ -75,31 +94,67 @@ shinyServer(function(input, output) {
       if ( input$carOn ) dF$carUse[runNum] <<- 1 
       
       
-      #increment vector populations
-      #based on which insecticide used
-      #and what resistance is present
-      #first go increase pop by 10% if no insecticides used
+      ## increment vector populations
+      ## based on insecticide used and resistance
+      
+      #set input parameters here to keep formulas more manageable
+      rateGrowth <- input$rateGrowth
+      rateInsecticideKill <- input$rateInsecticideKill
+      resistanceModifier <- input$resistanceModifier
+        
+      
+      ## if no insecticides used
       if (sum( dF$pyrUse[runNum],dF$ddtUse[runNum],dF$opsUse[runNum],dF$carUse[runNum],na.rm=TRUE) == 0)
-        dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] * 1.2
-      
-      #if just ddt or pyrethroid (i.e. no ops or carb)
-      #need to check resistance
-      else if (sum( dF$opsUse[runNum],dF$carUse[runNum],na.rm=TRUE) == 0)
-        #reducing efficacy of insecticide if resistance higher
-        dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] + (0.2 * 100/dF$pyrResist[runNum] * dF$vectorPop[runNum])
-      
-      else 
+      {
+        #first go increase pop by 20%
+        #dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] * 1.2
+        #constraining population to 1
+        #dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] +
+        #                            0.2 * (1 - dF$vectorPop[runNum])
+        
+        #logistic model
+        dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] + rateGrowth * 
+                                                          dF$vectorPop[runNum] * (1-dF$vectorPop[runNum]/K)
+        
+
+      ## if just ddt or pyrethroid (i.e. no ops or carb)                
+      } else if (sum( dF$opsUse[runNum],dF$carUse[runNum],na.rm=TRUE) == 0)
+      {
+        #no resistance : pop decline
+        #mid resistance : stay constant
+        #high resistance : pop increase
+
+# this partially works, but if pop reaches 1 it stays there even with insecticide        
+#         dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] + 
+#                                    (0.2 * (dF$pyrResist[runNum]-0.5)) *
+#                                    (1 - dF$vectorPop[runNum])  #to constrain pop at 1
+        
+        #logistic model growth - insecticideKill + resistance
+        dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] + (rateGrowth - rateInsecticideKill + resistanceModifier*dF$pyrResist[runNum] ) * 
+                                                          dF$vectorPop[runNum] * (1-dF$vectorPop[runNum]/K)
+        
+
+      ## ops or car used          
+      } else 
+      {
         #effective insecticide reduce popn.
-        dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] * 0.8
+        #dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] * 0.8 
+        
+        #logistic model + insecticide
+        dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] + (rateGrowth - rateInsecticideKill) * 
+                                                          dF$vectorPop[runNum] * (1-dF$vectorPop[runNum]/K)
+        
+      }
+
       
-      #increment resistance
-      #as a first test, just increase resistance to pyrethroids
+      ## increment resistance
+      ## as a first test, just increase resistance to pyrethroids
       #if pyr or ddt are used
       if ( input$pyrOn || input$ddtOn ) 
         #dF$pyrResist[runNum+1] <<- dF$pyrResist[runNum] * 1.2
-        #constraining resistance to 100
+        #constraining resistance to 1
         dF$pyrResist[runNum+1] <<- dF$pyrResist[runNum] +
-                                   0.2 * (100 - dF$pyrResist[runNum])
+                                   0.2 * (1 - dF$pyrResist[runNum])
       else 
         dF$pyrResist[runNum+1] <<- dF$pyrResist[runNum] * 0.8        
 
@@ -175,13 +230,14 @@ shinyServer(function(input, output) {
       cat(dF$vectorPop,"\n")
       
       #plot vector population
-      plot.default(dF$vectorPop, axes=FALSE, type='l', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
-      
+      plot.default(dF$vectorPop, axes=FALSE, ylim=c(0,1), type='l', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+      axis(2,at=c(0,1), labels=c(0,1), las=1, cex.axis=1.3, tick=FALSE)
+           
       #plot resistance (can have diff colour lines for diff insecticides)
-      plot.default(dF$pyrResist, axes=FALSE, ylim=c(0,100), type='l', col='green', main="resistance to pyrethroids", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+      plot.default(dF$pyrResist, axes=FALSE, ylim=c(0,1), type='l', col='green', main="resistance to pyrethroids", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
       #to add x axis labels, las=1 to make labels horizontal
-      #for resistance constrain 0-100
-      axis(2,at=c(0,100), labels=c(0,100), las=1, cex.axis=1.3, tick=FALSE)
+      #for resistance constrain 0-1
+      axis(2,at=c(0,1), labels=c(0,1), las=1, cex.axis=1.3, tick=FALSE)
             
       #plot cost
       plot.default(dF$cost, axes=FALSE, type='l', main="cost", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
