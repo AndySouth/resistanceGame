@@ -101,7 +101,7 @@ shinyServer(function(input, output) {
       rateGrowth <- input$rateGrowth
       rateInsecticideKill <- input$rateInsecticideKill
       resistanceModifier <- input$resistanceModifier
-        
+      rateResistance <- input$rateResistance  
       
       ## if no insecticides used
       if (sum( dF$pyrUse[runNum],dF$ddtUse[runNum],dF$opsUse[runNum],dF$carUse[runNum],na.rm=TRUE) == 0)
@@ -139,14 +139,13 @@ shinyServer(function(input, output) {
       
       ## increment resistance
       ## as a first test, just increase resistance to pyrethroids
-      #if pyr or ddt are used
+      ## if pyr or ddt are used
       if ( input$pyrOn || input$ddtOn ) 
-        #dF$pyrResist[runNum+1] <<- dF$pyrResist[runNum] * 1.2
         #constraining resistance to 1
         dF$pyrResist[runNum+1] <<- dF$pyrResist[runNum] +
-                                   0.2 * (1 - dF$pyrResist[runNum])
+                                   rateResistance * (1 - dF$pyrResist[runNum])
       else 
-        dF$pyrResist[runNum+1] <<- dF$pyrResist[runNum] * 0.8        
+        dF$pyrResist[runNum+1] <<- dF$pyrResist[runNum] * (1-rateResistance)        
 
             
       #increment cost (can insert relative costs here)
@@ -206,8 +205,10 @@ shinyServer(function(input, output) {
       if ( runNum == 0 ) return()
       
       #set up space for a number of plots
-      par(mfrow=c(4,1), mar=c(0,4,2,0)) #bltr
-      
+      #par(mfrow=c(4,1), mar=c(0,4,2,0)) #bltr
+      #disbaled cost for now so just need 3
+      par(mfrow=c(3,1), mar=c(2,4,2,0)) #bltr
+            
       #plot insecticide use
       #adj=0 to left justify title
       plot(dF$carUse, axes=FALSE, col='orange', xlim=c(0,nrow(dF)), ylim=c(0,5), main="insecticide used", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='' )
@@ -221,16 +222,20 @@ shinyServer(function(input, output) {
       
       #plot vector population
       plot.default(dF$vectorPop, axes=FALSE, ylim=c(0,1), type='l', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
-      axis(2,at=c(0,1), labels=c(0,1), las=1, cex.axis=1.3, tick=FALSE)
+      axis(2,at=c(0,1), labels=c('lo','hi'), las=1, cex.axis=1.3, tick=TRUE)
            
       #plot resistance (can have diff colour lines for diff insecticides)
       plot.default(dF$pyrResist, axes=FALSE, ylim=c(0,1), type='l', col='green', main="resistance to pyrethroids", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
       #to add x axis labels, las=1 to make labels horizontal
       #for resistance constrain 0-1
-      axis(2,at=c(0,1), labels=c(0,1), las=1, cex.axis=1.3, tick=FALSE)
-            
+      axis(2,at=c(0,1), labels=c(0,1), las=1, cex.axis=1.3, tick=TRUE)
+      
+      #add an x axis to the lower plot, let R set values
+      axis(1)
+      
+      #disabled cost for now      
       #plot cost
-      plot.default(dF$cost, axes=FALSE, type='l', main="cost", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+      #plot.default(dF$cost, axes=FALSE, type='l', main="cost", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
       
       
     }) #end isolate   

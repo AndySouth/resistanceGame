@@ -1,9 +1,10 @@
 #shinyGame1/ui.r
 #andy south 18/6/15
-#first go at a simple IRM 'game'
+#2nd go at a simple IRM 'game'
 
 library(shiny)
 library(shinythemes)
+
 
 shinyUI(fluidPage(theme = shinytheme("flatly"),
 
@@ -35,12 +36,17 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
       numericInput('rateGrowth', 'population growth rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
       numericInput('rateInsecticideKill', 'insecticide kill rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
       
-      numericInput('resistanceModifier', 'resistance modifier', value = 1, min = 0.1, max = 5, step = 0.1),
-      helpText("Values above 1 for resistance modifier cause lower resistances to have a greater effect on reducing mortality")
+      numericInput('resistanceModifier', 'resistance mortality modifier', value = 1, min = 0.1, max = 5, step = 0.1),
+      helpText("Values above 1 for resistance modifier cause lower resistances to reduce mortality more"),
+      
+      numericInput('rateResistance', 'resistance change rate', value = 0.2, min = 0.01, max = 1, step = 0.1)
       
     ), #end column
   column(8,
-    plotOutput('plot1')
+    
+    # to increase plot area vertically use height=         
+    plotOutput('plot1', height=700)
+    
   ) #end column
   ) #end fluid row
 ))
