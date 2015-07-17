@@ -29,8 +29,8 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
       
       #growth parameters
       numericInput('rateGrowth', 'population growth rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
-      numericInput('rateInsecticideKill', 'insecticide kill rate', value = 1.2, min = 0.1, max = 2, step = 0.1),
-      numericInput('resistanceModifier', 'resistance modifier', value = 1.5, min = 0.1, max = 2, step = 0.1)
+      numericInput('rateInsecticideKill', 'insecticide kill rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
+      numericInput('resistanceModifier', 'resistance modifier', value = 1, min = 0.1, max = 5, step = 0.1)
     ), #end column
   column(9,
     plotOutput('plot1')
