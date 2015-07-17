@@ -106,11 +106,6 @@ shinyServer(function(input, output) {
       ## if no insecticides used
       if (sum( dF$pyrUse[runNum],dF$ddtUse[runNum],dF$opsUse[runNum],dF$carUse[runNum],na.rm=TRUE) == 0)
       {
-        #first go increase pop by 20%
-        #dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] * 1.2
-        #constraining population to 1
-        #dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] +
-        #                            0.2 * (1 - dF$vectorPop[runNum])
         
         #logistic model
         dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] + rateGrowth * 
@@ -123,27 +118,22 @@ shinyServer(function(input, output) {
         #no resistance : pop decline
         #mid resistance : stay constant
         #high resistance : pop increase
-
-# this partially works, but if pop reaches 1 it stays there even with insecticide        
-#         dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] + 
-#                                    (0.2 * (dF$pyrResist[runNum]-0.5)) *
-#                                    (1 - dF$vectorPop[runNum])  #to constrain pop at 1
         
-        #logistic model growth - insecticideKill + resistance
-        dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] + (rateGrowth - rateInsecticideKill + resistanceModifier*dF$pyrResist[runNum] ) * 
-                                                          dF$vectorPop[runNum] * (1-dF$vectorPop[runNum]/K)
+        dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] + 
+          rateGrowth * dF$vectorPop[runNum] * (1-dF$vectorPop[runNum]/K) -   #density dependence
+          rateInsecticideKill * dF$vectorPop[runNum] *                       #insecticide
+          (1-dF$pyrResist[runNum]^(1/resistanceModifier))                    #resistance  
         
+      #no kill at resistance=1, a higher resistance modifier means that lower resistances have a greater effect
+      #on reducing mortality
 
       ## ops or car used          
       } else 
       {
         #effective insecticide reduce popn.
-        #dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] * 0.8 
-        
-        #logistic model + insecticide
-        dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] + (rateGrowth - rateInsecticideKill) * 
-                                                          dF$vectorPop[runNum] * (1-dF$vectorPop[runNum]/K)
-        
+        dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] + 
+                                   rateGrowth * dF$vectorPop[runNum] * (1-dF$vectorPop[runNum]/K) -   #density dependence
+                                   rateInsecticideKill * dF$vectorPop[runNum]                         #insecticide
       }
 
       
