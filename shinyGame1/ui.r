@@ -3,28 +3,37 @@
 #first go at a simple IRM 'game'
 
 library(shiny)
+library(shinythemes)
 
+shinyUI(fluidPage(theme = shinytheme("flatly"),
 
-shinyUI(pageWithSidebar(
-  headerPanel("IRM 'Game model' prototype1"),
-  sidebarPanel(
+  headerPanel("IRM 'Game model' prototype1"),                  
+                  
+  fluidRow(
     
-    # may want to set these so that you can just choose 
-    # one at a time (i.e. no mixtures)
-    checkboxInput('pyrOn', 'pyrethroid', TRUE),
-    checkboxInput('ddtOn', 'ddt', FALSE),
-    checkboxInput('opsOn', 'organophosphate', FALSE),
-    checkboxInput('carOn', 'carbamate', FALSE),
-    
-    actionButton('aButtonRun', 'advance 1 timestep'),
-    actionButton('aButtonRestart', 'restart'),
-    
-    #growth parameters
-    numericInput('rateGrowth', 'population growth rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
-    numericInput('rateInsecticideKill', 'insecticide kill rate', value = 1.2, min = 0.1, max = 2, step = 0.1),
-    numericInput('resistanceModifier', 'resistance modifier', value = 1.5, min = 0.1, max = 2, step = 0.1)
-  ),
-  mainPanel(
+    column(3,
+           #wellPanel(                  
+      
+      # may want to set these so that you can just choose 
+      # one at a time (i.e. no mixtures)
+      checkboxInput('pyrOn', 'pyrethroid', TRUE),
+      checkboxInput('ddtOn', 'ddt', FALSE),
+      checkboxInput('opsOn', 'organophosphate', FALSE),
+      checkboxInput('carOn', 'carbamate', FALSE),
+      
+      wellPanel(
+        actionButton('aButtonRun', 'advance 1 timestep'),
+        br(),br(),
+        actionButton('aButtonRestart', 'restart')
+      ),
+      
+      #growth parameters
+      numericInput('rateGrowth', 'population growth rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
+      numericInput('rateInsecticideKill', 'insecticide kill rate', value = 1.2, min = 0.1, max = 2, step = 0.1),
+      numericInput('resistanceModifier', 'resistance modifier', value = 1.5, min = 0.1, max = 2, step = 0.1)
+    ), #end column
+  column(9,
     plotOutput('plot1')
-  )
+  ) #end column
+  ) #end fluid row
 ))
