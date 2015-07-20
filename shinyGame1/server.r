@@ -102,6 +102,7 @@ shinyServer(function(input, output) {
       rateInsecticideKill <- input$rateInsecticideKill
       resistanceModifier <- input$resistanceModifier
       rateResistance <- input$rateResistance  
+      K <- input$ccModifier
       
       ## if no insecticides used
       if (sum( dF$pyrUse[runNum],dF$ddtUse[runNum],dF$opsUse[runNum],dF$carUse[runNum],na.rm=TRUE) == 0)

@@ -10,7 +10,7 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
 
   headerPanel("Insecticide Resistance Management 'Game model' prototype1"),  
   
-  helpText("To demonstrate a potential vector population simulation for the game, press buttons on the left to advance the simulation plots will appear on the right."),
+  helpText("A potential vector population simulation algorithm for the game, press buttons on the left to advance the simulation, plots will appear on the right."),
                   
   fluidRow(
     
@@ -32,6 +32,7 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
         actionButton('aButtonRestart', 'restart')
       ),
       
+      helpText("Parameters that could be modified within the game to generate different scenarios."),      
       #growth parameters
       numericInput('rateGrowth', 'population growth rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
       numericInput('rateInsecticideKill', 'insecticide kill rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
@@ -39,7 +40,9 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
       numericInput('resistanceModifier', 'resistance mortality modifier', value = 1, min = 0.1, max = 5, step = 0.1),
       helpText("Values above 1 for resistance modifier cause lower resistances to reduce mortality more"),
       
-      numericInput('rateResistance', 'resistance change rate', value = 0.2, min = 0.01, max = 1, step = 0.1)
+      numericInput('rateResistance', 'resistance change rate', value = 0.2, min = 0.01, max = 1, step = 0.1),
+      
+      numericInput('ccModifier', 'vector carrying capacity modifier', value = 1, min = 0.1, max = 1, step = 0.1)
       
     ), #end column
   column(8,
