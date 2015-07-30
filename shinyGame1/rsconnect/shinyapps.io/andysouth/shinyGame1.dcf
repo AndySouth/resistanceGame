@@ -1,8 +1,8 @@
 name: shinyGame1
 account: andysouth
 server: shinyapps.io
-bundleId: 210029
+bundleId: 222443
 url: https://andysouth.shinyapps.io/shinyGame1
-when: 1435049320.15546
+when: 1437388599.6483
 asMultiple: FALSE
 asStatic: FALSE
