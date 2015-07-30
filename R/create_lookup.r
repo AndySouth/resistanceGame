@@ -5,7 +5,7 @@
 #that could be used by a game to direct it's behaviour
 
 
-createLookup <- function(){
+create_lookup <- function(){
  
   #todo set this up as a list
 
