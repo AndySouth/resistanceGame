@@ -11,7 +11,7 @@
 #' @param insecticide_on whether insecticide is applied 0=no, 1=yes
 #' @param resistance_on whether there is resistance to the applied insecticide 0=no, 1=yes
 #' @examples
-#' change_pop(pop=0.5, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, rate_resistance=0.2, resistance_modifier=1)
+#' change_pop(pop=0.5, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, rate_resistance=0.2, resistance_modifier=1, resistance_on=1, insecticide_on=1)
 #' @return float population in next timestep
 #' @export
 
