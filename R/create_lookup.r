@@ -1,33 +1,32 @@
+#' create an example lookup table that could be used by a game to direct it's behaviour
+#'
+#' this is a prototype to explore what a lookup table might look like
+#'
+#' @param input_values
+#' @param write_csv a filename or NULL for no csv output
+#' @param carryCap carrying capacity (K) in the logistic model
+#' @param rateInsecticideKill kill rate due to insecticide
+#' @param rateResistance effect on resistance on insecticide kill rate
+#' @param resistanceModifier modifies effect of resistance
+#' @examples
+#' create_lookup(write_csv=NULL)
+#' @return float population in next timestep
+#' @export
 
 
-
-#a function to have a go at creating an example lookup table
-#that could be used by a game to direct it's behaviour
-
-
-create_lookup <- function(){
+create_lookup <- function(   inputValues = list( use_pyr=c(0,1), 
+                                                 use_ddt=c(0,1),
+                                                 use_ops=c(0,1),
+                                                 use_car=c(0,1),
+                                                 pop_vector=seq(0,1,0.1),
+                                                 resist_pyr=seq(0,1,0.1) ),
+                             write_csv = 'demoLookupTable.csv'
+                          ){
  
-  #todo set this up as a list
-
   
-#   name <- list('use_pyr','use_ddt','use_ops','use_car','pop_vector', 'resist_pyr')
-#   values <- list( c(0,1), 
-#                              c(0,1),
-#                              c(0,1),
-#                              c(0,1),
-#                              seq(0,1,0.1),
-#                              seq(0,1,0.1)
-#                              )
-  
-  inputRanges <- list( use_pyr=c(0,1), 
-                  use_ddt=c(0,1),
-                  use_ops=c(0,1),
-                  use_car=c(0,1),
-                  pop_vector=seq(0,1,0.1),
-                  resist_pyr=seq(0,1,0.1)
-  )  
+ 
 
-  inputs <- expand.grid(inputRanges)
+  inputs <- expand.grid(inputValues)
 
   #adding on outputs columns
   #columnsOutput <- c('change_pop_vector','change_resist_pyr')
@@ -39,7 +38,9 @@ create_lookup <- function(){
   inputs$change_pop_vector <- 0
   inputs$change_resist_pyr <- 0
   
-  write.csv(inputs, file='demoLookupTable.csv')
+  if ( !is.null(write_csv) )
+    write.csv(inputs, file=write_csv)
   
+  return(inputs)
    
 }
