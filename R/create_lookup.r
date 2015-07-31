@@ -2,12 +2,8 @@
 #'
 #' this is a prototype to explore what a lookup table might look like
 #'
-#' @param input_values
+#' @param input_values a list of inputs and values
 #' @param write_csv a filename or NULL for no csv output
-#' @param carryCap carrying capacity (K) in the logistic model
-#' @param rateInsecticideKill kill rate due to insecticide
-#' @param rateResistance effect on resistance on insecticide kill rate
-#' @param resistanceModifier modifies effect of resistance
 #' @examples
 #' create_lookup(write_csv=NULL)
 #' @return float population in next timestep
@@ -48,7 +44,12 @@ create_lookup <- function(   inputValues = list( use_pyr=c(0,1),
                                           resistance_on = inputs$use_pyr || inputs$use_ddt )
   
   
-  inputs$change_resist_pyr <- 0
+  #inputs$change_resist_pyr <- 0
+  inputs$change_resist_pyr <- change_resistance( resistance = inputs$resist_pyr,
+                                                 resist_incr = 0.4,
+                                                 resist_decr = 0.4,
+                                                 resistance_on = 1 )
+    
   
   if ( !is.null(write_csv) )
     write.csv(inputs, file=write_csv)
