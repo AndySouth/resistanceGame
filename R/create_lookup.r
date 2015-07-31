@@ -35,7 +35,19 @@ create_lookup <- function(   inputValues = list( use_pyr=c(0,1),
   #maybe put the logistic equations from shinyGame1.r into package functions
   #but only bother doing that if we are going to do much more with this
   #remember that this is not the objective
-  inputs$change_pop_vector <- 0
+  #inputs$change_pop_vector <- 0
+  inputs$change_pop_vector <- change_pop( pop = inputs$pop_vector,
+                                          rate_growth = 0.4,
+                                          carry_cap = 1,
+                                          rate_insecticide_kill = 0.4,
+                                          rate_resistance = inputs$resist_pyr,
+                                          resistance_modifier = 1,
+                                          #initially just test whether any insecticide
+                                          insecticide_on = inputs$use_pyr || inputs$use_ddt || inputs$use_ops || inputs$use_car,
+                                          #initially just test whether pyr or ddt
+                                          resistance_on = inputs$use_pyr || inputs$use_ddt )
+  
+  
   inputs$change_resist_pyr <- 0
   
   if ( !is.null(write_csv) )
