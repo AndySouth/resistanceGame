@@ -22,6 +22,9 @@ change_pop <- function(pop,
 ) 
 {
   
+  #todo do I want to put numTimesteps as an arg to allow it to run & return a vector ? or have as other func.
+  #todo do I want T/F args for insecticideOn & resistanceOn
+  
   pop2 <- pop +
           rateGrowth * pop * (1-pop/carryCap) -
           rateInsecticideKill * pop *
