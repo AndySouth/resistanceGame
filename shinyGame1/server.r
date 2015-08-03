@@ -203,8 +203,14 @@ shinyServer(function(input, output) {
     #isolate reactivity of other objects
     isolate({
  
-      if ( runNum == 0 ) return()
-      
+      #if ( runNum == 0 ) return()
+      if ( runNum == 0 ) {
+        plot.new()
+        mtext("press the advance... button on the left to start the simulation")
+        return()
+      }
+
+            
       #set up space for a number of plots
       #par(mfrow=c(4,1), mar=c(0,4,2,0)) #bltr
       #disbaled cost for now so just need 3
@@ -240,6 +246,60 @@ shinyServer(function(input, output) {
       
       
     }) #end isolate   
-  })
+  }) #end plot1
+  
+  ## text about the simulation equations
+  output$about <- renderText({ 
+    
+    print("This simple simulation could go on in the background of the game, game players could be provided selected information, e.g. with added randomness.
+
+Within the game equation parameters could be altered based on game play e.g. : 
+dry season : low growth rate and/or low carrying capacity
+rain events : increased growth rate or carrying capacity
+'better' insecticides : increased insecticide kill rate
+poor insecticide application : decreased insecticide kill rate, increased resistance change rate.
+
+These are the simple equations that drive the simulation.
+
+A) N[t+1] = N[t] + rateGrowth * N[t] * (1-N[t] / carryingCapacity)
+                         - (rateInsecticideKill * N[t]
+                         * (1-resistance[t] ^ (1/resistanceModifier) ) )
+
+Where N[t] is population now, and N[t+1] is population in the next time step.
+
+Line 1 does density dependence it just makes the population increase in a curve until it reaches the carrying capacity. This is the logistic model.
+Line 2 does killing of vectors by the insecticide
+Line 3 modifies vectors killed in line 2 according to resistance
+
+So in line 3, '1-resitance[t]' ensures that fewer vectors are killed when resistance is higher, and that no vectors are killed when resistance=1.
+
+The equation for the change in resistance is even simpler.
+
+If an insecticide prompting resistance is present :
+B) resistance[t+1] = resistance[t] + rateResistance * (1 - resistance[t])
+
+If no insecticide prompting resistance :
+C) resistance[t+1] = resistance[t]  * (1 - resistance[t])
+
+These simply make resistance go up towards a plateau when the insecticide is present and down towards 0 when it is absent.")
+    
+    
+    
+  }) #end about
+  
+  
+  ## lookup table
+  #output$table <- renderTable(, { 
+  #specifying num digits in each table column must match ncol(x)+1
+  output$table <- renderTable( digits=c(0,0,0,0,0,1,1,2,2), { 
+    
+    #trying to put text above the table, doesn't work here
+    #helpText("lookup table")
+    
+    #default lookup table
+    resistanceGame::create_lookup(write_csv=NULL)
+    
+  }) #end about
+    
   
 })

@@ -10,8 +10,8 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
 
   headerPanel("Insecticide Resistance Management 'Game model' prototype1"),  
   
-  helpText("A potential vector population simulation algorithm for the game, press buttons on the left to advance the simulation, plots will appear on the right."),
-                  
+  helpText("A potential vector simulation for an Insecticide Resistance Mangement game. Press buttons on the left to advance the simulation, plots will appear in the 'Simulation' tab. Feedback to southandy@gmail.com."),
+  
   fluidRow(
     
     column(4,
@@ -28,7 +28,7 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
       
       wellPanel(
         actionButton('aButtonRun', 'advance 1 timestep'),
-        br(),br(),
+        #br(),br(),
         actionButton('aButtonRestart', 'restart')
       ),
       
@@ -47,8 +47,22 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
     ), #end column
   column(8,
     
+    #could put a tab panel in here for tabs
+    #about : to show equations
+    #lookup table : to show an alternative lookup table approach
+    tabsetPanel(
+      # to increase plot area vertically use height=         
+      tabPanel("Simulation", plotOutput('plot1', height=700)),
+      tabPanel("About", verbatimTextOutput("about")),
+      tabPanel("Lookup Table", 
+               helpText("An alternative lookup table that could be used to drive game behaviour. Here generated from the simulation equations."),
+               helpText("The final columns 'changed_pop_vector' and 'changed_resist_pyr' are the new values for population and resistance under the values specified in the earlier columns."),
+               helpText("In some ways this is less flexible than using the equations directly in the game, but such a table has the advantage that it could be generated from other existing models"),
+               tableOutput("table") )
+    )
+         
     # to increase plot area vertically use height=         
-    plotOutput('plot1', height=700)
+    #plotOutput('plot1', height=700)
     
   ) #end column
   ) #end fluid row
