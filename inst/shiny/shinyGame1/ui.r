@@ -57,7 +57,8 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
       tabPanel("Lookup Table", 
                helpText("An alternative lookup table that could be used to drive game behaviour. Here generated from the simulation equations."),
                helpText("The final columns 'changed_pop_vector' and 'changed_resist_pyr' are the new values for population and resistance under the values specified in the earlier columns."),
-               helpText("In some ways this is less flexible than using the equations directly in the game, but such a table has the advantage that it could be generated from other existing models"),
+               helpText("A lookup table would be more cumbersome than using the equations directly in the game. This table is just for one set of the values that you can change in the boxes, extra columns could be added for those."),
+               helpText("A lookup table would have the advantage that it could be generated from other existing models."),
                tableOutput("table") )
     )
          

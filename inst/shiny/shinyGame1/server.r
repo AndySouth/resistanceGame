@@ -220,7 +220,7 @@ shinyServer(function(input, output) {
             
       #plot insecticide use
       #adj=0 to left justify title
-      plot(dF$carUse, axes=FALSE, col='orange', xlim=c(0,nrow(dF)), ylim=c(0,5), main="insecticide used", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='' )
+      plot(dF$carUse, axes=FALSE, col='orange', xlim=c(0,nrow(dF)), ylim=c(0.5,4.5), main="insecticide used", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='' )
       points(dF$opsUse*2, col='blue')    
       points(dF$ddtUse*3, col='red') 
       points(dF$pyrUse*4, col='green')  
@@ -295,8 +295,9 @@ These simply make resistance go up towards a plateau when the insecticide is pre
   #specifying num digits in each table column must match ncol(x)+1
   output$table <- renderTable( digits=c(0,0,0,0,0,1,1,2,2), { 
     
-    #trying to put text above the table, doesn't work here
-    #helpText("lookup table")
+    #add dependence on the advance button
+    #so that the table changes when parameter values are changed and advance is pressed
+    runApply()
     
     #default lookup table
     resistanceGame::create_lookup(write_csv=NULL)
