@@ -32,7 +32,7 @@ create_lookup <- function(   inputValues = list( use_pyr=c(0,1),
   #but only bother doing that if we are going to do much more with this
   #remember that this is not the objective
   #inputs$change_pop_vector <- 0
-  inputs$change_pop_vector <- change_pop( pop = inputs$pop_vector,
+  inputs$changed_pop_vector <- change_pop( pop = inputs$pop_vector,
                                           rate_growth = 0.4,
                                           carry_cap = 1,
                                           rate_insecticide_kill = 0.4,
@@ -45,7 +45,7 @@ create_lookup <- function(   inputValues = list( use_pyr=c(0,1),
   
   
   #inputs$change_resist_pyr <- 0
-  inputs$change_resist_pyr <- change_resistance( resistance = inputs$resist_pyr,
+  inputs$changed_resist_pyr <- change_resistance( resistance = inputs$resist_pyr,
                                                  resist_incr = 0.4,
                                                  resist_decr = 0.4,
                                                  resistance_on = 1 )
