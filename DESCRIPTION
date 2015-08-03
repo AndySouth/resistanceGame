@@ -1,8 +1,14 @@
 Package: resistanceGame
-Title: What the Package Does (one line, title case)
+Title: prototyping an insecticide resistance management computer game
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph)
-Depends: R (>= 3.2.1)
-License: What license is it under?
+Authors@R: person("Andy", "South", , "southandy@gmail.com", role = c("aut", "cre"))
+Description: Functions and user interfaces to prototype a 'game model' to be included in an an insecticide resistance management computer game.
+License: GPL
 LazyData: true
+URL: https://github.com/AndySouth/resistanceGame
+BugReports: https://github.com/AndySouth/resistanceGame/issues
+Depends:
+    R (>= 3.1.1)
+Suggests:
+    shiny, knitr
+VignetteBuilder: knitr
