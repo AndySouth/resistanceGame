@@ -4,6 +4,8 @@
 
 library(shiny)
 
+#library(devtools)
+#install_github("andysouth/resistanceGame")
 
 #global dataframe to hold results
 runNum <- 0
