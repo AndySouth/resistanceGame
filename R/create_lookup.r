@@ -14,8 +14,8 @@ create_lookup <- function(   input_values = list( use_pyr=c(0,1),
                                                  use_ddt=c(0,1),
                                                  use_ops=c(0,1),
                                                  use_car=c(0,1),
-                                                 pop_vector=seq(0,1,0.1),
-                                                 resist_pyr=seq(0,1,0.1) ),
+                                                 pop_vector=seq(0.1,1,0.1),
+                                                 resist_pyr=seq(0.1,1,0.1) ),
                              write_csv = 'demoLookupTable.csv'
                           ){
  
