@@ -28,30 +28,37 @@ change_pop <- function(pop,
   
   #todo do I want to put numTimesteps as an arg to allow it to run & return a vector ? or have as other func.
 
-  pop2 <- NULL
+  #pop2 <- NULL
   
-  if ( insecticide_on && resistance_on )
-  {
-    
-    pop2 <- pop +
-      rate_growth * pop * (1-pop/carry_cap) -
-      rate_insecticide_kill * pop *
-      (1-rate_resistance ^ (1/resistance_modifier) )    
-    
-  } else if ( insecticide_on )
-  {
-    
-    pop2 <- pop +
-      rate_growth * pop * (1-pop/carry_cap) -
-      rate_insecticide_kill * pop 
-    
-  } else
-  {
-    
-    pop2 <- pop +
-      rate_growth * pop * (1-pop/carry_cap) 
-    
-  }
+ 
+  pop2 <- pop +
+    rate_growth * pop * (1-pop/carry_cap) -
+    insecticide_on * rate_insecticide_kill * pop *
+    (1-resistance_on * rate_resistance ^ (1/resistance_modifier) )     
+  
+  
+#   if ( insecticide_on && resistance_on )
+#   {
+#     
+#     pop2 <- pop +
+#       rate_growth * pop * (1-pop/carry_cap) -
+#       rate_insecticide_kill * pop *
+#       (1-rate_resistance ^ (1/resistance_modifier) )    
+#     
+#   } else if ( insecticide_on )
+#   {
+#     
+#     pop2 <- pop +
+#       rate_growth * pop * (1-pop/carry_cap) -
+#       rate_insecticide_kill * pop 
+#     
+#   } else
+#   {
+#     
+#     pop2 <- pop +
+#       rate_growth * pop * (1-pop/carry_cap) 
+#     
+#   }
   
   
   return(pop2)
