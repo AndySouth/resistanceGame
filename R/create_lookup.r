@@ -6,11 +6,11 @@
 #' @param write_csv a filename or NULL for no csv output
 #' @examples
 #' create_lookup(write_csv=NULL)
-#' @return float population in next timestep
+#' @return a lookup table of input values and population and resistance outputs 
 #' @export
 
 
-create_lookup <- function(   inputValues = list( use_pyr=c(0,1), 
+create_lookup <- function(   input_values = list( use_pyr=c(0,1), 
                                                  use_ddt=c(0,1),
                                                  use_ops=c(0,1),
                                                  use_car=c(0,1),
@@ -22,7 +22,7 @@ create_lookup <- function(   inputValues = list( use_pyr=c(0,1),
   
  
 
-  inputs <- expand.grid(inputValues)
+  inputs <- expand.grid(input_values)
 
   #adding on outputs columns
   #columnsOutput <- c('change_pop_vector','change_resist_pyr')
