@@ -92,13 +92,12 @@ shinyServer(function(input, output) {
       rate_growth <- input$rate_growth
       rate_insecticide_kill <- input$rate_insecticide_kill
       resistance_modifier <- input$resistance_modifier
-      #rate_resistance <- input$rate_resistance 
       rate_resistance <- dF$resist_pyr[runNum]
       carry_cap <- input$cc_modifier
       
       #set resistance increase & decrease to same
-      resist_incr <- input$rate_resistance
-      resist_decr <- input$rate_resistance   
+      resist_incr <- input$resist_incr
+      resist_decr <- input$resist_decr   
       
       insecticide_on <- input$use_pyr | input$use_ddt | input$use_ops | input$use_car
       resistance_on <-  input$use_pyr | input$use_ddt

@@ -39,7 +39,8 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
       numericInput('resistance_modifier', 'resistance mortality modifier', value = 1, min = 0.1, max = 5, step = 0.1),
       helpText("Values above 1 for resistance modifier cause lower resistances to reduce mortality more"),
       
-      numericInput('rate_resistance', 'resistance change rate', value = 0.2, min = 0.01, max = 1, step = 0.1),
+      numericInput('resist_incr', 'increase in resistance', value = 0.2, min = 0.01, max = 1, step = 0.1),
+      numericInput('resist_decr', 'decrease in resistance', value = 0.1, min = 0.01, max = 1, step = 0.1),
       
       numericInput('cc_modifier', 'vector carrying capacity modifier', value = 1, min = 0.1, max = 1, step = 0.1)
       
