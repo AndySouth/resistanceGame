@@ -219,10 +219,11 @@ shinyServer(function(input, output) {
             
       #plot insecticide use
       #adj=0 to left justify title
-      plot(dF$carUse, axes=FALSE, col='orange', xlim=c(0,nrow(dF)), ylim=c(0.5,4.5), main="insecticide used", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='' )
-      points(dF$opsUse*2, col='blue')    
-      points(dF$ddtUse*3, col='red') 
-      points(dF$pyrUse*4, col='green')  
+      #, pch=15 filled square
+      plot(dF$carUse, axes=FALSE, col='orange', pch=15, cex=2, xlim=c(0,nrow(dF)), ylim=c(0.5,4.5), main="insecticide used", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='' )
+      points(dF$opsUse*2, col='blue', pch=15, cex=2)    
+      points(dF$ddtUse*3, col='red', pch=15, cex=2) 
+      points(dF$pyrUse*4, col='green', pch=15, cex=2)  
       #to add x axis labels, las=1 to make labels horizontal
       axis(2,at=1:4,labels=c('carb','ops','ddt','pyr'),las=1,cex.axis=1.3, tick=FALSE)
     
