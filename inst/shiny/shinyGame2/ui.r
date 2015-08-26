@@ -1,6 +1,5 @@
-#shinyGame1/ui.r
-#andy south 18/6/15
-#2nd go at a simple IRM 'game'
+#shinyGame2/ui.r
+#andy south 26/8/15
 
 library(shiny)
 library(shinythemes)
@@ -8,7 +7,7 @@ library(shinythemes)
 
 shinyUI(fluidPage(theme = shinytheme("flatly"),
 
-  headerPanel("Insecticide Resistance Management 'Game model' prototype1"),  
+  headerPanel("Insecticide Resistance Management 'Game model' prototype2"),  
   
   helpText("A potential vector simulation for an Insecticide Resistance Mangement game. Press buttons on the left to advance the simulation, plots will appear in the 'Simulation' tab. Feedback to southandy@gmail.com."),
   

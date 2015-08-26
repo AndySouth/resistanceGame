@@ -1,6 +1,5 @@
-#shinyGame1/server.r
-#andy south 18/6/15
-#first go at a simple IRM 'game'
+#shinyGame2/server.r
+#andy south 26/8/15
 
 library(shiny)
 
