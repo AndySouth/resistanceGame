@@ -61,13 +61,6 @@ shinyServer(function(input, output) {
     if ( input$aButtonRun == 0 ) 
     {
       startSim()
-      
-#       #set start value for vector popn
-#       dF$vectorPop[1] <<- 100
-#       #set start value for pyrethroid resistance
-#       dF$pyrResist[1] <<- 20
-#       #set start for cost
-#       dF$cost[1] <<- 0
       return()
     }
 
@@ -161,6 +154,8 @@ shinyServer(function(input, output) {
       
     }) #end isolate   
   }) #end of runApply
+  
+  
   # run mortality seeking  ##########################
   restart <- reactive({
     
@@ -170,23 +165,6 @@ shinyServer(function(input, output) {
     if ( input$aButtonRestart > 0 ) 
     {
       startSim()
-      
-#       #todo put these into a function that can be called at start
-#       runNum <<- 0
-#       #zero by re-creating the dF
-#       dF <<- data.frame( pyrUse = rep(NA,maxGos),
-#                         ddtUse = rep(NA,maxGos),
-#                         opsUse = rep(NA,maxGos),
-#                         carUse = rep(NA,maxGos),
-#                         vectorPop = rep(NA,maxGos),
-#                         pyrResist = rep(NA,maxGos),
-#                         cost = rep(NA,maxGos) )
-#       #set start value for vector popn
-#       dF$vectorPop[1] <<- 100
-#       #set start value for pyrethroid resistance
-#       dF$pyrResist[1] <<- 0.2
-#       #set start for cost
-#       dF$cost[1] <<- 0
     }
   
   }) #end of restart
@@ -250,6 +228,8 @@ shinyServer(function(input, output) {
     }) #end isolate   
   }) #end plot1
   
+  
+  
   ## text about the simulation equations
   output$about <- renderText({ 
     
@@ -311,7 +291,7 @@ These simply make resistance go up towards a plateau when the insecticide is pre
     
 
     
-  }) #end about
+  }) #end table
     
   
 })
