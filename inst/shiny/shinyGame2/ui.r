@@ -20,10 +20,10 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
                "This version only includes metabolic resistance prompted by use of either pyr or ddt."),    
       # may want to set these so that you can just choose 
       # one at a time (i.e. no mixtures)
-      checkboxInput('pyrOn', 'pyrethroid', TRUE),
-      checkboxInput('ddtOn', 'ddt', FALSE),
-      checkboxInput('opsOn', 'organophosphate', FALSE),
-      checkboxInput('carOn', 'carbamate', FALSE),
+      checkboxInput('use_pyr', 'pyrethroid', TRUE),
+      checkboxInput('use_ddt', 'ddt', FALSE),
+      checkboxInput('use_ops', 'organophosphate', FALSE),
+      checkboxInput('use_car', 'carbamate', FALSE),
       
       wellPanel(
         actionButton('aButtonRun', 'advance 1 timestep'),
@@ -33,15 +33,15 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
       
       helpText("Parameters that could be modified within the game to generate different scenarios."),      
       #growth parameters
-      numericInput('rateGrowth', 'population growth rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
-      numericInput('rateInsecticideKill', 'insecticide kill rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
+      numericInput('rate_growth', 'population growth rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
+      numericInput('rate_insecticide_kill', 'insecticide kill rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
       
-      numericInput('resistanceModifier', 'resistance mortality modifier', value = 1, min = 0.1, max = 5, step = 0.1),
+      numericInput('resistance_modifier', 'resistance mortality modifier', value = 1, min = 0.1, max = 5, step = 0.1),
       helpText("Values above 1 for resistance modifier cause lower resistances to reduce mortality more"),
       
-      numericInput('rateResistance', 'resistance change rate', value = 0.2, min = 0.01, max = 1, step = 0.1),
+      numericInput('rate_resistance', 'resistance change rate', value = 0.2, min = 0.01, max = 1, step = 0.1),
       
-      numericInput('ccModifier', 'vector carrying capacity modifier', value = 1, min = 0.1, max = 1, step = 0.1)
+      numericInput('cc_modifier', 'vector carrying capacity modifier', value = 1, min = 0.1, max = 1, step = 0.1)
       
     ), #end column
   column(8,

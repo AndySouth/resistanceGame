@@ -5,6 +5,7 @@ library(shiny)
 
 #library(devtools)
 #install_github("andysouth/resistanceGame")
+library(resistanceGame)
 
 #global dataframe to hold results
 runNum <- 0
@@ -12,11 +13,7 @@ maxGos <- 20
 dF <- NULL
 #logistic model params
 K <- 1
-# now set from input boxes
-# rateGrowth <- 0.4
-# rateInsecticideKill <- 1.2
-# #allows changing the effect of resistance
-# resistanceModifier <- 1.5
+
 
 #if I scale all measures between 0 & 1 that may make life a lot easier later on
 
@@ -29,21 +26,21 @@ shinyServer(function(input, output) {
     
     runNum <<- 0
     
-    dF <<- data.frame( pyrUse = rep(NA,maxGos),
-                       ddtUse = rep(NA,maxGos),
-                       opsUse = rep(NA,maxGos),
-                       carUse = rep(NA,maxGos),
-                       vectorPop = rep(NA,maxGos),
-                       pyrResist = rep(NA,maxGos),
+    dF <<- data.frame( use_pyr = rep(NA,maxGos),
+                       use_ddt = rep(NA,maxGos),
+                       use_ops = rep(NA,maxGos),
+                       use_car = rep(NA,maxGos),
+                       pop = rep(NA,maxGos),
+                       resist_pyr = rep(NA,maxGos),
                        cost = rep(NA,maxGos) )
     
     
     #if I scale all measures between 0 & 1 that may make life a lot easier later on
     
     #set start value for vector popn
-    dF$vectorPop[1] <<- 0.3
+    dF$pop[1] <<- 0.3
     #set start value for pyrethroid resistance
-    dF$pyrResist[1] <<- 0.01
+    dF$resist_pyr[1] <<- 0.01
     #set start for cost
     dF$cost[1] <<- 0
     
@@ -82,73 +79,59 @@ shinyServer(function(input, output) {
 
       
       #record which insecticide used (for plotting)
-      if ( input$pyrOn ) dF$pyrUse[runNum] <<- 1 
-      if ( input$ddtOn ) dF$ddtUse[runNum] <<- 1 
-      if ( input$opsOn ) dF$opsUse[runNum] <<- 1 
-      if ( input$carOn ) dF$carUse[runNum] <<- 1 
+      if ( input$use_pyr ) dF$use_pyr[runNum] <<- 1 
+      if ( input$use_ddt ) dF$use_ddt[runNum] <<- 1 
+      if ( input$use_ops ) dF$use_ops[runNum] <<- 1 
+      if ( input$use_car ) dF$use_car[runNum] <<- 1 
       
       
       ## increment vector populations
       ## based on insecticide used and resistance
       
       #set input parameters here to keep formulas more manageable
-      rateGrowth <- input$rateGrowth
-      rateInsecticideKill <- input$rateInsecticideKill
-      resistanceModifier <- input$resistanceModifier
-      rateResistance <- input$rateResistance  
-      K <- input$ccModifier
+      rate_growth <- input$rate_growth
+      rate_insecticide_kill <- input$rate_insecticide_kill
+      resistance_modifier <- input$resistance_modifier
+      #rate_resistance <- input$rate_resistance 
+      rate_resistance <- dF$resist_pyr[runNum]
+      carry_cap <- input$cc_modifier
       
-      ## if no insecticides used
-      if (sum( dF$pyrUse[runNum],dF$ddtUse[runNum],dF$opsUse[runNum],dF$carUse[runNum],na.rm=TRUE) == 0)
-      {
-        
-        #logistic model
-        dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] + rateGrowth * 
-                                                          dF$vectorPop[runNum] * (1-dF$vectorPop[runNum]/K)
-        
-
-      ## if just ddt or pyrethroid (i.e. no ops or carb)                
-      } else if (sum( dF$opsUse[runNum],dF$carUse[runNum],na.rm=TRUE) == 0)
-      {
-        #no resistance : pop decline
-        #mid resistance : stay constant
-        #high resistance : pop increase
-        
-        dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] + 
-          rateGrowth * dF$vectorPop[runNum] * (1-dF$vectorPop[runNum]/K) -   #density dependence
-          rateInsecticideKill * dF$vectorPop[runNum] *                       #insecticide
-          (1-dF$pyrResist[runNum]^(1/resistanceModifier))                    #resistance  
-        
-      #no kill at resistance=1, a higher resistance modifier means that lower resistances have a greater effect
-      #on reducing mortality
-
-      ## ops or car used          
-      } else 
-      {
-        #effective insecticide reduce popn.
-        dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] + 
-                                   rateGrowth * dF$vectorPop[runNum] * (1-dF$vectorPop[runNum]/K) -   #density dependence
-                                   rateInsecticideKill * dF$vectorPop[runNum]                         #insecticide
-      }
-
+      #set resistance increase & decrease to same
+      resist_incr <- input$rate_resistance
+      resist_decr <- input$rate_resistance   
       
-      ## increment resistance
-      ## as a first test, just increase resistance to pyrethroids
-      ## if pyr or ddt are used
-      if ( input$pyrOn || input$ddtOn ) 
-        #constraining resistance to 1
-        dF$pyrResist[runNum+1] <<- dF$pyrResist[runNum] +
-                                   rateResistance * (1 - dF$pyrResist[runNum])
-      else 
-        dF$pyrResist[runNum+1] <<- dF$pyrResist[runNum] * (1-rateResistance)        
+      insecticide_on <- input$use_pyr | input$use_ddt | input$use_ops | input$use_car
+      resistance_on <-  input$use_pyr | input$use_ddt
+      
+      #cat("insecticide & resistance on ",insecticide_on, resistance_on,"\n")
+      
+      # change population
+      dF$pop[runNum+1] <<- change_pop( pop = dF$pop[runNum],
+                                             rate_growth = rate_growth,
+                                             carry_cap = carry_cap,
+                                             rate_insecticide_kill = rate_insecticide_kill,
+                                             rate_resistance = rate_resistance,
+                                             resistance_modifier = resistance_modifier,
+                                             #initially just test whether any insecticide
+                                             insecticide_on = insecticide_on,
+                                             #initially just test whether pyr or ddt
+                                             resistance_on = resistance_on )
+      
+      # change resistance
+      dF$resist_pyr[runNum+1] <<- change_resistance( resistance = rate_resistance,
+                                                    resist_incr = resist_incr,
+                                                    resist_decr = resist_decr,
+                                                    #initially just test whether pyr or ddt
+                                                    resistance_on = resistance_on )
+        
 
             
       #increment cost (can insert relative costs here)
       dF$cost[runNum+1] <<- dF$cost[runNum] + 
-                            input$pyrOn * 1 +
-                            input$ddtOn * 2 +
-                            input$opsOn * 5 +
-                            input$carOn * 5 
+                            input$use_pyr * 1 +
+                            input$use_ddt * 2 +
+                            input$use_ops * 5 +
+                            input$use_car * 5 
         
       
       
@@ -198,21 +181,21 @@ shinyServer(function(input, output) {
       #plot insecticide use
       #adj=0 to left justify title
       #, pch=15 filled square
-      plot(dF$carUse, axes=FALSE, col='orange', pch=15, cex=2, xlim=c(0,nrow(dF)), ylim=c(0.5,4.5), main="insecticide used", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='' )
-      points(dF$opsUse*2, col='blue', pch=15, cex=2)    
-      points(dF$ddtUse*3, col='red', pch=15, cex=2) 
-      points(dF$pyrUse*4, col='green', pch=15, cex=2)  
+      plot(dF$use_car, axes=FALSE, col='orange', pch=15, cex=2, xlim=c(0,nrow(dF)), ylim=c(0.5,4.5), main="insecticide used", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='' )
+      points(dF$use_ops*2, col='blue', pch=15, cex=2)    
+      points(dF$use_ddt*3, col='red', pch=15, cex=2) 
+      points(dF$use_pyr*4, col='green', pch=15, cex=2)  
       #to add x axis labels, las=1 to make labels horizontal
       axis(2,at=1:4,labels=c('carb','ops','ddt','pyr'),las=1,cex.axis=1.3, tick=FALSE)
     
-      cat(dF$vectorPop,"\n")
+      cat(dF$pop,"\n")
       
       #plot vector population
-      plot.default(dF$vectorPop, axes=FALSE, ylim=c(0,1), type='l', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+      plot.default(dF$pop, axes=FALSE, ylim=c(0,1), type='l', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
       axis(2,at=c(0,1), labels=c('lo','hi'), las=1, cex.axis=1.3, tick=TRUE)
            
       #plot resistance (can have diff colour lines for diff insecticides)
-      plot.default(dF$pyrResist, axes=FALSE, ylim=c(0,1), type='l', col='green', main="resistance to pyrethroids", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+      plot.default(dF$resist_pyr, axes=FALSE, ylim=c(0,1), type='l', col='green', main="resistance to pyrethroids", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
       #to add x axis labels, las=1 to make labels horizontal
       #for resistance constrain 0-1
       axis(2,at=c(0,1), labels=c(0,1), las=1, cex.axis=1.3, tick=TRUE)
@@ -243,9 +226,9 @@ poor insecticide application : decreased insecticide kill rate, increased resist
 
 These are the simple equations that drive the simulation.
 
-A) N[t+1] = N[t] + rateGrowth * N[t] * (1-N[t] / carryingCapacity)
-                         - (rateInsecticideKill * N[t]
-                         * (1-resistance[t] ^ (1/resistanceModifier) ) )
+A) N[t+1] = N[t] + rate_growth * N[t] * (1-N[t] / carryingCapacity)
+                         - (rate_insecticide_kill * N[t]
+                         * (1-resistance[t] ^ (1/resistance_modifier) ) )
 
 Where N[t] is population now, and N[t+1] is population in the next time step.
 
@@ -258,7 +241,7 @@ So in line 3, '1-resitance[t]' ensures that fewer vectors are killed when resist
 The equation for the change in resistance is even simpler.
 
 If an insecticide prompting resistance is present :
-B) resistance[t+1] = resistance[t] + rateResistance * (1 - resistance[t])
+B) resistance[t+1] = resistance[t] + rate_resistance * (1 - resistance[t])
 
 If no insecticide prompting resistance :
 C) resistance[t+1] = resistance[t]  * (1 - resistance[t])
@@ -281,13 +264,13 @@ These simply make resistance go up towards a plateau when the insecticide is pre
     
     #default lookup table
     resistanceGame::create_lookup(write_csv=NULL,
-                                  rate_growth = input$rateGrowth,
-                                  rate_insecticide_kill = input$rateInsecticideKill,
-                                  resistance_modifier = input$resistanceModifier,
-                                  carry_cap = input$ccModifier,
+                                  rate_growth = input$rate_growth,
+                                  rate_insecticide_kill = input$rate_insecticide_kill,
+                                  resistance_modifier = input$resistance_modifier,
+                                  carry_cap = input$cc_modifier,
                                   #beware increase & decrease set to same rate here
-                                  resist_incr = input$rateResistance,
-                                  resist_decr = input$rateResistance )
+                                  resist_incr = input$rate_resistance,
+                                  resist_decr = input$rate_resistance )
     
 
     
