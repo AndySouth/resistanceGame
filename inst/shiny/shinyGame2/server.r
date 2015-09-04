@@ -51,7 +51,7 @@ shinyServer(function(input, output) {
   # advance one timestep  ##########################
   runApply <- reactive({
     
-    cat("in runApply button=",input$aButtonRun,"\n")
+    #cat("in runApply button=",input$aButtonRun,"\n")
     
     #add dependency on the button
     if ( input$aButtonRun == 0 ) 
@@ -140,7 +140,7 @@ shinyServer(function(input, output) {
   # run mortality seeking  ##########################
   restart <- reactive({
     
-    cat("in restart button=",input$aButtonRestart,"\n")
+    #cat("in restart button=",input$aButtonRestart,"\n")
     
     #add dependency on the button
     if ( input$aButtonRestart > 0 ) 
@@ -158,7 +158,7 @@ shinyServer(function(input, output) {
     #check if apply has been pressed
     runApply()
     
-    cat("in plot1 tstep=",tstep,"\n")
+    #cat("in plot1 tstep=",tstep,"\n")
     
     #isolate reactivity of other objects
     isolate({
