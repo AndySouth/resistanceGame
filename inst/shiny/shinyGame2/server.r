@@ -25,14 +25,7 @@ shinyServer(function(input, output) {
     
     tstep <<- 0
     
-    dF <<- data.frame( use_pyr = rep(NA,num_tsteps),
-                       use_ddt = rep(NA,num_tsteps),
-                       use_ops = rep(NA,num_tsteps),
-                       use_car = rep(NA,num_tsteps),
-                       pop = rep(NA,num_tsteps),
-                       resist_pyr = rep(NA,num_tsteps),
-                       cost = rep(NA,num_tsteps) )
-    
+    dF <<- init_sim(num_tsteps=num_tsteps)
     
     #if I scale all measures between 0 & 1 that may make life a lot easier later on
     
