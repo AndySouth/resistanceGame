@@ -4,8 +4,9 @@
 #'
 #' @param dF dataframe containing simulation results
 #' @examples
-#' #todo need a way of creating example dF from here
-#' #plot_sim(dF)
+#' #blank plot
+#' dF <- init_sim(20)
+#' plot_sim(dF)
 #' @return maybe nothing, produces a plot
 #' @export
 
