@@ -3,3 +3,4 @@
 export(change_pop)
 export(change_resistance)
 export(create_lookup)
+export(plot_sim)
