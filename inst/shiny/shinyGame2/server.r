@@ -8,11 +8,10 @@ library(shiny)
 library(resistanceGame)
 
 #global dataframe to hold results
-runNum <- 0
-maxGos <- 20
+tstep <- 0
+num_tsteps <- 20
 dF <- NULL
-#logistic model params
-K <- 1
+
 
 
 #if I scale all measures between 0 & 1 that may make life a lot easier later on
@@ -24,15 +23,15 @@ shinyServer(function(input, output) {
   #to set up data storage etc. for the simulation
   startSim <- function(){
     
-    runNum <<- 0
+    tstep <<- 0
     
-    dF <<- data.frame( use_pyr = rep(NA,maxGos),
-                       use_ddt = rep(NA,maxGos),
-                       use_ops = rep(NA,maxGos),
-                       use_car = rep(NA,maxGos),
-                       pop = rep(NA,maxGos),
-                       resist_pyr = rep(NA,maxGos),
-                       cost = rep(NA,maxGos) )
+    dF <<- data.frame( use_pyr = rep(NA,num_tsteps),
+                       use_ddt = rep(NA,num_tsteps),
+                       use_ops = rep(NA,num_tsteps),
+                       use_car = rep(NA,num_tsteps),
+                       pop = rep(NA,num_tsteps),
+                       resist_pyr = rep(NA,num_tsteps),
+                       cost = rep(NA,num_tsteps) )
     
     
     #if I scale all measures between 0 & 1 that may make life a lot easier later on
@@ -66,23 +65,23 @@ shinyServer(function(input, output) {
     isolate({
       #to allow this to be reset later
       #remember global assignment <<-
-      runNum <<- runNum + 1
+      tstep <<- tstep + 1
  
-      #i could get runs to restart when they get to maxGos ?
+      #i could get runs to restart when they get to num_tsteps ?
       #or could I extend the dF and allow it to go on indefinitely
-      if (runNum >= nrow(dF))
+      if (tstep >= nrow(dF))
       {
         dF <<- rbind(dF,dF[1,]) #copy row 1 on end
         dF[nrow(dF),] <<- NA #set to NA just in case
-        maxGos <<- maxGos+1 #increment
+        num_tsteps <<- num_tsteps+1 #increment
       }
 
       
       #record which insecticide used (for plotting)
-      if ( input$use_pyr ) dF$use_pyr[runNum] <<- 1 
-      if ( input$use_ddt ) dF$use_ddt[runNum] <<- 1 
-      if ( input$use_ops ) dF$use_ops[runNum] <<- 1 
-      if ( input$use_car ) dF$use_car[runNum] <<- 1 
+      if ( input$use_pyr ) dF$use_pyr[tstep] <<- 1 
+      if ( input$use_ddt ) dF$use_ddt[tstep] <<- 1 
+      if ( input$use_ops ) dF$use_ops[tstep] <<- 1 
+      if ( input$use_car ) dF$use_car[tstep] <<- 1 
       
       
       ## increment vector populations
@@ -92,7 +91,7 @@ shinyServer(function(input, output) {
       rate_growth <- input$rate_growth
       rate_insecticide_kill <- input$rate_insecticide_kill
       resistance_modifier <- input$resistance_modifier
-      rate_resistance <- dF$resist_pyr[runNum]
+      rate_resistance <- dF$resist_pyr[tstep]
       carry_cap <- input$cc_modifier
       
       #set resistance increase & decrease to same
@@ -105,7 +104,7 @@ shinyServer(function(input, output) {
       #cat("insecticide & resistance on ",insecticide_on, resistance_on,"\n")
       
       # change population
-      dF$pop[runNum+1] <<- change_pop( pop = dF$pop[runNum],
+      dF$pop[tstep+1] <<- change_pop( pop = dF$pop[tstep],
                                              rate_growth = rate_growth,
                                              carry_cap = carry_cap,
                                              rate_insecticide_kill = rate_insecticide_kill,
@@ -117,7 +116,7 @@ shinyServer(function(input, output) {
                                              resistance_on = resistance_on )
       
       # change resistance
-      dF$resist_pyr[runNum+1] <<- change_resistance( resistance = rate_resistance,
+      dF$resist_pyr[tstep+1] <<- change_resistance( resistance = rate_resistance,
                                                     resist_incr = resist_incr,
                                                     resist_decr = resist_decr,
                                                     #initially just test whether pyr or ddt
@@ -126,7 +125,7 @@ shinyServer(function(input, output) {
 
             
       #increment cost (can insert relative costs here)
-      dF$cost[runNum+1] <<- dF$cost[runNum] + 
+      dF$cost[tstep+1] <<- dF$cost[tstep] + 
                             input$use_pyr * 1 +
                             input$use_ddt * 2 +
                             input$use_ops * 5 +
@@ -159,13 +158,13 @@ shinyServer(function(input, output) {
     #check if apply has been pressed
     runApply()
     
-    cat("in plot1 runNum=",runNum,"\n")
+    cat("in plot1 tstep=",tstep,"\n")
     
     #isolate reactivity of other objects
     isolate({
  
-      #if ( runNum == 0 ) return()
-      if ( runNum == 0 ) {
+      #if ( tstep == 0 ) return()
+      if ( tstep == 0 ) {
         plot.new()
         mtext("press the advance... button on the left to start the simulation")
         return()
