@@ -17,14 +17,16 @@
 #' @export
 
 run_sim <- function(num_tsteps=20,
-                    pop_start,
-                    rate_resistance_start,
-                       rate_growth,
-                       carry_cap,
-                       rate_insecticide_kill,
-                       resistance_modifier,
-                       insecticide_on,
-                       resistance_on
+                    pop_start=0.5,
+                    rate_resistance_start=0.1,
+                    rate_growth=0.2,
+                    carry_cap=1,
+                    rate_insecticide_kill=0.1,
+                    resistance_modifier=1,
+                    insecticide_on=1,
+                    resistance_on=1,
+                    resist_incr = 0.2,
+                    resist_decr = 0.1
 ) 
 {
   #todo
@@ -34,27 +36,38 @@ run_sim <- function(num_tsteps=20,
 
   dF <- init_sim(num_tsteps)
 
-  #todo start tstep loop
+  dF$pop[1] <- pop_start
+  dF$resist_pyr[1] <- rate_resistance_start
+
   
+  #tstep loop
+  for( tstep in 1:(num_tsteps-1) )
+  {
+    
+    cat("t",tstep,"\n")
+
+    # change population
+    dF$pop[tstep+1] <- change_pop( pop = dF$pop[tstep],
+                                    rate_resistance = dF$resist_pyr[tstep],
+                                    rate_growth = rate_growth,
+                                    carry_cap = carry_cap,
+                                    rate_insecticide_kill = rate_insecticide_kill,
+                                    resistance_modifier = resistance_modifier,
+                                    #initially just test whether any insecticide
+                                    insecticide_on = insecticide_on,
+                                    #initially just test whether pyr or ddt
+                                    resistance_on = resistance_on )
+    
+    # change resistance
+    dF$resist_pyr[tstep+1] <- change_resistance( resistance = dF$resist_pyr[tstep],
+                                                  resist_incr = resist_incr,
+                                                  resist_decr = resist_decr,
+                                                  #initially just test whether pyr or ddt
+                                                  resistance_on = resistance_on )
+        
+  }
   
-  # change population
-  dF$pop[tstep+1] <<- change_pop( pop = dF$pop[tstep],
-                                  rate_growth = rate_growth,
-                                  carry_cap = carry_cap,
-                                  rate_insecticide_kill = rate_insecticide_kill,
-                                  rate_resistance = rate_resistance,
-                                  resistance_modifier = resistance_modifier,
-                                  #initially just test whether any insecticide
-                                  insecticide_on = insecticide_on,
-                                  #initially just test whether pyr or ddt
-                                  resistance_on = resistance_on )
-  
-  # change resistance
-  dF$resist_pyr[tstep+1] <<- change_resistance( resistance = rate_resistance,
-                                                resist_incr = resist_incr,
-                                                resist_decr = resist_decr,
-                                                #initially just test whether pyr or ddt
-                                                resistance_on = resistance_on )
+
   
   
   return(dF)
