@@ -45,9 +45,22 @@ plot_sim( run_sim(use_pyr=NA, use_ops=1) )
 plot_sim( run_sim(use_pyr=c(NA,1)) )
 ```
 
-### scenario 5 : alernate use of ops and pyr
+### scenario 5 : alternate use of ops and pyr
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
 plot_sim( run_sim(use_pyr=c(NA,1), use_ops=c(1,NA)) )
 ```
 
+### scenario 6 : 10 steps pyr, 10 steps ops
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+plot_sim( run_sim(use_pyr=rep(c(1,NA),each=10), use_ops=rep(c(NA,1),each=10)) )
+```
 
+### scenario 7 : 10 steps pyr, 10 steps ddt
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+plot_sim( run_sim(use_pyr=rep(c(1,NA),each=10), use_ddt=rep(c(NA,1),each=10)) )
+```
+
+### scenario 8 : no insecticide use, maximum randomness added
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+plot_sim( run_sim(use_pyr=NA, randomness=1) )
+```
