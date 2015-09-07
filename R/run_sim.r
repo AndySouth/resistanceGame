@@ -17,6 +17,7 @@
 #' @param use_ddt use ddt see use_pyr
 #' @param use_ops use organophosphates see use_pyr
 #' @param use_car use carbamates see use_pyr
+#' @param randomness 0-1 0=none, 1=maximum
 #' 
 #' @examples
 #' dF <- run_sim(pop_start=0.5, rate_resistance_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
@@ -34,7 +35,7 @@ run_sim <- function(num_tsteps=20,
                     rate_resistance_start=0.1,
                     rate_growth=0.2,
                     carry_cap=1,
-                    rate_insecticide_kill=0.1,
+                    rate_insecticide_kill=0.2,
                     resistance_modifier=1,
                     #insecticide_on=1,
                     #resistance_on=1,
@@ -43,7 +44,8 @@ run_sim <- function(num_tsteps=20,
                     use_pyr = rep(1,num_tsteps),
                     use_ddt = NA,
                     use_ops = NA,
-                    use_car = NA
+                    use_car = NA,
+                    randomness = 0
 ) 
 {
   #todo
@@ -83,7 +85,8 @@ run_sim <- function(num_tsteps=20,
                                     #initially just test whether any insecticide
                                     insecticide_on = insecticide_on,
                                     #initially just test whether pyr or ddt
-                                    resistance_on = resistance_on )
+                                    resistance_on = resistance_on,
+                                    randomness = randomness )
     
     # change resistance
     dF$resist_pyr[tstep+1] <- change_resistance( resistance = dF$resist_pyr[tstep],

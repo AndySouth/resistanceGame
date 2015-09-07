@@ -10,6 +10,7 @@
 #' @param resistance_modifier modifies effect of resistance
 #' @param insecticide_on whether insecticide is applied 0=no, 1=yes
 #' @param resistance_on whether there is resistance to the applied insecticide 0=no, 1=yes
+#' @param randomness 0-1 0=none, 1=maximum
 #' @examples
 #' change_pop(pop=0.5, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, rate_resistance=0.2, resistance_modifier=1, resistance_on=1, insecticide_on=1)
 #' @return float population in next timestep
@@ -22,7 +23,8 @@ change_pop <- function(pop,
                        rate_resistance,
                        resistance_modifier,
                        insecticide_on,
-                       resistance_on
+                       resistance_on,
+                       randomness = 0
 ) 
 {
   
@@ -36,6 +38,11 @@ change_pop <- function(pop,
     insecticide_on * rate_insecticide_kill * pop *
     (1-resistance_on * rate_resistance ^ (1/resistance_modifier) )     
   
+  
+  #randomness how to add
+  #randomness 0-1
+  if (randomness > 0)
+    pop2 <- pop2 + (randomness * runif(1, min=-1, max=1))
   
 #   if ( insecticide_on && resistance_on )
 #   {

@@ -5,10 +5,10 @@
 \title{run simulation of population and resistance change}
 \usage{
 run_sim(num_tsteps = 20, pop_start = 0.5, rate_resistance_start = 0.1,
-  rate_growth = 0.2, carry_cap = 1, rate_insecticide_kill = 0.1,
+  rate_growth = 0.2, carry_cap = 1, rate_insecticide_kill = 0.2,
   resistance_modifier = 1, resist_incr = 0.2, resist_decr = 0.1,
   use_pyr = rep(1, num_tsteps), use_ddt = NA, use_ops = NA,
-  use_car = NA)
+  use_car = NA, randomness = 0)
 }
 \arguments{
 \item{num_tsteps}{number of timesteps to run simulation}
@@ -36,6 +36,8 @@ run_sim(num_tsteps = 20, pop_start = 0.5, rate_resistance_start = 0.1,
 \item{use_ops}{use organophosphates see use_pyr}
 
 \item{use_car}{use carbamates see use_pyr}
+
+\item{randomness}{0-1 0=none, 1=maximum}
 }
 \value{
 dataframe of simulation results
