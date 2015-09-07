@@ -7,6 +7,10 @@
 #' #blank plot
 #' dF <- init_sim(20)
 #' plot_sim(dF)
+#' #default run
+#' plot_sim( run_sim())
+#' #modify params
+#' plot_sim( run_sim( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
 #' @return maybe nothing, produces a plot
 #' @export
 

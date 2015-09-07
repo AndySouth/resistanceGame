@@ -13,6 +13,10 @@
 #' @param resistance_on whether there is resistance to the applied insecticide 0=no, 1=yes
 #' @examples
 #' dF <- run_sim(pop_start=0.5, rate_resistance_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1, resistance_on=1, insecticide_on=1)
+#' #plot default run
+#' plot_sim( run_sim())
+#' #modify params
+#' plot_sim( run_sim( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
 #' @return dataframe of simulation results
 #' @export
 
@@ -44,7 +48,7 @@ run_sim <- function(num_tsteps=20,
   for( tstep in 1:(num_tsteps-1) )
   {
     
-    cat("t",tstep,"\n")
+    #cat("t",tstep,"\n")
 
     # change population
     dF$pop[tstep+1] <- change_pop( pop = dF$pop[tstep],
