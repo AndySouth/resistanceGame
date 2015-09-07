@@ -1,0 +1,53 @@
+---
+title: "Insecticide resistance management : prototype game scenarios"
+author: "Andy South"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+#to produce a pdf
+#output: rmarkdown::pdf_document
+vignette: >
+  %\VignetteIndexEntry{IRM prototype game scenarios}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+This document demonstrates how a few simple equations can be used to generate patterns of change in vector populations and insecticide resistance over time depending on the use of insecticides. Parameters within the simple equations can be modified to generate different patterns of change.
+
+
+We intend to tweak the input parameters to generate reasonable scenarios. We intend to ask experts in entomology and modelling to assess these scenarios. Thus we are looking for assessment of the scenarios themselves rather than the input parameter values. The input parameters are simply a means by which we can generate reasonable scenarios.
+
+
+In the following plots time is represented on the x axis, the top panel shows insecticide use, the middle panel shows vector population and the lowe panel shows resistance (phenotypic). The code included e.g. `plot_sim(...)` is there merely to show us as developers how the scenarios were generated.
+
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE}
+#### load required packages
+require(resistanceGame)
+```
+
+### scenario 1 : no insecticide use
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+plot_sim( run_sim(use_pyr=NA) )
+```
+
+### scenario 2 : continuous pyr use in presence of resistance
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+plot_sim( run_sim(use_pyr=1) )
+```
+
+### scenario 3 : continuous use of ops with no resistance
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+plot_sim( run_sim(use_pyr=NA, use_ops=1) )
+```
+
+### scenario 4 : pyr used in alternate steps
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+plot_sim( run_sim(use_pyr=c(NA,1)) )
+```
+
+### scenario 5 : alernate use of ops and pyr
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+plot_sim( run_sim(use_pyr=c(NA,1), use_ops=c(1,NA)) )
+```
+
+
