@@ -26,9 +26,9 @@ change_pop <- function(pop,
 ) 
 {
   
-  #todo do I want to put numTimesteps as an arg to allow it to run & return a vector ? or have as other func.
-
-  #pop2 <- NULL
+  #todo fix this temp fudge
+  if(is.na(insecticide_on)) insecticide_on <- 0
+  if(is.na(resistance_on)) resistance_on <- 0  
   
  
   pop2 <- pop +

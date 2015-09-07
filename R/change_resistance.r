@@ -19,7 +19,8 @@ change_resistance <- function(resistance,
 ) 
 {
   
-  #todo do I want to put numTimesteps as an arg to allow it to run & return a vector ? or have as other func.
+  #todo fix this temp fudge
+  if(is.na(resistance_on)) resistance_on <- 0  
   
   resistance2 <- NULL
   
