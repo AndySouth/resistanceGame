@@ -37,7 +37,7 @@ plot_sim <- function(dF)
   #to add x axis labels, las=1 to make labels horizontal
   axis(2,at=1:4,labels=c('carb','ops','ddt','pyr'),las=1,cex.axis=1.3, tick=FALSE)
   
-  cat(dF$pop,"\n")
+  #cat(dF$pop,"\n")
   
   #plot vector population
   plot.default(dF$pop, axes=FALSE, ylim=c(0,1), type='l', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
