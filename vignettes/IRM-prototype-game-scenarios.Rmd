@@ -6,7 +6,7 @@ output: rmarkdown::html_vignette
 #to produce a pdf
 #output: rmarkdown::pdf_document
 vignette: >
-  %\VignetteIndexEntry{IRM prototype game scenarios}
+  %\VignetteIndexEntry{IRM-prototype-game-scenarios}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
@@ -60,7 +60,13 @@ plot_sim( run_sim(use_pyr=rep(c(1,NA),each=10), use_ops=rep(c(NA,1),each=10)) )
 plot_sim( run_sim(use_pyr=rep(c(1,NA),each=10), use_ddt=rep(c(NA,1),each=10)) )
 ```
 
-### scenario 8 : no insecticide use, maximum randomness added
+### scenario 8 : no insecticide use, maximum randomness (1) added
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
 plot_sim( run_sim(use_pyr=NA, randomness=1) )
 ```
+
+### scenario 9 : no insecticide use, randomness 0.2 added
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+plot_sim( run_sim(use_pyr=NA, randomness=0.2) )
+```
+
