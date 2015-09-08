@@ -2,9 +2,9 @@
 title: "Insecticide resistance management : prototype game scenarios"
 author: "Andy South"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+#output: rmarkdown::html_vignette
 #to produce a pdf
-#output: rmarkdown::pdf_document
+output: rmarkdown::pdf_document
 vignette: >
   %\VignetteIndexEntry{IRM-prototype-game-scenarios}
   %\VignetteEngine{knitr::rmarkdown}
@@ -20,53 +20,81 @@ We intend to tweak the input parameters to generate reasonable scenarios. We int
 In the following plots time is represented on the x axis, the top panel shows insecticide use, the middle panel shows vector population and the lowe panel shows resistance (phenotypic). The code included e.g. `plot_sim(...)` is there merely to show us as developers how the scenarios were generated.
 
 
+For an interactive version of the equations used to generate these plots see this (link.)[https://andysouth.shinyapps.io/shinyGame2]
+
+
 ```{r, eval=TRUE, echo=FALSE, message=FALSE}
 #### load required packages
 require(resistanceGame)
 ```
 
-### scenario 1 : no insecticide use
+\newpage
+
+## scenario 1 : no insecticide use
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
 plot_sim( run_sim(use_pyr=NA) )
 ```
 
-### scenario 2 : continuous pyr use in presence of resistance
+\newpage
+
+## scenario 2 : continuous pyr use in presence of resistance
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
 plot_sim( run_sim(use_pyr=1) )
 ```
 
-### scenario 3 : continuous use of ops with no resistance
+\newpage
+
+## scenario 3 : continuous use of ops with no resistance
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
 plot_sim( run_sim(use_pyr=NA, use_ops=1) )
 ```
 
-### scenario 4 : pyr used in alternate steps
+\newpage
+
+## scenario 4 : pyr used in alternate steps
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
 plot_sim( run_sim(use_pyr=c(NA,1)) )
 ```
 
-### scenario 5 : alternate use of ops and pyr
+\newpage
+
+## scenario 5 : alternate use of ops and pyr
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
 plot_sim( run_sim(use_pyr=c(NA,1), use_ops=c(1,NA)) )
 ```
 
-### scenario 6 : 10 steps pyr, 10 steps ops
+\newpage
+
+## scenario 6 : 10 steps pyr, 10 steps ops
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
 plot_sim( run_sim(use_pyr=rep(c(1,NA),each=10), use_ops=rep(c(NA,1),each=10)) )
 ```
 
-### scenario 7 : 10 steps pyr, 10 steps ddt
+\newpage
+
+## scenario 7 : 10 steps pyr, 10 steps ddt
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
 plot_sim( run_sim(use_pyr=rep(c(1,NA),each=10), use_ddt=rep(c(NA,1),each=10)) )
 ```
 
-### scenario 8 : no insecticide use, maximum randomness (1) added
+\newpage
+
+## scenario 8 : no insecticide use, 50% randomness added
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
-plot_sim( run_sim(use_pyr=NA, randomness=1) )
+plot_sim( run_sim(use_pyr=NA, randomness=0.5) )
 ```
 
-### scenario 9 : no insecticide use, randomness 0.2 added
+\newpage
+
+## scenario 9 : same as previous but just a different randomisation
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
-plot_sim( run_sim(use_pyr=NA, randomness=0.2) )
+plot_sim( run_sim(use_pyr=NA, randomness=0.5) )
+```
+
+\newpage
+
+## scenario 10 : no insecticide use, 10% randomness added
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+plot_sim( run_sim(use_pyr=NA, randomness=0.1) )
 ```
 
