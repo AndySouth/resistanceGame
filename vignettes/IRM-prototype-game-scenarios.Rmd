@@ -98,3 +98,16 @@ plot_sim( run_sim(use_pyr=NA, randomness=0.5) )
 plot_sim( run_sim(use_pyr=NA, randomness=0.1) )
 ```
 
+\newpage
+
+## scenario 11 : continuous pyr use, resistance_modifier < 1 decreases effect of resistance
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+plot_sim( run_sim(use_pyr=1,resistance_modifier=0.1) )
+```
+
+\newpage
+
+## scenario 12 : continuous pyr use, resistance_modifier > 1 increases effect of resistance
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+plot_sim( run_sim(use_pyr=1,resistance_modifier=10) )
+```
