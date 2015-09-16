@@ -48,10 +48,6 @@ run_sim <- function(num_tsteps=20,
                     randomness = 0
 ) 
 {
-  #todo
-  #pass use_pyr etc. rather than insecticide_on
-  #calc whether resistance_on
-  #clac rate_resistance change over time
 
   dF <- init_sim(num_tsteps)
 
