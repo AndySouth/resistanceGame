@@ -56,6 +56,12 @@ shinyServer(function(input, output) {
     
     #isolate reactivity of other objects
     isolate({
+      
+      
+      #todo work out how to be able to run this for multiple timesteps
+      #to extend the dF could use init_sim to create a new dF and rbind that on to the existing one
+      
+      
       #to allow this to be reset later
       #remember global assignment <<-
       tstep <<- tstep + 1
@@ -91,42 +97,60 @@ shinyServer(function(input, output) {
       resist_incr <- input$resist_incr
       resist_decr <- input$resist_decr   
       
-      insecticide_on <- input$use_pyr | input$use_ddt | input$use_ops | input$use_car
-      resistance_on <-  input$use_pyr | input$use_ddt
+#       insecticide_on <- input$use_pyr | input$use_ddt | input$use_ops | input$use_car
+#       resistance_on <-  input$use_pyr | input$use_ddt
       
       #cat("insecticide & resistance on ",insecticide_on, resistance_on,"\n")
       
       
       # todo get this to run_sim(num_tsteps=tsteps_to_run)
       # may need to rbind new results onto end of existing ones
+      dF2 <- run_sim( num_tsteps=input$tsteps_to_run,
+                      pop_start=dF$pop[tstep],
+                      rate_resistance_start=rate_resistance,
+                      rate_growth = rate_growth,
+                      carry_cap = carry_cap,
+                      rate_insecticide_kill = rate_insecticide_kill,
+                      resistance_modifier = resistance_modifier,
+                      use_pyr = input$use_pyr,
+                      use_ddt = input$use_ddt,
+                      use_ops = input$use_ops,
+                      use_car = input$use_car,
+                      resist_incr = resist_incr,
+                      resist_decr = resist_decr,
+                      randomness = 0
+      )
+ 
       
-      # change population
-      dF$pop[tstep+1] <<- change_pop( pop = dF$pop[tstep],
-                                             rate_growth = rate_growth,
-                                             carry_cap = carry_cap,
-                                             rate_insecticide_kill = rate_insecticide_kill,
-                                             rate_resistance = rate_resistance,
-                                             resistance_modifier = resistance_modifier,
-                                             #initially just test whether any insecticide
-                                             insecticide_on = insecticide_on,
-                                             #initially just test whether pyr or ddt
-                                             resistance_on = resistance_on )
-      
-      # change resistance
-      dF$resist_pyr[tstep+1] <<- change_resistance( resistance = rate_resistance,
-                                                    resist_incr = resist_incr,
-                                                    resist_decr = resist_decr,
-                                                    #initially just test whether pyr or ddt
-                                                    resistance_on = resistance_on )
-        
-
-            
-      #increment cost (can insert relative costs here)
-      dF$cost[tstep+1] <<- dF$cost[tstep] + 
-                            input$use_pyr * 1 +
-                            input$use_ddt * 2 +
-                            input$use_ops * 5 +
-                            input$use_car * 5 
+      dF <- rbind(dF,dF2)
+           
+#       # change population
+#       dF$pop[tstep+1] <<- change_pop( pop = dF$pop[tstep],
+#                                              rate_growth = rate_growth,
+#                                              carry_cap = carry_cap,
+#                                              rate_insecticide_kill = rate_insecticide_kill,
+#                                              rate_resistance = rate_resistance,
+#                                              resistance_modifier = resistance_modifier,
+#                                              #initially just test whether any insecticide
+#                                              insecticide_on = insecticide_on,
+#                                              #initially just test whether pyr or ddt
+#                                              resistance_on = resistance_on )
+#       
+#       # change resistance
+#       dF$resist_pyr[tstep+1] <<- change_resistance( resistance = rate_resistance,
+#                                                     resist_incr = resist_incr,
+#                                                     resist_decr = resist_decr,
+#                                                     #initially just test whether pyr or ddt
+#                                                     resistance_on = resistance_on )
+#         
+# 
+#             
+#       #increment cost (can insert relative costs here)
+#       dF$cost[tstep+1] <<- dF$cost[tstep] + 
+#                             input$use_pyr * 1 +
+#                             input$use_ddt * 2 +
+#                             input$use_ops * 5 +
+#                             input$use_car * 5 
         
       
       
