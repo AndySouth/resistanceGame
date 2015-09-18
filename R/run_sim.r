@@ -169,7 +169,7 @@ run_sim2 <- function(num_tsteps=20,
     
     #this sums all control measures
     #todo be careful with whether this should add to > 1 and what happens
-    insecticide_on <- sum(l_time[[tstep]]$l_controls_used, na.rm=TRUE)
+    insecticide_on <- sum(l_time[[tstep]]$controls_used, na.rm=TRUE)
     
     
     #resistance_on <-  l_time$use_pyr[tstep] | l_time$use_ddt[tstep]
@@ -179,7 +179,7 @@ run_sim2 <- function(num_tsteps=20,
     #initially assume just one resistance mechanism at a time
     #it will need to test both l_time and list_config
     
-    resistance_on <- is_control_incr_resist( controls_used = l_time[[tstep]]$l_controls_used,
+    resistance_on <- is_control_incr_resist( controls_used = l_time[[tstep]]$controls_used,
                                              l_config = l_config )
     
     #cat("insecticide & resistance on ",insecticide_on, resistance_on,"\n")
