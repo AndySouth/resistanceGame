@@ -44,7 +44,9 @@ dF <- run_sim2(pop_start=0.5, rate_resistance_start=0.2, rate_growth=0.4, carry_
 plot_sim2( run_sim2())
 #modify params
 plot_sim2( run_sim2( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
-#alternate use of pyr
-#plot_sim( run_sim(use_pyr=c(NA,1)))
+#modify config file
+l_config <- read_config()
+l_config2 <- config_control_plan(l_config, time_strt=c(1,11), time_stop=c(10,20), control_id=c('irs_pyr','irs_ddt'))
+plot_sim2( run_sim2(l_config=l_config2, resist_incr=0.1))
 }
 
