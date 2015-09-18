@@ -100,7 +100,32 @@ run_sim <- function(num_tsteps=20,
 }
 
 
-#starting run_sim2 to use new config_file approach
+#' run flexible simulation of population and resistance change driven by config file
+#'
+#' some params driven by config file, others by function args
+#'
+#' @param num_tsteps number of timesteps to run simulation
+#' @param pop_start start vector population
+#' @param rate_resistance_start effect of resistance on insecticide kill rate
+#' @param rate_growth population growth rate
+#' @param carry_cap carrying capacity (K) in the logistic model
+#' @param rate_insecticide_kill kill rate due to insecticide
+#' @param resistance_modifier modifies effect of resistance
+#' @param resist_incr increase in resistance when correct insecticide present
+#' @param resist_decr decrease in resistance when correct insecticide absent
+#' @param l_config list of config parameters
+#' @param randomness 0-1 0=none, 1=maximum
+#' 
+#' @examples
+#' dF <- run_sim2(pop_start=0.5, rate_resistance_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
+#' #plot default run
+#' plot_sim2( run_sim2())
+#' #modify params
+#' plot_sim2( run_sim2( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
+#' #alternate use of pyr
+#' #plot_sim( run_sim(use_pyr=c(NA,1)))
+#' @return list of simulation results
+#' @export
 
 run_sim2 <- function(num_tsteps=20,
                     pop_start=0.5,
@@ -112,7 +137,6 @@ run_sim2 <- function(num_tsteps=20,
                     resist_incr = 0.2,
                     resist_decr = 0.1,
                     l_config=NULL, #list got from configuration files
-                    l_controls_used, #list by control_id and t of which controls used
                     randomness = 0
 ) 
 {
