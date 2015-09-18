@@ -20,3 +20,86 @@ init_sim <- function(num_tsteps=20)
                      cost = rep(NA,num_tsteps) )
   
 }
+
+#' initialise simulation results list based on config file
+#'
+#' create list to contain simulation results
+#'
+#' @param num_tsteps number of timesteps to put in dataframe
+#' @param l_config list of config parameters
+#' @examples
+#' dF <- init_sim(20, l_config=read_config())
+#' @return list to contain simulation results
+#' @export
+#' 
+init_sim2 <- function(num_tsteps=20, l_config=NULL) 
+{
+  
+  #read default config if none specified
+  if (is.null(l_config))
+    l_config <- read_config()
+  
+  
+  controls_blank <- rep(NA,length( l_config$controls$control_id ))
+  names(controls_blank) <- l_config$controls$control_id
+  
+  #controls_blank <- list( l_config$controls$control_id = NA )
+  #l_controls_blank <- list( controls_blank )  
+  
+#   l_time <- list( l_controls_used = rep(controls_blank,num_tsteps),
+#                      pop = rep(NA,num_tsteps),
+#                      resist = rep(NA,num_tsteps),
+#                      cost = rep(NA,num_tsteps) )
+  
+  #maybe i want this the other way around with timne as the first dimension ?
+  #this has to be a list of lists to allow me to store in another master list after
+  l_one_time <- list(list(pop = NA,
+                 resist = NA,
+                 cost = NA,
+                 controls_used = controls_blank))
+                 #l_controls_used = l_controls_blank))
+  
+  #create a list with blanks for each timestep
+  l_time <- vector("list", length=num_tsteps)
+  
+  #fill it with blank l_one_time lists
+  l_time[1:num_tsteps] <- l_one_time
+  
+  #now I can use these access functions
+  
+  l_time[[1]] #to get first timestep
+  l_time[[1]]$pop #to get pop in first tstep
+  #l_time[[1]]$l_controls_used[[1]]['irs_pyr'] #get whether a control used in first tstep
+  l_time[[1]]$controls_used['irs_pyr'] #get whether a control used in first tstep  
+  
+  #but for controls_used I don't need all the blank NAs I may just 
+  #be able to store the ids of the controls used in each timestep
+  
+  #first go at filling controls_used from l_config$control_plan
+  #num rows in control_plan
+  n_controls <- nrow(l_config$control_plan)
+  for(control_num in 1:n_controls)
+  {
+    
+    #for each row in config list
+    t_strt <- l_config$control_plan[['time_strt']][[control_num]]
+    t_stop <- l_config$control_plan[['time_stop']][[control_num]] 
+    control_id <- l_config$control_plan[['control_id']][[control_num]]
+    
+    #this doesn't work
+    #l_time[ t_strt:t_stop ]$l_controls_used[[1]][[control_id]] <- 1  
+    
+    for(t in t_strt:t_stop )
+      #l_time[[t]]$l_controls_used[[1]][[control_id]] <- 1 
+      l_time[[t]]$controls_used[[control_id]] <- 1 
+           
+  }
+
+  
+  #this now gives a list of the controls used at t1
+  #l_time[[1]]$controls_used
+  #this to test whether a partic control used
+  #l_time[[1]]$controls_used[[1]][['irs_pyr']]
+  return(l_time)
+  
+}

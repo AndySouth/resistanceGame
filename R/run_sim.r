@@ -94,9 +94,97 @@ run_sim <- function(num_tsteps=20,
   }
   
 
-  
-  
   return(dF)
  
+  
+}
+
+
+#starting run_sim2 to use new config_file approach
+
+run_sim2 <- function(num_tsteps=20,
+                    pop_start=0.5,
+                    rate_resistance_start=0.1,
+                    rate_growth=0.2,
+                    carry_cap=1,
+                    rate_insecticide_kill=0.2,
+                    resistance_modifier=1,
+                    resist_incr = 0.2,
+                    resist_decr = 0.1,
+                    l_config=NULL, #list got from configuration files
+                    l_controls_used, #list by control_id and t of which controls used
+                    randomness = 0
+) 
+{
+  
+  #read default config if none specified
+  if (is.null(l_config))
+    l_config <- read_config()
+  
+  
+  l_time <- init_sim2(num_tsteps=num_tsteps, l_config=l_config)
+  
+  l_time[[1]]$pop <- pop_start
+  
+  l_time[[1]]$resist <- rate_resistance_start
+  
+  #l_time$l_controls_used <- l_controls_used
+
+  
+  #tstep loop
+  for( tstep in 1:(num_tsteps-1) )
+  {
+    
+    #cat("t",tstep,"\n")
+    
+    #initially insecticide on is just if a control measure is present
+    #todo later this will need to get the kill_rate from somewhere
+    #or even assess whether this control measure works on this vectorl_time
+    
+    #insecticide_on <- l_time$use_pyr[tstep] | l_time$use_ddt[tstep] | l_time$use_ops[tstep] | l_time$use_car[tstep]
+    
+    #this sums all control measures
+    #todo be careful with whether this should add to > 1 and what happens
+    insecticide_on <- sum(l_time[[tstep]]$l_controls_used, na.rm=TRUE)
+    
+    
+    #resistance_on <-  l_time$use_pyr[tstep] | l_time$use_ddt[tstep]
+    
+    #resistance_on is whether there is an appropriate combination
+    #of resistance mechanism and control method
+    #initially assume just one resistance mechanism at a time
+    #it will need to test both l_time and list_config
+    
+    resistance_on <- is_control_incr_resist( controls_used = l_time[[tstep]]$l_controls_used,
+                                             l_config = l_config )
+    
+    #cat("insecticide & resistance on ",insecticide_on, resistance_on,"\n")
+    
+    
+    # change population
+    l_time[[tstep+1]]$pop <- change_pop( pop = l_time[[tstep]]$pop,
+                                   rate_resistance = l_time[[tstep]]$resist,
+                                   rate_growth = rate_growth,
+                                   carry_cap = carry_cap,
+                                   rate_insecticide_kill = rate_insecticide_kill,
+                                   resistance_modifier = resistance_modifier,
+                                   #initially just test whether any insecticide
+                                   insecticide_on = insecticide_on,
+                                   #initially just test whether pyr or ddt
+                                   resistance_on = resistance_on,
+                                   randomness = randomness )
+    
+    # change resistance
+    l_time[[tstep+1]]$resist <- change_resistance( resistance = l_time[[tstep]]$resist,
+                                                 resist_incr = resist_incr,
+                                                 resist_decr = resist_decr,
+                                                 #initially just test whether pyr or ddt
+                                                 resistance_on = resistance_on )
+    
+  }
+  
+  
+  return(l_time)
+  
   
 }
