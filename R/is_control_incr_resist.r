@@ -3,6 +3,7 @@
 #' based on controls used and a configuration file
 #'
 #' @param controls_used vector of numbers named with control_ids
+#' @param l_config list of config parameters
 #' @examples
 #' controls_used <- 1
 #' names(controls_used) <- 'irs_pyr'

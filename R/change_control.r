@@ -9,14 +9,14 @@
 #' @param add whether to add the new controls to exisiting ones, default FALSE to replace
 #' @examples
 #' l_config <- read_config()
-#' l_config2 <- config_control_plan(l_config, t_strt=1, t_stop=15, control_id='irs_pyr')
-#' l_config2 <- config_control_plan(l_config, t_strt=c(1,15), t_stop=c(10,20), control_id='irs_pyr')
-#' l_config2 <- config_control_plan(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ops'))
-#' l_config2 <- config_control_plan(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ddt'))
+#' l_config2 <- change_control(l_config, t_strt=1, t_stop=15, control_id='irs_pyr')
+#' l_config2 <- change_control(l_config, t_strt=c(1,15), t_stop=c(10,20), control_id='irs_pyr')
+#' l_config2 <- change_control(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ops'))
+#' l_config2 <- change_control(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ddt'))
 #' plot_sim2( run_sim2(l_config=l_config2))
 #' @return list with modified control_plan
 #' @export
-config_control_plan <- function( l_config,
+change_control <- function( l_config,
                                  t_strt,
                                  t_stop,
                                  control_id,

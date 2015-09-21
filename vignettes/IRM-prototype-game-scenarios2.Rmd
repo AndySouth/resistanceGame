@@ -40,7 +40,7 @@ plot_sim2( run_sim2() )
 ## scenario 2 : continuous pyr use in presence of resistance
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
 l_config <- read_config()
-l_config2 <- config_control_plan(l_config, t_strt=1, t_stop=20, control_id='irs_pyr')
+l_config2 <- change_control(l_config, t_strt=1, t_stop=20, control_id='irs_pyr')
 plot_sim2( run_sim2(l_config=l_config2) )
 ```
 
@@ -48,7 +48,7 @@ plot_sim2( run_sim2(l_config=l_config2) )
 
 ## scenario 3 : continuous use of ops with no resistance
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
-l_config2 <- config_control_plan(l_config, t_strt=1, t_stop=20, control_id='irs_ops')
+l_config2 <- change_control(l_config, t_strt=1, t_stop=20, control_id='irs_ops')
 plot_sim2( run_sim2(l_config=l_config2) )
 ```
 
@@ -56,7 +56,7 @@ plot_sim2( run_sim2(l_config=l_config2) )
 
 ## scenario 4 : pyr used in alternate steps
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
-l_config2 <- config_control_plan(l_config, t_strt=seq(1,20,2), t_stop=seq(1,20,2), control_id='irs_pyr')
+l_config2 <- change_control(l_config, t_strt=seq(1,20,2), t_stop=seq(1,20,2), control_id='irs_pyr')
 plot_sim2( run_sim2(l_config=l_config2) )
 ```
 
@@ -64,7 +64,7 @@ plot_sim2( run_sim2(l_config=l_config2) )
 
 ## scenario 5 : alternate use of ops and pyr
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
-l_config2 <- config_control_plan(l_config, t_strt=seq(1,20), t_stop=seq(1,20), control_id=c('irs_pyr','irs_ops'))
+l_config2 <- change_control(l_config, t_strt=seq(1,20), t_stop=seq(1,20), control_id=c('irs_pyr','irs_ops'))
 plot_sim2( run_sim2(l_config=l_config2) )
 ```
 
@@ -73,7 +73,7 @@ plot_sim2( run_sim2(l_config=l_config2) )
 ## scenario 6 : 10 steps pyr, 10 steps ops
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
 #plot_sim( run_sim(use_pyr=rep(c(1,NA),each=10), use_ops=rep(c(NA,1),each=10)) )
-l_config2 <- config_control_plan(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ops'))
+l_config2 <- change_control(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ops'))
 plot_sim2( run_sim2(l_config=l_config2) )
 ```
 
@@ -81,7 +81,7 @@ plot_sim2( run_sim2(l_config=l_config2) )
 
 ## scenario 7 : 10 steps pyr, 10 steps ddt
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
-l_config2 <- config_control_plan(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ddt'))
+l_config2 <- change_control(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ddt'))
 plot_sim2( run_sim2(l_config=l_config2) )
 ```
 
@@ -110,8 +110,8 @@ plot_sim2( run_sim2(randomness=0.1) )
 
 ## scenario 11 : continuous pyr use, resistance_modifier < 1 decreases effect of resistance
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
-l_config2 <- config_control_plan(l_config, t_strt=1, t_stop=20, control_id='irs_pyr')
-plot_sim2( run_sim2(resistance_modifier=0.1) )
+l_config2 <- change_control(l_config, t_strt=1, t_stop=20, control_id='irs_pyr')
+plot_sim2( run_sim2(l_config=l_config2, resistance_modifier=0.1) )
 ```
 
 \newpage
