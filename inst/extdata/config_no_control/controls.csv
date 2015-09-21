@@ -1,0 +1,6 @@
+control_id,control_name,control_desc,vector_id,control_kill_rate
+irs_pyr,IRS pyrethroid,,an_gamb,0.4
+irs_ddt,IRS ddt,,an_gamb,0.5
+irs_ops,IRS organophosphates,,an_gamb,0.3
+llin_pyr,pyrethroid bednet,,an_gamb,0.2
+

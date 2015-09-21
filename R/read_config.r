@@ -20,7 +20,7 @@ read_config <- function(in_folder=NULL)
   #first need to set the folder that they are in
   
   if (is.null(in_folder))  
-     in_folder <- system.file("extdata","config1", package="resistanceGame")
+     in_folder <- system.file("extdata","config_no_control", package="resistanceGame")
   
   
   #name <- "C:\\Dropbox\\Serious Gaming Initiative - Resistance Game (1)\\game model\\gm_config_test1\\resistances.csv"
