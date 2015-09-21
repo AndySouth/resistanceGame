@@ -97,7 +97,7 @@ plot_sim2 <- function(l_time)
   #this multiplies by row numbers
   mat_control <- mat_control * row(mat_control)
   
-  image(t(mat_control),yaxt="n",xaxt="n")
+  image(t(mat_control),yaxt="n",xaxt="n",col=rainbow(n=nrow(mat_control)))
 
 
   #xaxis
