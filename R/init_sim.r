@@ -69,7 +69,8 @@ init_sim2 <- function(num_tsteps=20, l_config=NULL)
   #first go at filling controls_used from l_config$control_plan
   #num rows in control_plan
   n_controls <- nrow(l_config$control_plan)
-  for(control_num in 1:n_controls)
+  #seq(len=n_controls) copes if 0 controls
+  for(control_num in seq(len=n_controls))
   {
     
     #for each row in config list

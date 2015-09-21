@@ -33,10 +33,15 @@ config_control_plan <- function( l_config,
   
   #todo add checks that times are within those specified
   #todo add check that control_ids are present
+ 
+# this didn't work when no controls present before   
+#   l_config$control_plan[['t_strt']] <- t_strt
+#   l_config$control_plan[['t_stop']] <- t_stop
+#   l_config$control_plan[['control_id']] <- control_id
   
-  l_config$control_plan[['t_strt']] <- t_strt
-  l_config$control_plan[['t_stop']] <- t_stop
-  l_config$control_plan[['control_id']] <- control_id
+  dF <- data.frame(t_strt=t_strt, t_stop=t_stop, control_id=control_id, stringsAsFactors = FALSE)
+  
+  l_config$control_plan <- dF
   
   return(l_config)
   
