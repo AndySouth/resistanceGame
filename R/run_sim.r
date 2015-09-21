@@ -148,13 +148,11 @@ run_sim2 <- function(num_tsteps=20,
     l_config <- read_config()
   
   
+  #initialise the list storing time data including what controls used
   l_time <- init_sim2(num_tsteps=num_tsteps, l_config=l_config)
   
   l_time[[1]]$pop <- pop_start
-  
   l_time[[1]]$resist <- rate_resistance_start
-  
-  #l_time$l_controls_used <- l_controls_used
 
   
   #tstep loop

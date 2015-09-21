@@ -81,8 +81,10 @@ init_sim2 <- function(num_tsteps=20, l_config=NULL)
     #l_time[ t_strt:t_stop ]$controls_used[[control_id]] <- 1  
     
     for(t in t_strt:t_stop )
+    {
+      l_time[[t]]$controls_used[[control_id]] <- 1       
+    }
 
-      l_time[[t]]$controls_used[[control_id]] <- 1 
            
   }
 
