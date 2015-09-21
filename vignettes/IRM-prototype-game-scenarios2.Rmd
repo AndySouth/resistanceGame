@@ -1,0 +1,122 @@
+---
+title: "Insecticide resistance management : prototype game scenarios"
+author: "Andy South"
+date: "`r Sys.Date()`"
+#output: rmarkdown::html_vignette
+#to produce a pdf
+output: rmarkdown::pdf_document
+vignette: >
+  %\VignetteIndexEntry{IRM-prototype-game-scenarios}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+This document demonstrates how a few simple equations can be used to generate patterns of change in vector populations and insecticide resistance over time depending on the use of insecticides. Parameters within the simple equations can be modified to generate different patterns of change.
+
+
+We intend to tweak the input parameters to generate reasonable scenarios. We intend to ask experts in entomology and modelling to assess these scenarios. Thus we are looking for assessment of the scenarios themselves rather than the input parameter values. The input parameters are simply a means by which we can generate reasonable scenarios.
+
+
+In the following plots time is represented on the x axis, the top panel shows insecticide use, the middle panel shows vector population and the lowe panel shows resistance (phenotypic). The code included e.g. `plot_sim(...)` is there merely to show us as developers how the scenarios were generated.
+
+
+For an interactive version of the equations used to generate these plots see this (link.)[https://andysouth.shinyapps.io/shinyGame2]
+
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE}
+#### load required packages
+require(resistanceGame)
+```
+
+\newpage
+
+## scenario 1 : no insecticide use
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+plot_sim2( run_sim2() )
+```
+
+\newpage
+
+## scenario 2 : continuous pyr use in presence of resistance
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+l_config <- read_config()
+l_config2 <- config_control_plan(l_config, t_strt=1, t_stop=20, control_id='irs_pyr')
+plot_sim2( run_sim2(l_config=l_config2) )
+```
+
+\newpage
+
+## scenario 3 : continuous use of ops with no resistance
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+l_config2 <- config_control_plan(l_config, t_strt=1, t_stop=20, control_id='irs_ops')
+plot_sim2( run_sim2(l_config=l_config2) )
+```
+
+\newpage
+
+## scenario 4 : pyr used in alternate steps
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+l_config2 <- config_control_plan(l_config, t_strt=seq(1,20,2), t_stop=seq(1,20,2), control_id='irs_pyr')
+plot_sim2( run_sim2(l_config=l_config2) )
+```
+
+\newpage
+
+## scenario 5 : alternate use of ops and pyr
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+l_config2 <- config_control_plan(l_config, t_strt=seq(1,20), t_stop=seq(1,20), control_id=c('irs_pyr','irs_ops'))
+plot_sim2( run_sim2(l_config=l_config2) )
+```
+
+\newpage
+
+## scenario 6 : 10 steps pyr, 10 steps ops
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+#plot_sim( run_sim(use_pyr=rep(c(1,NA),each=10), use_ops=rep(c(NA,1),each=10)) )
+l_config2 <- config_control_plan(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ops'))
+plot_sim2( run_sim2(l_config=l_config2) )
+```
+
+\newpage
+
+## scenario 7 : 10 steps pyr, 10 steps ddt
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+l_config2 <- config_control_plan(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ddt'))
+plot_sim2( run_sim2(l_config=l_config2) )
+```
+
+\newpage
+
+## scenario 8 : no insecticide use, 50% randomness added
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+plot_sim2( run_sim2(randomness=0.5) )
+```
+
+\newpage
+
+## scenario 9 : same as previous but just a different randomisation
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+plot_sim2( run_sim2(randomness=0.5) )
+```
+
+\newpage
+
+## scenario 10 : no insecticide use, 10% randomness added
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+plot_sim2( run_sim2(randomness=0.1) )
+```
+
+\newpage
+
+## scenario 11 : continuous pyr use, resistance_modifier < 1 decreases effect of resistance
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+l_config2 <- config_control_plan(l_config, t_strt=1, t_stop=20, control_id='irs_pyr')
+plot_sim2( run_sim2(resistance_modifier=0.1) )
+```
+
+\newpage
+
+## scenario 12 : continuous pyr use, resistance_modifier > 1 increases effect of resistance
+```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+plot_sim( run_sim(use_pyr=1,resistance_modifier=10) )
+```
