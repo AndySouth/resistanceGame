@@ -73,8 +73,8 @@ init_sim2 <- function(num_tsteps=20, l_config=NULL)
   {
     
     #for each row in config list
-    t_strt <- l_config$control_plan[['time_strt']][[control_num]]
-    t_stop <- l_config$control_plan[['time_stop']][[control_num]] 
+    t_strt <- l_config$control_plan[['t_strt']][[control_num]]
+    t_stop <- l_config$control_plan[['t_stop']][[control_num]] 
     control_id <- l_config$control_plan[['control_id']][[control_num]]
     
     #this doesn't work
