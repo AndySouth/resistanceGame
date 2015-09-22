@@ -25,7 +25,13 @@ change_control <- function( l_config,
 
   #todo add checks that times are within those specified
   #todo add check that control_ids are present  
+  bad_indices <- which(!control_id %in% l_config$controls[['control_id']])
+  if (length(bad_indices)>0)
+  {
+    warning("these control_ids are not in your controls config file and will cause problems :",control_id[bad_indices])
+  }
   
+  #put passed data into a dataframe ready to put into list
   dF <- data.frame(t_strt=t_strt, t_stop=t_stop, control_id=control_id, stringsAsFactors = FALSE)
     
   
