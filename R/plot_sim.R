@@ -88,11 +88,21 @@ plot_sim2 <- function(l_time)
   #plot insecticide use
   #in v2 I need to get it to cope with variable num controls
   #take controls from l_time (it does have all potential controls from the config)
-  names(l_time[[1]]$controls_used)
+  #names(l_time[[1]]$controls_used)
   #tricky to get out the time series of use for each insecticide
   #actaully by chance found it might not be too hard
   #this produces a matrix of control names by time
-  mat_control <- sapply(l_time, "[[", "controls_used")
+  #mat_control <- sapply(l_time, "[[", "controls_used")
+  #drop=FALSE to cope when just one control
+  mat_control <- sapply(l_time, function(x) x[["controls_used", drop=FALSE]])
+  
+  #hack to cope if just one control (otherwise it stops being a matrix & fails)
+  if (is.null(nrow(mat_control)))
+  {
+    mat_control <- as.matrix(t(mat_control))
+    rownames(mat_control) <- names(l_time[[1]]$controls_used)
+  }
+
   
   if ( sum(mat_control,na.rm=TRUE) > 0 )
   {
@@ -102,7 +112,7 @@ plot_sim2 <- function(l_time)
     image(t(mat_control),yaxt="n",xaxt="n",col=rainbow(n=nrow(mat_control)))
   } else {
     
-    mat_control[] <- 0
+    mat_control <- 0
     #blank plot
     image(t(mat_control),yaxt="n",xaxt="n",col='white')
     
