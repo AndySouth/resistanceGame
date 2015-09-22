@@ -3,6 +3,8 @@
 export(change_control)
 export(change_pop)
 export(change_resistance)
+export(config_controls)
+export(config_resistances)
 export(create_lookup)
 export(init_sim)
 export(init_sim2)

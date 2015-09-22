@@ -8,6 +8,8 @@ is_control_incr_resist(controls_used, l_config)
 }
 \arguments{
 \item{controls_used}{vector of numbers named with control_ids}
+
+\item{l_config}{list of config parameters}
 }
 \value{
 integer 0=no, 1 =yes
