@@ -94,11 +94,19 @@ plot_sim2 <- function(l_time)
   #this produces a matrix of control names by time
   mat_control <- sapply(l_time, "[[", "controls_used")
   
-  #this multiplies by row numbers
-  mat_control <- mat_control * row(mat_control)
-  
-  image(t(mat_control),yaxt="n",xaxt="n",col=rainbow(n=nrow(mat_control)))
-
+  if ( sum(mat_control,na.rm=TRUE) > 0 )
+  {
+    #this multiplies by row numbers
+    mat_control <- mat_control * row(mat_control)
+    #plot pattern of control use
+    image(t(mat_control),yaxt="n",xaxt="n",col=rainbow(n=nrow(mat_control)))
+  } else {
+    
+    mat_control[] <- 0
+    #blank plot
+    image(t(mat_control),yaxt="n",xaxt="n",col='white')
+    
+  }
 
   #xaxis
   #axis( 1, at=seq(0,1,length.out=ncol( mat_control ) ), labels= colnames( mat_control ), las= 2 )
