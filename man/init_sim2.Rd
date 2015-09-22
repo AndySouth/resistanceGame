@@ -18,6 +18,6 @@ list to contain simulation results
 create list to contain simulation results
 }
 \examples{
-dF <- init_sim(20, l_config=read_config())
+dF <- init_sim2(20, l_config=read_config())
 }
 

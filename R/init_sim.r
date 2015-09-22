@@ -28,7 +28,7 @@ init_sim <- function(num_tsteps=20)
 #' @param num_tsteps number of timesteps to put in dataframe
 #' @param l_config list of config parameters
 #' @examples
-#' dF <- init_sim(20, l_config=read_config())
+#' dF <- init_sim2(20, l_config=read_config())
 #' @return list to contain simulation results
 #' @export
 #' 
