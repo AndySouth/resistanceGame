@@ -95,24 +95,25 @@ plot_sim2 <- function(l_time)
   #mat_control <- sapply(l_time, "[[", "controls_used")
   #drop=FALSE to cope when just one control
   mat_control <- sapply(l_time, function(x) x[["controls_used", drop=FALSE]])
-  
+
   #hack to cope if just one control (otherwise it stops being a matrix & fails)
   if (is.null(nrow(mat_control)))
   {
     mat_control <- as.matrix(t(mat_control))
     rownames(mat_control) <- names(l_time[[1]]$controls_used)
   }
-
+  
   
   if ( sum(mat_control,na.rm=TRUE) > 0 )
   {
+    
     #this multiplies by row numbers
     mat_control <- mat_control * row(mat_control)
     #plot pattern of control use
     image(t(mat_control),yaxt="n",xaxt="n",col=rainbow(n=nrow(mat_control)))
   } else {
     
-    mat_control <- 0
+    mat_control[] <- 0
     #blank plot
     image(t(mat_control),yaxt="n",xaxt="n",col='white')
     
