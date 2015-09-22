@@ -22,26 +22,21 @@ change_control <- function( l_config,
                                  control_id,
                                  add = FALSE) 
 {
-  
-  #todo later add an option for add=TRUE
-  if (add)
-  {
-    l_config$control_plan[['t_strt']] <- c(l_config$control_plan[['t_strt']], t_strt)
-    l_config$control_plan[['t_stop']] <- c(l_config$control_plan[['t_stop']], t_stop)
-    l_config$control_plan[['control_id']] <- c(l_config$control_plan[['control_id']], control_id)
-  }
-  
+
   #todo add checks that times are within those specified
-  #todo add check that control_ids are present
- 
-# this didn't work when no controls present before   
-#   l_config$control_plan[['t_strt']] <- t_strt
-#   l_config$control_plan[['t_stop']] <- t_stop
-#   l_config$control_plan[['control_id']] <- control_id
+  #todo add check that control_ids are present  
   
   dF <- data.frame(t_strt=t_strt, t_stop=t_stop, control_id=control_id, stringsAsFactors = FALSE)
+    
   
-  l_config$control_plan <- dF
+  if (add)
+  {
+    l_config$control_plan <- rbind(l_config$control_plan, dF) 
+  } else
+  {
+    l_config$control_plan <- dF    
+  }
+  
   
   return(l_config)
   
