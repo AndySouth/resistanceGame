@@ -16,15 +16,17 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
     
     column(4,
                  
+      helpText("Choose one or more controls to use in each time step. ",
+               "Controls and resistances can be modified in configuration files."),    
       
-      helpText("Choose one or more insecticides to use in each time step. ",
-               "This version only includes resistance prompted by use of either pyr or ddt."),    
-      # may want to set these so that you can just choose 
-      # one at a time (i.e. no mixtures)
-      checkboxInput('use_pyr', 'pyrethroid', TRUE),
-      checkboxInput('use_ddt', 'ddt', FALSE),
-      checkboxInput('use_ops', 'organophosphate', FALSE),
-      checkboxInput('use_car', 'carbamate', FALSE),
+#       checkboxInput('use_pyr', 'pyrethroid', TRUE),
+#       checkboxInput('use_ddt', 'ddt', FALSE),
+#       checkboxInput('use_ops', 'organophosphate', FALSE),
+#       checkboxInput('use_car', 'carbamate', FALSE),
+      
+      #controls checkboxes got from config file
+      uiOutput("checkboxGroupControls"),
+      
       
       wellPanel(
         numericInput('tsteps_to_run', 'Number of timesteps to advance', value = 20, min = 1, max = 50, step = 1),

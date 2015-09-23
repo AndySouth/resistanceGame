@@ -10,11 +10,13 @@ library(resistanceGame)
 #global dataframe to hold results
 tstep <- 0
 num_tsteps <- 20
-dF <- NULL
+#dF <- NULL
+l_time <- NULL
 
+#read config files into a list
+#later could offer option to read different one
+l_config <- resistanceGame::read_config()
 
-
-#if I scale all measures between 0 & 1 that may make life a lot easier later on
 
 
 shinyServer(function(input, output) {
@@ -25,16 +27,13 @@ shinyServer(function(input, output) {
     
     tstep <<- 0
     
-    dF <<- init_sim(num_tsteps=num_tsteps)
-    
-    #if I scale all measures between 0 & 1 that may make life a lot easier later on
+    l_time <<- init_sim2(num_tsteps=num_tsteps, l_config=l_config)
     
     #set start value for vector popn
-    dF$pop[1] <<- 0.3
-    #set start value for pyrethroid resistance
-    dF$resist_pyr[1] <<- 0.01
-    #set start for cost
-    dF$cost[1] <<- 0
+    l_time[[1]]$pop <<- 0.3
+    #set start value for resistance
+    l_time[[1]]$resist <<- 0.01
+
     
     
   }
@@ -57,10 +56,8 @@ shinyServer(function(input, output) {
     #isolate reactivity of other objects
     isolate({
       
-      
       #todo work out how to be able to run this for multiple timesteps
-      #to extend the dF could use init_sim to create a new dF and rbind that on to the existing one
-      
+
       
       #to allow this to be reset later
       #remember global assignment <<-
@@ -68,20 +65,19 @@ shinyServer(function(input, output) {
  
       #i could get runs to restart when they get to num_tsteps ?
       #or could I extend the dF and allow it to go on indefinitely
-      if (tstep >= nrow(dF))
-      {
-        dF <<- rbind(dF,dF[1,]) #copy row 1 on end
-        dF[nrow(dF),] <<- NA #set to NA just in case
-        num_tsteps <<- num_tsteps+1 #increment
-      }
+#       if (tstep >= nrow(dF))
+#       {
+#         dF <<- rbind(dF,dF[1,]) #copy row 1 on end
+#         dF[nrow(dF),] <<- NA #set to NA just in case
+#         num_tsteps <<- num_tsteps+1 #increment
+#       }
 
       
-      #record which insecticide used (for plotting)
-      if ( input$use_pyr ) dF$use_pyr[tstep] <<- 1 
-      if ( input$use_ddt ) dF$use_ddt[tstep] <<- 1 
-      if ( input$use_ops ) dF$use_ops[tstep] <<- 1 
-      if ( input$use_car ) dF$use_car[tstep] <<- 1 
+      cat(input$controls_used,"\n")
       
+      # set config file control_plan from inputs
+      #first just set start & stop to the whole time
+      l_config <<- config_plan(l_config, control_id = input$controls_used, t_strt = 1, t_stop = num_tsteps )
       
       ## increment vector populations
       ## based on insecticide used and resistance
@@ -90,39 +86,27 @@ shinyServer(function(input, output) {
       rate_growth <- input$rate_growth
       rate_insecticide_kill <- input$rate_insecticide_kill
       resistance_modifier <- input$resistance_modifier
-      rate_resistance <- dF$resist_pyr[tstep]
+      rate_resistance <- l_time[[tstep]]$resist
       carry_cap <- input$cc_modifier
       
       #set resistance increase & decrease to same
       resist_incr <- input$resist_incr
       resist_decr <- input$resist_decr   
       
-#       insecticide_on <- input$use_pyr | input$use_ddt | input$use_ops | input$use_car
-#       resistance_on <-  input$use_pyr | input$use_ddt
       
-      #cat("insecticide & resistance on ",insecticide_on, resistance_on,"\n")
+      l_time <<- run_sim2( l_config=l_config, 
+                          num_tsteps=input$tsteps_to_run,
+                          pop_start=l_time[[tstep]]$pop,
+                          rate_resistance_start=rate_resistance,
+                          rate_growth = rate_growth,
+                          carry_cap = carry_cap,
+                          rate_insecticide_kill = rate_insecticide_kill,
+                          resistance_modifier = resistance_modifier,
+                          resist_incr = resist_incr,
+                          resist_decr = resist_decr,
+                          randomness = 0 )
       
-      
-      # todo get this to run_sim(num_tsteps=tsteps_to_run)
-      # may need to rbind new results onto end of existing ones
-      dF2 <- run_sim( num_tsteps=input$tsteps_to_run,
-                      pop_start=dF$pop[tstep],
-                      rate_resistance_start=rate_resistance,
-                      rate_growth = rate_growth,
-                      carry_cap = carry_cap,
-                      rate_insecticide_kill = rate_insecticide_kill,
-                      resistance_modifier = resistance_modifier,
-                      use_pyr = input$use_pyr,
-                      use_ddt = input$use_ddt,
-                      use_ops = input$use_ops,
-                      use_car = input$use_car,
-                      resist_incr = resist_incr,
-                      resist_decr = resist_decr,
-                      randomness = 0
-      )
- 
-      
-      dF <- rbind(dF,dF2)
+      #dF <- rbind(dF,dF2)
            
 #       # change population
 #       dF$pop[tstep+1] <<- change_pop( pop = dF$pop[tstep],
@@ -142,15 +126,7 @@ shinyServer(function(input, output) {
 #                                                     resist_decr = resist_decr,
 #                                                     #initially just test whether pyr or ddt
 #                                                     resistance_on = resistance_on )
-#         
-# 
-#             
-#       #increment cost (can insert relative costs here)
-#       dF$cost[tstep+1] <<- dF$cost[tstep] + 
-#                             input$use_pyr * 1 +
-#                             input$use_ddt * 2 +
-#                             input$use_ops * 5 +
-#                             input$use_car * 5 
+
         
       
       
@@ -171,7 +147,7 @@ shinyServer(function(input, output) {
   
   }) #end of restart
   
-  
+  # plot #####################
   output$plot1 <- renderPlot({
     
     #check if restart has been pressed
@@ -195,14 +171,15 @@ shinyServer(function(input, output) {
       #put this plotting into a package function
       #so that it can be called from elsewhere, e.g. to plot scenarios in a document
       #initially just get function to accept the dataframe with use_*, pop & resist_pyr
-      plot_sim(dF)
+      #plot_sim(dF)
+      plot_sim2(l_time)      
       
     }) #end isolate   
   }) #end plot1
   
   
   
-  ## text about the simulation equations
+  ## text about the simulation equations ###############
   output$about <- renderText({ 
     
     print("This simple simulation could go on in the background of the game, game players could be provided selected information, e.g. with added randomness.
@@ -242,7 +219,7 @@ These simply make resistance go up towards a plateau when the insecticide is pre
   }) #end about
   
   
-  ## lookup table
+  ## lookup table ################
   #output$table <- renderTable(, { 
   #specifying num digits in each table column must match ncol(x)+1
   output$table <- renderTable( digits=c(0,0,0,0,0,1,1,2,2), { 
@@ -264,6 +241,26 @@ These simply make resistance go up towards a plateau when the insecticide is pre
 
     
   }) #end table
+ 
+  
+  # controls checkboxes for UI ###############
+  output$checkboxGroupControls <- renderUI({   
     
+    #checkboxGroupInput(inputId, label, choices, selected = NULL, inline = FALSE)
+    
+    # if wanted just one at a time (i.e. no mixtures) change to radioButtons
+    
+    choices <- l_config$controls$control_id
+    #or could use names, but as they are optional could leave blank
+    #choices <- l_config$controls$control_name
+    
+    checkboxGroupInput("controls_used", 
+                       label = "Controls:",
+                       choices = choices )
+    #I guess I get at selections by :
+    #input$controls_used #which should be a named list
+    
+  })   
+     
   
 })
