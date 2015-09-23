@@ -80,6 +80,13 @@ plot_sim2 <- function(l_time)
 {
   
 
+  #hack to avoid problem with null lists
+  if (is.null(l_time))
+  {
+    warning("null list")
+    return()
+  }
+  
   #set up space for a number of plots
   #par(mfrow=c(4,1), mar=c(0,4,2,0)) #bltr
   #disbaled cost for now so just need 3
