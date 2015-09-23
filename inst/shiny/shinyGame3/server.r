@@ -7,11 +7,12 @@ library(shiny)
 #install_github("andysouth/resistanceGame")
 library(resistanceGame)
 
-#global dataframe to hold results
-tstep <- 0
-num_tsteps <- 20
-#dF <- NULL
+#global list to hold results
+tstep <- 1
 l_time <- NULL
+
+pop_start <- 0.3
+resist_start <- 0.01
 
 #read config files into a list
 #later could offer option to read different one
@@ -25,16 +26,20 @@ shinyServer(function(input, output) {
   #to set up data storage etc. for the simulation
   startSim <- function(){
     
-    tstep <<- 0
+    tstep <<- 1
     
-    l_time <<- init_sim2(num_tsteps=num_tsteps, l_config=l_config)
+    #l_time <<- init_sim2(num_tsteps=input$tsteps_to_run, l_config=l_config)
+    l_time <<- NULL    
     
-    #set start value for vector popn
-    l_time[[1]]$pop <<- 0.3
-    #set start value for resistance
-    l_time[[1]]$resist <<- 0.01
+#     #set start value for vector popn
+#     l_time[[1]]$pop <<- 0.3
+#     #set start value for resistance
+#     l_time[[1]]$resist <<- 0.01
 
-    
+    #set start value for vector popn
+    pop_start <<- 0.3
+    #set start value for resistance
+    resist_start <<- 0.01
     
   }
   
@@ -56,13 +61,11 @@ shinyServer(function(input, output) {
     #isolate reactivity of other objects
     isolate({
       
-      #todo work out how to be able to run this for multiple timesteps
-
-      
-      #to allow this to be reset later
       #remember global assignment <<-
-      tstep <<- tstep + 1
- 
+      #tstep <<- tstep + 1
+      #tstep now incremented after simulation run
+      
+      
       #i could get runs to restart when they get to num_tsteps ?
       #or could I extend the dF and allow it to go on indefinitely
 #       if (tstep >= nrow(dF))
@@ -73,20 +76,36 @@ shinyServer(function(input, output) {
 #       }
 
       
-      cat(input$controls_used,"\n")
+      cat(input$controls_used," length:",length(input$controls_used),"\n")
       
       # set config file control_plan from inputs
       #first just set start & stop to the whole time
-      l_config <<- config_plan(l_config, control_id = input$controls_used, t_strt = 1, t_stop = num_tsteps )
+      
+      # tryting to get it to work when no control
+      if (length(input$controls_used)==0)
+        l_config$control_plan <<- l_config$control_plan[0,]
+      else
+        l_config <<- config_plan(l_config, control_id = input$controls_used, t_strt = 1, t_stop = input$tsteps_to_run )
       
       ## increment vector populations
       ## based on insecticide used and resistance
+      
+      
+      if (is.null(l_time))
+      {
+        pop <- pop_start
+        rate_resistance <- resist_start
+      } else
+      {
+        pop <- l_time[[tstep]]$pop
+        rate_resistance <- l_time[[tstep]]$resist
+      }
+      
       
       #set input parameters here to keep formulas more manageable
       rate_growth <- input$rate_growth
       rate_insecticide_kill <- input$rate_insecticide_kill
       resistance_modifier <- input$resistance_modifier
-      rate_resistance <- l_time[[tstep]]$resist
       carry_cap <- input$cc_modifier
       
       #set resistance increase & decrease to same
@@ -94,9 +113,9 @@ shinyServer(function(input, output) {
       resist_decr <- input$resist_decr   
       
       
-      l_time <<- run_sim2( l_config=l_config, 
+      l_time_this <<- run_sim2( l_config=l_config, 
                           num_tsteps=input$tsteps_to_run,
-                          pop_start=l_time[[tstep]]$pop,
+                          pop_start=pop,
                           rate_resistance_start=rate_resistance,
                           rate_growth = rate_growth,
                           carry_cap = carry_cap,
@@ -106,28 +125,12 @@ shinyServer(function(input, output) {
                           resist_decr = resist_decr,
                           randomness = 0 )
       
-      #dF <- rbind(dF,dF2)
-           
-#       # change population
-#       dF$pop[tstep+1] <<- change_pop( pop = dF$pop[tstep],
-#                                              rate_growth = rate_growth,
-#                                              carry_cap = carry_cap,
-#                                              rate_insecticide_kill = rate_insecticide_kill,
-#                                              rate_resistance = rate_resistance,
-#                                              resistance_modifier = resistance_modifier,
-#                                              #initially just test whether any insecticide
-#                                              insecticide_on = insecticide_on,
-#                                              #initially just test whether pyr or ddt
-#                                              resistance_on = resistance_on )
-#       
-#       # change resistance
-#       dF$resist_pyr[tstep+1] <<- change_resistance( resistance = rate_resistance,
-#                                                     resist_incr = resist_incr,
-#                                                     resist_decr = resist_decr,
-#                                                     #initially just test whether pyr or ddt
-#                                                     resistance_on = resistance_on )
-
-        
+      #concatenate new time series onto existing
+      l_time <<- c(l_time, l_time_this)
+         
+      #set tstep to the last one in the current run  
+      tstep <<- tstep -1 + input$tsteps_to_run
+      
       
       
     }) #end isolate   
@@ -160,8 +163,8 @@ shinyServer(function(input, output) {
     #isolate reactivity of other objects
     isolate({
  
-      #if ( tstep == 0 ) return()
-      if ( tstep == 0 ) {
+
+      if ( tstep == 1 ) {
         plot.new()
         mtext("press the advance... button on the left to start the simulation")
         return()

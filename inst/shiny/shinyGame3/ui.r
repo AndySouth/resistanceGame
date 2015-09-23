@@ -57,6 +57,9 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
     tabsetPanel(
       # to increase plot area vertically use height=         
       tabPanel("Simulation", plotOutput('plot1', height=700)),
+      #just include the HTML which I copied into the shiny folder
+      #unfortunately it restricts width of plotting area on other tabs
+      #tabPanel("Scenarios",includeHTML("IRM-prototype-game-scenarios2.html")),
       tabPanel("About", verbatimTextOutput("about"))
     )
          
