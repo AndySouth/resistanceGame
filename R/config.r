@@ -14,6 +14,8 @@
 #' l_config2 <- config_plan(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ops'))
 #' l_config2 <- config_plan(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ddt'))
 #' plot_sim2( run_sim2(l_config=l_config2))
+#' #to create a blank config_plan
+#' #l_config$control_plan <- l_config$control_plan[0,]
 #' @return list with modified control_plan
 #' @export
 config_plan <- function( l_config,
