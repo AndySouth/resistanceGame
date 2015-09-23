@@ -217,30 +217,7 @@ These simply make resistance go up towards a plateau when the insecticide is pre
     
     
   }) #end about
-  
-  
-  ## lookup table ################
-  #output$table <- renderTable(, { 
-  #specifying num digits in each table column must match ncol(x)+1
-  output$table <- renderTable( digits=c(0,0,0,0,0,1,1,2,2), { 
-    
-    #add dependence on the advance button
-    #so that the table changes when parameter values are changed and advance is pressed
-    runApply()
-    
-    #default lookup table
-    resistanceGame::create_lookup(write_csv=NULL,
-                                  rate_growth = input$rate_growth,
-                                  rate_insecticide_kill = input$rate_insecticide_kill,
-                                  resistance_modifier = input$resistance_modifier,
-                                  carry_cap = input$cc_modifier,
-                                  #beware increase & decrease set to same rate here
-                                  resist_incr = input$rate_resistance,
-                                  resist_decr = input$rate_resistance )
-    
 
-    
-  }) #end table
  
   
   # controls checkboxes for UI ###############

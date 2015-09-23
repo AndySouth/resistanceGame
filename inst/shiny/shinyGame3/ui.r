@@ -57,13 +57,7 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
     tabsetPanel(
       # to increase plot area vertically use height=         
       tabPanel("Simulation", plotOutput('plot1', height=700)),
-      tabPanel("About", verbatimTextOutput("about")),
-      tabPanel("Lookup Table", 
-               helpText("An alternative lookup table that could be used to drive game behaviour. Here generated from the simulation equations."),
-               helpText("The final columns 'changed_pop_vector' and 'changed_resist_pyr' are the new values for population and resistance under the values specified in the earlier columns."),
-               helpText("A lookup table would be more cumbersome than using the equations directly in the game. This table is just for one set of the values that you can change in the boxes, extra columns could be added for those."),
-               helpText("A lookup table would have the advantage that it could be generated from other existing models."),
-               tableOutput("table") )
+      tabPanel("About", verbatimTextOutput("about"))
     )
          
     # to increase plot area vertically use height=         
