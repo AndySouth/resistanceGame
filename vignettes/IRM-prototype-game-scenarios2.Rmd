@@ -20,7 +20,7 @@ We intend to tweak the input parameters to generate reasonable scenarios. We int
 In the following plots time is represented on the x axis, the top panel shows insecticide use, the middle panel shows vector population and the lowe panel shows resistance (phenotypic). The code included e.g. `plot_sim(...)` is there merely to show us as developers how the scenarios were generated.
 
 
-For an interactive version of the equations used to generate these plots see this (link.)[https://andysouth.shinyapps.io/shinyGame3]
+For an interactive version of the equations used to generate these plots see [https://andysouth.shinyapps.io/shinyGame3](https://andysouth.shinyapps.io/shinyGame3).
 
 
 ```{r, eval=TRUE, echo=FALSE, message=FALSE}
@@ -31,14 +31,14 @@ require(resistanceGame)
 \newpage
 
 ## scenario 1 : no insecticide use
-```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 plot_sim2( run_sim2() )
 ```
 
 \newpage
 
 ## scenario 2 : continuous pyr use in presence of resistance
-```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 l_config <- read_config()
 l_config2 <- config_plan(l_config, t_strt=1, t_stop=20, control_id='irs_pyr')
 plot_sim2( run_sim2(l_config=l_config2) )
@@ -47,7 +47,7 @@ plot_sim2( run_sim2(l_config=l_config2) )
 \newpage
 
 ## scenario 3 : continuous use of ops with no resistance
-```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 l_config2 <- config_plan(l_config, t_strt=1, t_stop=20, control_id='irs_ops')
 plot_sim2( run_sim2(l_config=l_config2) )
 ```
@@ -55,7 +55,7 @@ plot_sim2( run_sim2(l_config=l_config2) )
 \newpage
 
 ## scenario 4 : pyr used in alternate steps
-```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 l_config2 <- config_plan(l_config, t_strt=seq(1,20,2), t_stop=seq(1,20,2),
                             control_id='irs_pyr')
 plot_sim2( run_sim2(l_config=l_config2) )
@@ -64,7 +64,7 @@ plot_sim2( run_sim2(l_config=l_config2) )
 \newpage
 
 ## scenario 5 : alternate use of ops and pyr
-```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 l_config2 <- config_plan(l_config, t_strt=seq(1,20), t_stop=seq(1,20), control_id=c('irs_pyr','irs_ops'))
 plot_sim2( run_sim2(l_config=l_config2) )
 ```
@@ -72,8 +72,7 @@ plot_sim2( run_sim2(l_config=l_config2) )
 \newpage
 
 ## scenario 6 : 10 steps pyr, 10 steps ops
-```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
-#plot_sim( run_sim(use_pyr=rep(c(1,NA),each=10), use_ops=rep(c(NA,1),each=10)) )
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 l_config2 <- config_plan(l_config, t_strt=c(1,11), t_stop=c(10,20),
                             control_id=c('irs_pyr','irs_ops'))
 plot_sim2( run_sim2(l_config=l_config2) )
@@ -82,7 +81,7 @@ plot_sim2( run_sim2(l_config=l_config2) )
 \newpage
 
 ## scenario 7 : 10 steps pyr, 10 steps ddt
-```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 l_config2 <- config_plan(l_config, t_strt=c(1,11), t_stop=c(10,20),
                             control_id=c('irs_pyr','irs_ddt'))
 plot_sim2( run_sim2(l_config=l_config2) )
@@ -91,28 +90,28 @@ plot_sim2( run_sim2(l_config=l_config2) )
 \newpage
 
 ## scenario 8 : no insecticide use, 50% randomness added
-```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 plot_sim2( run_sim2(randomness=0.5) )
 ```
 
 \newpage
 
 ## scenario 9 : same as previous but just a different randomisation
-```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 plot_sim2( run_sim2(randomness=0.5) )
 ```
 
 \newpage
 
 ## scenario 10 : no insecticide use, 10% randomness added
-```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 plot_sim2( run_sim2(randomness=0.1) )
 ```
 
 \newpage
 
 ## scenario 11 : continuous pyr use, resistance_modifier < 1 decreases effect of resistance
-```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 l_config2 <- config_plan(l_config, t_strt=1, t_stop=20, control_id='irs_pyr')
 plot_sim2( run_sim2(l_config=l_config2, resistance_modifier=0.1) )
 ```
@@ -120,14 +119,15 @@ plot_sim2( run_sim2(l_config=l_config2, resistance_modifier=0.1) )
 \newpage
 
 ## scenario 12 : continuous pyr use, resistance_modifier > 1 increases effect of resistance
-```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 plot_sim2( run_sim2(l_config=l_config2, resistance_modifier=10) )
 ```
 
 \newpage
 
 ## scenario 13 : set a different control and resistance mechanism and control plan
-```{r, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=6}
+
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 l_config2 <- config_controls(l_config, control_id='new_ai', vector_id='an_gamb',
                              control_kill_rate=0.4)
 l_config2 <- config_resistances(l_config2, control_id='new_ai', resistance_id="target_site",
@@ -138,3 +138,36 @@ l_config2 <- config_plan(l_config2, t_strt=1, t_stop=20, control_id='new_ai')
 plot_sim2( run_sim2(l_config=l_config2) )
 
 ```
+
+\newpage
+
+## How controls and resistance mechanisms can be specified.
+
+Our generic approach allows us to specify any combination of controls and resistance mechanisms. The controls cause a specified kill rate(s) on specified vector(s). The resistance mechanisms specify which controls they apply to and how fast resistance increases and decreases in the presence and absence respectively of that control. Cross resistance can be specified simply by specifiying multiple controls for one resistance mechanism.
+
+The relationships between vectors, controls and resistance mechanisms are specified in simple configuration files. Here is a simple example of a collection of such configuration files :
+
+#### vectors.csv
+```{r, eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6}
+vectors <- read.csv( system.file('extdata','config1','vectors.csv', package='resistanceGame'))
+print(vectors)
+```
+
+#### controls.csv
+```{r, eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6}
+controls <- read.csv( system.file('extdata','config1','controls.csv', package='resistanceGame'))
+print(controls)
+```
+
+#### resistances.csv
+```{r, eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6}
+resistances <- read.csv( system.file('extdata','config1','resistances.csv', package='resistanceGame'))
+print(resistances)
+```
+
+#### control_plan.csv
+```{r, eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6}
+control_plan <- read.csv( system.file('extdata','config1','control_plan.csv', package='resistanceGame'))
+print(control_plan)
+```
+
