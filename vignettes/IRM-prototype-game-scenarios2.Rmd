@@ -20,7 +20,7 @@ We intend to tweak the input parameters to generate reasonable scenarios. We int
 In the following plots time is represented on the x axis, the top panel shows insecticide use, the middle panel shows vector population and the lowe panel shows resistance (phenotypic). The code included e.g. `plot_sim(...)` is there merely to show us as developers how the scenarios were generated.
 
 
-For an interactive version of the equations used to generate these plots see this (link.)[https://andysouth.shinyapps.io/shinyGame2]
+For an interactive version of the equations used to generate these plots see this (link.)[https://andysouth.shinyapps.io/shinyGame3]
 
 
 ```{r, eval=TRUE, echo=FALSE, message=FALSE}
