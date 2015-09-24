@@ -239,10 +239,16 @@ These simply make resistance go up towards a plateau when the insecticide is pre
     #or could use names, but as they are optional could leave blank
     #choices <- l_config$controls$control_name
     
-    checkboxGroupInput("controls_used", 
-                       label = "Controls:",
+#     checkboxGroupInput("controls_used", 
+#                        label = "Controls : tick boxes to turn on & off",
+#                        choices = choices,
+#                        selected = choices[1]) #to select first box as default
+
+    radioButtons("controls_used", 
+                       label = "Controls : tick boxes to turn on & off",
                        choices = choices,
-                       selected = choices[1]) #to select first box as default
+                       selected = choices[1]) #to select first box as default        
+    
     #I guess I get at selections by :
     #input$controls_used #which should be a named list
     
