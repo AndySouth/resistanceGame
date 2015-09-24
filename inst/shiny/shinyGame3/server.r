@@ -126,10 +126,12 @@ shinyServer(function(input, output) {
                           randomness = 0 )
       
       #concatenate new time series onto existing
-      l_time <<- c(l_time, l_time_this)
-         
+      #l_time <<- c(l_time, l_time_this)
+      #miss off first time step of the new one, otherwise this is a repeat of last tstep of previous
+      l_time <<- c(l_time, l_time_this[-1])
+               
       #set tstep to the last one in the current run  
-      tstep <<- tstep -1 + input$tsteps_to_run
+      tstep <<- tstep -2 + input$tsteps_to_run
       
       
       
