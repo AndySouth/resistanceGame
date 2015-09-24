@@ -29,13 +29,13 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
       
       
       wellPanel(
-        numericInput('tsteps_to_run', 'Number of timesteps to advance', value = 20, min = 1, max = 50, step = 1),
+        numericInput('tsteps_to_run', 'Num. timesteps to advance', value = 20, min = 1, max = 50, step = 1),
         actionButton('aButtonRun', 'advance'),
         #br(),br(),
         actionButton('aButtonRestart', 'restart')
       ),
       
-      helpText("Parameters that could be modified within the game to generate different scenarios."),      
+      #helpText("Parameters that could be modified within the game to generate different scenarios."),      
       #growth parameters
       numericInput('rate_growth', 'population growth rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
       numericInput('rate_insecticide_kill', 'insecticide kill rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
