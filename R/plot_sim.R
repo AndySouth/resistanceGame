@@ -103,6 +103,9 @@ plot_sim2 <- function(l_time)
   #drop=FALSE to cope when just one control
   mat_control <- sapply(l_time, function(x) x[["controls_used", drop=FALSE]])
 
+  #testing
+  print(mat_control)
+  
   #hack to cope if just one control (otherwise it stops being a matrix & fails)
   if (is.null(nrow(mat_control)))
   {
@@ -118,6 +121,7 @@ plot_sim2 <- function(l_time)
     mat_control <- mat_control * row(mat_control)
     #plot pattern of control use, zlim keeps colours constant
     image(t(mat_control),yaxt="n",xaxt="n",zlim=c(1,length(l_time[[1]]$controls_used)),col=rainbow(7))
+    
   } else {
     
     mat_control[] <- 0
@@ -150,6 +154,8 @@ plot_sim2 <- function(l_time)
   
   pop <- sapply(l_time, "[[", "pop")
   
+  cat("plotting pop :",pop,"\n")
+  
   plot.default(pop, axes=FALSE, ylim=c(0,1), type='l', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
   axis(2,at=c(0,1), labels=c('lo','hi'), las=1, cex.axis=1.3, tick=TRUE)
   
@@ -159,6 +165,8 @@ plot_sim2 <- function(l_time)
   #plot resistance (can have diff colour lines for diff insecticides)
   
   resist <- sapply(l_time, "[[", "resist")
+  
+  cat("plotting resist :",resist,"\n")
   
   plot.default(resist, axes=FALSE, ylim=c(0,1), type='l', col='green', main="resistance", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
   #to add x axis labels, las=1 to make labels horizontal
