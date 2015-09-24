@@ -116,8 +116,8 @@ plot_sim2 <- function(l_time)
     
     #this multiplies by row numbers
     mat_control <- mat_control * row(mat_control)
-    #plot pattern of control use
-    image(t(mat_control),yaxt="n",xaxt="n",col=rainbow(n=nrow(mat_control)))
+    #plot pattern of control use, zlim keeps colours constant
+    image(t(mat_control),yaxt="n",xaxt="n",zlim=c(1,length(l_time[[1]]$controls_used)),col=rainbow(7))
   } else {
     
     mat_control[] <- 0
