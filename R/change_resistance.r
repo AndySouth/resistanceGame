@@ -18,7 +18,14 @@ change_resistance <- function(resistance,
                               resistance_on
 ) 
 {
-  
+ 
+  #warnings
+  if ( length(resistance_on) > 1 ||
+       resistance_on > 1)
+  {
+    warning("resistance_on should be a single value between 0 & 1 it is : ", resistance_on, "\n")
+  }
+   
   #todo fix this temp fudge
   if(is.na(resistance_on)) resistance_on <- 0  
   
