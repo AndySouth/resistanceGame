@@ -209,14 +209,17 @@ Line 3 modifies vectors killed in line 2 according to resistance
 
 So in line 3, '1-resitance[t]' ensures that fewer vectors are killed when resistance is higher, and that no vectors are killed when resistance=1.
 
-The equation for the change in resistance is even simpler.
+The equations for the change in resistance is even simpler.
 
 If an insecticide prompting resistance is present :
-B) resistance[t+1] = resistance[t] + rate_resistance * (1 - resistance[t])
+
+B) resistance[t+1] = resistance[t] + resist_incr * (1 - resistance[t])
 
 If no insecticide prompting resistance :
-C) resistance[t+1] = resistance[t]  * (1 - resistance[t])
 
+C) resistance[t+1] = resistance[t]  * (1 - resist_decr)
+
+          
 These simply make resistance go up towards a plateau when the insecticide is present and down towards 0 when it is absent.")
     
     
@@ -238,7 +241,8 @@ These simply make resistance go up towards a plateau when the insecticide is pre
     
     checkboxGroupInput("controls_used", 
                        label = "Controls:",
-                       choices = choices )
+                       choices = choices,
+                       selected = choices[1]) #to select first box as default
     #I guess I get at selections by :
     #input$controls_used #which should be a named list
     

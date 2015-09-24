@@ -10,7 +10,7 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
 
   headerPanel("Insecticide Resistance Management 'Game model' prototype3"),  
   
-  helpText("A vector simulation for an Insecticide Resistance Management game. This version runs whole scenario rather than step by step. Press buttons on the left to advance, plots will appear in the 'Simulation' tab. Feedback to southandy@gmail.com."),
+  helpText("A vector simulation for an Insecticide Resistance Management game. Press buttons on left to advance, plots will appear in the 'Simulation' tab. Feedback to southandy@gmail.com."),
   
   fluidRow(
     
@@ -29,7 +29,7 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
       
       
       wellPanel(
-        numericInput('tsteps_to_run', 'Num. timesteps to advance', value = 20, min = 1, max = 50, step = 1),
+        numericInput('tsteps_to_run', 'Num. timesteps to advance', value = 10, min = 1, max = 50, step = 1),
         actionButton('aButtonRun', 'advance'),
         #br(),br(),
         actionButton('aButtonRestart', 'restart')
