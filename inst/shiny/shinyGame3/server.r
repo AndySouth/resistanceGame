@@ -8,7 +8,7 @@ library(shiny)
 library(resistanceGame)
 
 #global list to hold results
-tstep <- 1
+tstep <- 0
 l_time <- NULL
 
 pop_start <- 0.3
@@ -26,7 +26,7 @@ shinyServer(function(input, output) {
   #to set up data storage etc. for the simulation
   startSim <- function(){
     
-    tstep <<- 1
+    tstep <<- 0
     
     #l_time <<- init_sim2(num_tsteps=input$tsteps_to_run, l_config=l_config)
     l_time <<- NULL    
@@ -131,8 +131,10 @@ shinyServer(function(input, output) {
       l_time <<- c(l_time, l_time_this[-1])
                
       #set tstep to the last one in the current run  
-      tstep <<- tstep -2 + input$tsteps_to_run
+      #this is -1 to miss repeated tstep (last tstep of one run is same as first tstep of next)
+      tstep <<- tstep -1 + input$tsteps_to_run
       
+      cat("tstep:",tstep," length(l_time):",length(l_time),"\n")
       
       
     }) #end isolate   
@@ -166,7 +168,7 @@ shinyServer(function(input, output) {
     isolate({
  
 
-      if ( tstep == 1 ) {
+      if ( tstep == 0 ) {
         plot.new()
         mtext("press the advance... button on the left to start the simulation")
         return()
