@@ -44,12 +44,12 @@ init_sim2 <- function(num_tsteps=20, l_config=NULL)
   names(controls_blank) <- l_config$controls$control_id
   
   
-  #maybe i want this the other way around with timne as the first dimension ?
   #this has to be a list of lists to allow me to store in another master list after
   l_one_time <- list(list(pop = NA,
                  resist = NA,
                  cost = NA,
-                 controls_used = controls_blank))
+                 controls_used = controls_blank,
+                 cc_modifier = NA))
                  #l_controls_used = l_controls_blank))
   
   #create a list with blanks for each timestep

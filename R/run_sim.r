@@ -117,7 +117,7 @@ run_sim <- function(num_tsteps=20,
 #' @param randomness 0-1 0=none, 1=maximum
 #' 
 #' @examples
-#' dF <- run_sim2(pop_start=0.5, rate_resistance_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
+#' l_time <- run_sim2(pop_start=0.5, rate_resistance_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
 #' #plot default run
 #' plot_sim2( run_sim2())
 #' #modify params
@@ -154,6 +154,26 @@ run_sim2 <- function(num_tsteps=20,
   l_time[[1]]$pop <- pop_start
   l_time[[1]]$resist <- rate_resistance_start
 
+  #can I allow carry_cap to be passed as a vector ?
+  #be careful that later carry_cap may need to be specific to each vector
+  #or this here could be a modifier that is multiplied by a species specific parameter
+  #l_time[[]]$cc_modifier <- carry_cap
+  #this would just work for a single carry_cap
+  #l_time <- sapply(l_time, function(x) x$cc_modifier <- carry_cap)
+  #because I need to go through the l_time list & the carry_cap vector, I could first try it with a loop
+  
+  #sneaky bit of code to replicate carry_cap as many times as needed to fill all tsteps
+  #this allows some flexibility in creating seasonal patterns
+  if (length(carry_cap) < num_tsteps)
+  {
+    carry_cap <- rep_len(carry_cap, num_tsteps)
+  }
+  
+  for( tstep in 1:(num_tsteps) )
+  {
+    l_time[[tstep]]$cc_modifier <- carry_cap[tstep]
+  }
+  
   
   #tstep loop
   for( tstep in 1:(num_tsteps-1) )
@@ -189,7 +209,8 @@ run_sim2 <- function(num_tsteps=20,
     l_time[[tstep+1]]$pop <- change_pop( pop = l_time[[tstep]]$pop,
                                    rate_resistance = l_time[[tstep]]$resist,
                                    rate_growth = rate_growth,
-                                   carry_cap = carry_cap,
+                                   #carry_cap = carry_cap,
+                                   carry_cap = l_time[[tstep]]$cc_modifier,
                                    rate_insecticide_kill = rate_insecticide_kill,
                                    resistance_modifier = resistance_modifier,
                                    #initially just test whether any insecticide
