@@ -40,13 +40,16 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
       numericInput('rate_growth', 'population growth rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
       numericInput('rate_insecticide_kill', 'insecticide kill rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
       
+      numericInput('pop_start', 'start population (vectors)', value = 0.3, min = 0.01, max = 1, step = 0.05),
+      numericInput('resist_start', 'starting resistance', value = 0.05, min = 0.01, max = 1, step = 0.05),
+      
+      numericInput('resist_incr', 'increase in resistance', value = 0.2, min = 0.01, max = 1, step = 0.05),
+      numericInput('resist_decr', 'decrease in resistance', value = 0.1, min = 0.01, max = 1, step = 0.05),
+      
+      numericInput('cc_modifier', 'vector carrying capacity modifier', value = 1, min = 0.1, max = 1, step = 0.1),
+
       numericInput('resistance_modifier', 'resistance mortality modifier', value = 1, min = 0.1, max = 5, step = 0.1),
-      helpText("Values above 1 for resistance modifier cause lower resistances to reduce mortality more"),
-      
-      numericInput('resist_incr', 'increase in resistance', value = 0.2, min = 0.01, max = 1, step = 0.1),
-      numericInput('resist_decr', 'decrease in resistance', value = 0.1, min = 0.01, max = 1, step = 0.1),
-      
-      numericInput('cc_modifier', 'vector carrying capacity modifier', value = 1, min = 0.1, max = 1, step = 0.1)
+      helpText("Values above 1 for resistance modifier cause lower resistances to reduce mortality more")
       
     ), #end column
   column(8,
@@ -60,6 +63,19 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
       #just include the HTML which I copied into the shiny folder
       #unfortunately it restricts width of plotting area on other tabs
       #tabPanel("Scenarios",includeHTML("IRM-prototype-game-scenarios2.html")),
+      #tabPanel("Config Files", verbatimTextOutput("show_config_files")),
+      tabPanel("Config Files",
+               helpText("The relationships between vectors, controls and resistance mechanisms are specified in simple 
+                         configuration files. Below is a simple example of a collection of such configuration files. 
+                         (In this version of the UI the configuration files do not yet determine rates of growth and 
+                         control thus allowing you to modify them in the boxes on the left)"),
+               helpText("vectors.txt"),
+               tableOutput("table_vectors"),
+               helpText("controls.txt"),
+               tableOutput("table_controls"),
+               helpText("resistances.txt"),               
+               tableOutput("table_resistances")               
+               ),
       tabPanel("About", verbatimTextOutput("about"))
     )
          

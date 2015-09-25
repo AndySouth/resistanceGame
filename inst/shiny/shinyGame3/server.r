@@ -11,8 +11,6 @@ library(resistanceGame)
 tstep <- 0
 l_time <- NULL
 
-pop_start <- 0.3
-resist_start <- 0.01
 
 #read config files into a list
 #later could offer option to read different one
@@ -31,15 +29,6 @@ shinyServer(function(input, output) {
     #l_time <<- init_sim2(num_tsteps=input$tsteps_to_run, l_config=l_config)
     l_time <<- NULL    
     
-#     #set start value for vector popn
-#     l_time[[1]]$pop <<- 0.3
-#     #set start value for resistance
-#     l_time[[1]]$resist <<- 0.01
-
-    #set start value for vector popn
-    pop_start <<- 0.3
-    #set start value for resistance
-    resist_start <<- 0.01
     
   }
   
@@ -93,8 +82,8 @@ shinyServer(function(input, output) {
       
       if (is.null(l_time))
       {
-        pop <- pop_start
-        rate_resistance <- resist_start
+        pop <- input$pop_start
+        rate_resistance <- input$resist_start
       } else
       {
         pop <- l_time[[tstep]]$pop
@@ -185,6 +174,50 @@ shinyServer(function(input, output) {
   }) #end plot1
   
   
+  ## show config files ###############
+  #output$show_config_files <- renderText({ 
+  output$show_config_files <- renderPrint({ 
+      
+    print("The relationships between vectors, controls and resistance mechanisms are specified in simple 
+          configuration files. Here is a simple example of a collection of such configuration files :/n")
+      
+    print("/nvectors.csv/n")
+    vectors <- read.csv( system.file('extdata','config1','vectors.csv', package='resistanceGame'))
+    print(vectors)
+    
+    print("/ncontrols.csv/n")
+
+    controls <- read.csv( system.file('extdata','config1','controls.csv', package='resistanceGame'))
+    print(controls)
+
+    
+    print("\nresistances.csv\n")
+
+    resistances <- read.csv( system.file('extdata','config1','resistances.csv', package='resistanceGame'))
+    print(resistances)
+
+    
+  }) #end show_config_files    
+
+  
+  ## table of vectors from config files ###############  
+  output$table_vectors <- renderTable({
+    
+    vectors <- read.csv( system.file('extdata','config1','vectors.csv', package='resistanceGame'))
+  })  
+  
+  ## table of controls from config files ###############  
+  output$table_controls <- renderTable({
+    
+    controls <- read.csv( system.file('extdata','config1','controls.csv', package='resistanceGame'))
+  })  
+    
+  ## table of resistances from config files ###############  
+  output$table_resistances <- renderTable({
+    
+    resistances <- read.csv( system.file('extdata','config1','resistances.csv', package='resistanceGame'))
+  })    
+  
   
   ## text about the simulation equations ###############
   output$about <- renderText({ 
@@ -255,6 +288,8 @@ These simply make resistance go up towards a plateau when the insecticide is pre
     #input$controls_used #which should be a named list
     
   })   
-     
+
+  
+       
   
 })
