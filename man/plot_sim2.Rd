@@ -4,10 +4,12 @@
 \alias{plot_sim2}
 \title{plot simulation results for new flexible simulations}
 \usage{
-plot_sim2(l_time)
+plot_sim2(l_time, plot_cc = TRUE)
 }
 \arguments{
 \item{l_time}{list containing simulation results}
+
+\item{plot_cc}{whether to add carryin capacity to the population plot}
 }
 \value{
 maybe nothing, produces a plot

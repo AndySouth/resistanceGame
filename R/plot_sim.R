@@ -65,6 +65,7 @@ plot_sim <- function(dF)
 #' plot insecticide use and resulting changes in population and resistance
 #'
 #' @param l_time list containing simulation results
+#' @param plot_cc whether to add carryin capacity to the population plot
 #' @examples
 #' #blank plot
 #' l_time <- init_sim2(20)
@@ -76,7 +77,7 @@ plot_sim <- function(dF)
 #' @return maybe nothing, produces a plot
 #' @export
 
-plot_sim2 <- function(l_time) 
+plot_sim2 <- function(l_time, plot_cc=TRUE) 
 {
   
 
@@ -159,6 +160,15 @@ plot_sim2 <- function(l_time)
   plot.default(pop, axes=FALSE, ylim=c(0,1), type='l', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
   axis(2,at=c(0,1), labels=c('lo','hi'), las=1, cex.axis=1.3, tick=TRUE)
   
+  # can I add the cc_modifier ? even if just temporarily
+  if (plot_cc)
+  {
+    #beware currently this just takes cc_modifier, cc may be further modified by vector attributes
+    carry_cap <- sapply(l_time, "[[", "cc_modifier")
+    lines( carry_cap, col='red', lty=3 ) #lty=3 dotted
+    legend( "bottomleft", legend=c("popn","carry cap"), 
+            col=c("black","red"), lty=c(1,3), bty="n" )
+  }
   
   
   
