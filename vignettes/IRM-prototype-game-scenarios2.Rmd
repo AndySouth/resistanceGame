@@ -141,6 +141,26 @@ plot_sim2( run_sim2(l_config=l_config2) )
 
 \newpage
 
+## scenario 14 : change carrying capacity over time (6 tstep(month) cycle). High growth rate.
+
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+carry_cap = c(rep(1,6),rep(0.1,6))
+plot_sim2( run_sim2(carry_cap=carry_cap, rate_growth=1.6), plot_cc=TRUE )
+```
+
+\newpage
+
+## scenario 15 : carrying capacity gradual change. High growth rate.
+
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+carry_cap = seq(1,0.1,-0.1)
+plot_sim2( run_sim2(carry_cap=carry_cap, rate_growth=1.6), plot_cc=TRUE )
+```
+
+\newpage
+
+
+
 ## How controls and resistance mechanisms can be specified.
 
 Our generic approach allows us to specify any combination of controls and resistance mechanisms. The controls cause a specified kill rate(s) on specified vector(s). The resistance mechanisms specify which controls they apply to and how fast resistance increases and decreases in the presence and absence respectively of that control. Cross resistance can be specified simply by specifiying multiple controls for one resistance mechanism.
