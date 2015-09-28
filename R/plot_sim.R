@@ -77,7 +77,7 @@ plot_sim <- function(dF)
 #' @return maybe nothing, produces a plot
 #' @export
 
-plot_sim2 <- function(l_time, plot_cc=TRUE) 
+plot_sim2 <- function(l_time, plot_cc=FALSE) 
 {
   
 

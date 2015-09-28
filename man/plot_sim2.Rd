@@ -4,7 +4,7 @@
 \alias{plot_sim2}
 \title{plot simulation results for new flexible simulations}
 \usage{
-plot_sim2(l_time, plot_cc = TRUE)
+plot_sim2(l_time, plot_cc = FALSE)
 }
 \arguments{
 \item{l_time}{list containing simulation results}
