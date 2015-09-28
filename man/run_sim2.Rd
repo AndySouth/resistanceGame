@@ -39,7 +39,7 @@ list of simulation results
 some params driven by config file, others by function args
 }
 \examples{
-dF <- run_sim2(pop_start=0.5, rate_resistance_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
+l_time <- run_sim2(pop_start=0.5, rate_resistance_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
 #plot default run
 plot_sim2( run_sim2())
 #modify params
