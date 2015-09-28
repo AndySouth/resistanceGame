@@ -7,7 +7,7 @@
 run_sim2(num_tsteps = 20, pop_start = 0.5, rate_resistance_start = 0.1,
   rate_growth = 0.2, carry_cap = 1, rate_insecticide_kill = 0.2,
   resistance_modifier = 1, resist_incr = 0.2, resist_decr = 0.1,
-  l_config = NULL, randomness = 0)
+  l_config = NULL, randomness = 0, never_go_below = 0.01)
 }
 \arguments{
 \item{num_tsteps}{number of timesteps to run simulation}
@@ -31,6 +31,8 @@ run_sim2(num_tsteps = 20, pop_start = 0.5, rate_resistance_start = 0.1,
 \item{l_config}{list of config parameters}
 
 \item{randomness}{0-1 0=none, 1=maximum}
+
+\item{never_go_below}{restock at this level if pop goes below it}
 }
 \value{
 list of simulation results

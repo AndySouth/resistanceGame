@@ -5,7 +5,8 @@
 \title{change vector population}
 \usage{
 change_pop(pop, rate_growth, carry_cap, rate_insecticide_kill, rate_resistance,
-  resistance_modifier, insecticide_on, resistance_on, randomness = 0)
+  resistance_modifier, insecticide_on, resistance_on, randomness = 0,
+  never_go_below = 0.01)
 }
 \arguments{
 \item{pop}{vector population in this timestep}
@@ -25,6 +26,8 @@ change_pop(pop, rate_growth, carry_cap, rate_insecticide_kill, rate_resistance,
 \item{resistance_on}{whether there is resistance to the applied insecticide 0=no, 1=yes}
 
 \item{randomness}{0-1 0=none, 1=maximum}
+
+\item{never_go_below}{restock at this level if pop goes below it}
 }
 \value{
 float population in next timestep

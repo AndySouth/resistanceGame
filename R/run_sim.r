@@ -115,6 +115,7 @@ run_sim <- function(num_tsteps=20,
 #' @param resist_decr decrease in resistance when correct insecticide absent
 #' @param l_config list of config parameters
 #' @param randomness 0-1 0=none, 1=maximum
+#' @param never_go_below restock at this level if pop goes below it
 #' 
 #' @examples
 #' l_time <- run_sim2(pop_start=0.5, rate_resistance_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
@@ -139,7 +140,8 @@ run_sim2 <- function(num_tsteps=20,
                     resist_incr = 0.2,
                     resist_decr = 0.1,
                     l_config=NULL, #list got from configuration files
-                    randomness = 0
+                    randomness = 0,
+                    never_go_below = 0.01
 ) 
 {
   
@@ -217,7 +219,8 @@ run_sim2 <- function(num_tsteps=20,
                                    insecticide_on = insecticide_on,
                                    #initially just test whether pyr or ddt
                                    resistance_on = resistance_on,
-                                   randomness = randomness )
+                                   randomness = randomness,
+                                   never_go_below = never_go_below )
     
     # change resistance
     l_time[[tstep+1]]$resist <- change_resistance( resistance = l_time[[tstep]]$resist,
