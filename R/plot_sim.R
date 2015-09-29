@@ -165,9 +165,9 @@ plot_sim2 <- function(l_time, plot_cc=FALSE)
   {
     #beware currently this just takes cc_modifier, cc may be further modified by vector attributes
     carry_cap <- sapply(l_time, "[[", "cc_modifier")
-    lines( carry_cap, col='red', lty=3 ) #lty=3 dotted
+    lines( carry_cap, col='red', lty=2 ) #lty=3 dotted, 2 dashed
     legend( "bottomleft", legend=c("popn","carry cap"), 
-            col=c("black","red"), lty=c(1,3), bty="n" )
+            col=c("black","red"), lty=c(1,2), bty="n" )
   }
   
   
