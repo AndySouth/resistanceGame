@@ -24,8 +24,10 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
   
   helpText("A vector simulation for an Insecticide Resistance Management game. Press buttons on left to advance, plots will appear in the 'Simulation' tab. Feedback to southandy@gmail.com."),
 
-  #29/9/2015 simply include a link to pdf on dropbox
-  helpText(a("View a document of scenarios", href="https://www.dropbox.com/s/r7dnsf9e9hc2kil/IRM-prototype-game-scenarios2.pdf?dl=0")),
+  #29/9/2015 simply include a link to pdf on dropbox, target="_blank" to open in new tab
+  helpText(a("View a document of scenarios", 
+             href="https://www.dropbox.com/s/r7dnsf9e9hc2kil/IRM-prototype-game-scenarios2.pdf?dl=0",
+             target="_blank")),
   
   fluidRow(
     
