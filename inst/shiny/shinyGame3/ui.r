@@ -8,9 +8,24 @@ library(shinythemes)
 
 shinyUI(fluidPage(theme = shinytheme("flatly"),
 
-  headerPanel("Insecticide Resistance Management 'Game model' prototype3"),  
+  #headerPanel("Insecticide Resistance Management 'Game model' prototype3"),  
+  h4("Insecticide Resistance Management 'Game model' prototype3"), 
+  
+  #29/9/2015    
+  #navbarPage sets up navbar, title appears on left
+#   navbarPage("IRM game model v3", id="selectedTab",
+# 
+#      # tab "Scenarios" ---------------------------
+#      tabPanel("Scenarios", includeHTML("IRM-prototype-game-scenarios2.html")),
+#      
+#      # tab "User Interface" ---------------------------
+#      tabPanel("User Interface", value="seek",
+  
   
   helpText("A vector simulation for an Insecticide Resistance Management game. Press buttons on left to advance, plots will appear in the 'Simulation' tab. Feedback to southandy@gmail.com."),
+
+  #29/9/2015 simply include a link to pdf on dropbox
+  helpText(a("View a document of scenarios", href="https://www.dropbox.com/s/r7dnsf9e9hc2kil/IRM-prototype-game-scenarios2.pdf?dl=0")),
   
   fluidRow(
     
@@ -77,11 +92,17 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
                tableOutput("table_resistances")               
                ),
       tabPanel("About", verbatimTextOutput("about"))
-    )
+    ) #end tabsetPanel
          
     # to increase plot area vertically use height=         
     #plotOutput('plot1', height=700)
     
   ) #end column
   ) #end fluid row
-))
+
+#29/9/2015
+# ) # end tabPanel("User Interface") 
+# ) # end navbarPage  
+
+) # end fluidPage
+) # end shinyUI
