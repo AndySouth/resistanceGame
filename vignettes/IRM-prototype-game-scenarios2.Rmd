@@ -3,6 +3,8 @@ title: "Insecticide resistance management : prototype game scenarios"
 author: "Andy South"
 date: "`r Sys.Date()`"
 #output: rmarkdown::html_vignette
+# trying to increase width fails
+#  width: "110" 
 #to produce a pdf
 output: rmarkdown::pdf_document
 vignette: >
@@ -11,13 +13,13 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-This document demonstrates how a few simple equations can be used to generate patterns of change in vector populations and insecticide resistance over time depending on the use of insecticides. Parameters within the simple equations can be modified to generate different patterns of change.
+This document demonstrates how a few simple equations can simulate vector populations and insecticide resistance over time depending on the use of insecticides. Parameters within the simple equations can be modified to generate different patterns.
 
 
-We intend to tweak the input parameters to generate reasonable scenarios. We intend to ask experts in entomology and modelling to assess these scenarios. Thus we are looking for assessment of the scenarios themselves rather than the input parameter values. The input parameters are simply a means by which we can generate reasonable scenarios.
+We intend to tweak the input parameters to generate reasonable scenarios. We are looking for assessment of the scenarios themselves rather than the input parameter values. The input parameters are simply a means by which we can generate reasonable scenarios.
 
 
-In the following plots time is represented on the x axis, the top panel shows insecticide use, the middle panel shows vector population and the lowe panel shows resistance (phenotypic). The code included e.g. `plot_sim(...)` is there merely to show us as developers how the scenarios were generated.
+In the following plots time is represented on the x axis, the top panel shows insecticide use, the middle panel shows vector population and the lower panel shows resistance (phenotypic). The code included e.g. `plot_sim(...)` is there merely to show us as developers how the scenarios were generated.
 
 
 For an interactive version of the equations used to generate these plots see [https://andysouth.shinyapps.io/shinyGame3](https://andysouth.shinyapps.io/shinyGame3).
