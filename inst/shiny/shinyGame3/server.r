@@ -244,7 +244,12 @@ Line 3 modifies vectors killed in line 2 according to resistance
 
 So in line 3, '1-resitance[t]' ensures that fewer vectors are killed when resistance is higher, and that no vectors are killed when resistance=1.
 
-The equations for the change in resistance is even simpler.
+A2) If N < low_threshold : N = low_threshold
+
+An additional line to stop the vector population from going extinct (which would be unrealistic).
+
+
+The equations for the change in resistance are even simpler.
 
 If an insecticide prompting resistance is present :
 
