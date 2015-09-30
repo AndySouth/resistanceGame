@@ -169,6 +169,12 @@ Our generic approach allows us to specify any combination of controls and resist
 
 The relationships between vectors, controls and resistance mechanisms are specified in simple configuration files. Here is a simple example of a collection of such configuration files :
 
+#### places.csv
+```{r, eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6}
+places <- read.csv( system.file('extdata','config1','places.csv', package='resistanceGame'))
+print(places) 
+```    
+
 #### vectors.csv
 ```{r, eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6}
 vectors <- read.csv( system.file('extdata','config1','vectors.csv', package='resistanceGame'))

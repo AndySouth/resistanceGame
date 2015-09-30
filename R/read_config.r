@@ -23,20 +23,19 @@ read_config <- function(in_folder=NULL)
      in_folder <- system.file("extdata","config_no_control", package="resistanceGame")
   
   
-  #name <- "C:\\Dropbox\\Serious Gaming Initiative - Resistance Game (1)\\game model\\gm_config_test1\\resistances.csv"
-  #name <- "C:\\Dropbox\\Serious Gaming Initiative - Resistance Game (1)\\game model\\gm_config_test1\\vectors.csv"
-  #name <- "C:\\Dropbox\\Serious Gaming Initiative - Resistance Game (1)\\game model\\gm_config_test1\\controls.csv"
-  
   resistances <- read.csv(file.path(in_folder,"resistances.csv"), as.is=TRUE)
   vectors <- read.csv(file.path(in_folder,"vectors.csv"), as.is=TRUE)
   controls <- read.csv(file.path(in_folder,"controls.csv"), as.is=TRUE)
   control_plan <- read.csv(file.path(in_folder,"control_plan.csv"), as.is=TRUE)
-    
+
+  places <- read.csv(file.path(in_folder,"places.csv"), as.is=TRUE)
+      
   #put into a list
   list_config <- list(vectors=vectors,
                       controls=controls,
                       resistances=resistances,
-                      control_plan=control_plan)
+                      control_plan=control_plan,
+                      places=places)
   
   #initially I want to try running for one vector
   #and see how I can access the interaction between controls and resistances

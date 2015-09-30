@@ -175,31 +175,40 @@ shinyServer(function(input, output) {
   
   
   ## show config files ###############
+  ## SUPERCEDED by the table methods below 
   #output$show_config_files <- renderText({ 
   output$show_config_files <- renderPrint({ 
       
     print("The relationships between vectors, controls and resistance mechanisms are specified in simple 
           configuration files. Here is a simple example of a collection of such configuration files :/n")
       
+    
+    print("/nplaces.csv/n")
+    places <- read.csv( system.file('extdata','config1','places.csv', package='resistanceGame'))
+    print(places)    
+    
     print("/nvectors.csv/n")
     vectors <- read.csv( system.file('extdata','config1','vectors.csv', package='resistanceGame'))
     print(vectors)
     
     print("/ncontrols.csv/n")
-
     controls <- read.csv( system.file('extdata','config1','controls.csv', package='resistanceGame'))
     print(controls)
-
     
     print("\nresistances.csv\n")
-
     resistances <- read.csv( system.file('extdata','config1','resistances.csv', package='resistanceGame'))
     print(resistances)
 
     
   }) #end show_config_files    
 
-  
+
+  ## table of places from config files ###############  
+  output$table_places <- renderTable({
+    
+    places <- read.csv( system.file('extdata','config1','places.csv', package='resistanceGame'))
+  })  
+    
   ## table of vectors from config files ###############  
   output$table_vectors <- renderTable({
     

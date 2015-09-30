@@ -86,11 +86,14 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
                          configuration files. Below is a simple example of a collection of such configuration files. 
                          (In this version of the UI the configuration files do not yet determine rates of growth and 
                          control thus allowing you to modify them in the boxes on the left)"),
-               helpText("vectors.txt"),
+               
+               helpText("places.csv"),
+               tableOutput("table_places"),
+               helpText("vectors.csv"),
                tableOutput("table_vectors"),
-               helpText("controls.txt"),
+               helpText("controls.csv"),
                tableOutput("table_controls"),
-               helpText("resistances.txt"),               
+               helpText("resistances.csv"),               
                tableOutput("table_resistances")               
                ),
       tabPanel("About", verbatimTextOutput("about"))
