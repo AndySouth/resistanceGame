@@ -2,9 +2,11 @@
 
 Developing prototypes for insecticide resistance computer games.
 
-Development by Andy South in 2015.
+Development by Andy South in 2015 for the Liverpool School for Tropical Medicine.
 
+https://etchteam.wordpress.com/
+   
     
-### An early prototype
+### Early prototypes
 
-https://andysouth.shinyapps.io/shinyGame1
+https://andysouth.shinyapps.io/shinyGame3
