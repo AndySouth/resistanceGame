@@ -98,15 +98,6 @@ change_pop <- function(pop,
 #     
 #   }
   
-  
-  
-  
-  
   return(pop2)
-  
-#   dF$vectorPop[runNum+1] <<- dF$vectorPop[runNum] + 
-#     rate_growth * dF$vectorPop[runNum] * (1-dF$vectorPop[runNum]/K) -   #density dependence
-#     rate_insecticide_kill * dF$vectorPop[runNum] *                       #insecticide
-#     (1-dF$pyrResist[runNum]^(1/resistance_modifier))                    #resistance  
   
 }
