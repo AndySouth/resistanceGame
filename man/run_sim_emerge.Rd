@@ -5,8 +5,8 @@
 \title{run flexible simulation of population and resistance change based on emergence driven by config file}
 \usage{
 run_sim_emerge(num_tsteps = 20, pop_start = 0.5,
-  rate_resistance_start = 0.1, rate_growth = 0.2, carry_cap = 1,
-  rate_insecticide_kill = 0.2, resistance_modifier = 1, resist_incr = 0.2,
+  rate_resistance_start = 0.1, rate_growth = 0.7, carry_cap = 0.3,
+  rate_insecticide_kill = 0.8, resistance_modifier = 1, resist_incr = 0.2,
   resist_decr = 0.1, l_config = NULL, randomness = 0,
   never_go_below = 0.01)
 }

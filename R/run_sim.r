@@ -272,9 +272,9 @@ run_sim2 <- function(num_tsteps=20,
 run_sim_emerge <- function(num_tsteps=20,
                      pop_start=0.5,
                      rate_resistance_start=0.1,
-                     rate_growth=0.2, 
-                     carry_cap=1, #now this is emergence try changing default
-                     rate_insecticide_kill=0.2,
+                     rate_growth=0.7, #now survival
+                     carry_cap=0.3, #now emergence (equilibrium pop = emergence/(1-survival))
+                     rate_insecticide_kill=0.8, #default put up from 0.2 for emerge version
                      resistance_modifier=1,
                      resist_incr = 0.2,
                      resist_decr = 0.1,
