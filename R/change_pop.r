@@ -176,9 +176,13 @@ change_pop_emerge <- function(pop,
   
   # new emergence model 
   #pop2 <- emergence + survivors
-  surviving_adults <- pop * survival * 
-    (1 - insecticide_on * rate_insecticide_kill *
-       (1-resistance_on * rate_resistance ^ (1/resistance_modifier) ))    
+  
+  control_kill <- (1-insecticide_on * rate_insecticide_kill *
+                  (1-resistance_on * rate_resistance ^ (1/resistance_modifier) ))    
+  
+  
+  surviving_adults <- pop * survival * control_kill
+  
   
   pop2 <- emergence + surviving_adults
           
