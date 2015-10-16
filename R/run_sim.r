@@ -147,7 +147,9 @@ run_sim_oldcc <- function(num_tsteps=20,
   
   #read default config if none specified
   if (is.null(l_config))
-    l_config <- read_config()
+    #read config files into a list, this is the old carrying capacity driven one
+    l_config <- read_config(in_folder=system.file("extdata","config_oldcc_no_control", package="resistanceGame"))
+  
   
   
   #initialise the list storing time data including what controls used
@@ -175,7 +177,7 @@ run_sim_oldcc <- function(num_tsteps=20,
   
   for( tstep in 1:(num_tsteps) )
   {
-    l_time[[tstep]]$cc_modifier <- carry_cap[tstep]
+    l_time[[tstep]]$emergence <- carry_cap[tstep]
   }
   
   
@@ -214,7 +216,7 @@ run_sim_oldcc <- function(num_tsteps=20,
                                    rate_resistance = l_time[[tstep]]$resist,
                                    rate_growth = rate_growth,
                                    #carry_cap = carry_cap,
-                                   carry_cap = l_time[[tstep]]$cc_modifier,
+                                   carry_cap = l_time[[tstep]]$emergence,
                                    rate_insecticide_kill = rate_insecticide_kill,
                                    resistance_modifier = resistance_modifier,
                                    #initially just test whether any insecticide
@@ -314,7 +316,7 @@ run_sim <- function(num_tsteps=20,
   
   for( tstep in 1:(num_tsteps) )
   {
-    l_time[[tstep]]$cc_modifier <- emergence[tstep]
+    l_time[[tstep]]$emergence <- emergence[tstep]
   }
   
   
@@ -352,7 +354,7 @@ run_sim <- function(num_tsteps=20,
     l_time[[tstep+1]]$pop <- change_pop( pop = l_time[[tstep]]$pop,
                                          rate_resistance = l_time[[tstep]]$resist,
                                          survival = survival,
-                                         emergence = l_time[[tstep]]$cc_modifier,
+                                         emergence = l_time[[tstep]]$emergence,
                                          rate_insecticide_kill = rate_insecticide_kill,
                                          resistance_modifier = resistance_modifier,
                                          #initially just test whether any insecticide

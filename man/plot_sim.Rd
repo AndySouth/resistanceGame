@@ -4,12 +4,12 @@
 \alias{plot_sim}
 \title{plot simulation results for newest flexible config driven simulations}
 \usage{
-plot_sim(l_time, plot_cc = FALSE)
+plot_sim(l_time, plot_emergence = FALSE)
 }
 \arguments{
 \item{l_time}{list containing simulation results}
 
-\item{plot_cc}{whether to add carryin capacity to the population plot}
+\item{plot_emergence}{whether to add emergence rate to population plot}
 }
 \value{
 maybe nothing, produces a plot

@@ -49,7 +49,7 @@ init_sim <- function(num_tsteps=20, l_config=NULL)
                  resist = NA,
                  cost = NA,
                  controls_used = controls_blank,
-                 cc_modifier = NA))
+                 emergence = NA))
                  #l_controls_used = l_controls_blank))
   
   #create a list with blanks for each timestep

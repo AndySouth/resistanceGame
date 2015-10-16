@@ -147,7 +147,7 @@ plot_sim( run_sim(l_config=l_config2) )
 
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 emergence = c(rep(0.5,6),rep(0,6))
-plot_sim( run_sim(emergence=emergence, survival=0.7), plot_cc=TRUE )
+plot_sim( run_sim(emergence=emergence, survival=0.7), plot_emergence=TRUE )
 ```
 
 \newpage
@@ -156,7 +156,7 @@ plot_sim( run_sim(emergence=emergence, survival=0.7), plot_cc=TRUE )
 
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 emergence = seq(0.5,0,-0.05)
-plot_sim( run_sim(emergence=emergence, survival=0.7), plot_cc=TRUE )
+plot_sim( run_sim(emergence=emergence, survival=0.7), plot_emergence=TRUE )
 ```
 
 \newpage

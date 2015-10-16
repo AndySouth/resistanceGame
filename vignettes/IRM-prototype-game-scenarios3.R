@@ -61,12 +61,12 @@ plot_sim( run_sim(l_config=l_config2) )
 
 
 ## ---- eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6----
-carry_cap = c(rep(0.5,6),rep(0,6))
-plot_sim( run_sim(carry_cap=carry_cap, rate_growth=0.7), plot_cc=TRUE )
+emergence = c(rep(0.5,6),rep(0,6))
+plot_sim( run_sim(emergence=emergence, survival=0.7), plot_emergence=TRUE )
 
 ## ---- eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6----
-carry_cap = seq(0.5,0,-0.05)
-plot_sim( run_sim(carry_cap=carry_cap, rate_growth=0.7), plot_cc=TRUE )
+emergence = seq(0.5,0,-0.05)
+plot_sim( run_sim(emergence=emergence, survival=0.7), plot_emergence=TRUE )
 
 ## ---- eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6----
 places <- read.csv( system.file('extdata','config1','places.csv', package='resistanceGame'))

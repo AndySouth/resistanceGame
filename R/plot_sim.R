@@ -150,11 +150,11 @@ plot_sim_oldcc <- function(l_time, plot_cc=FALSE)
   plot.default(pop, axes=FALSE, ylim=c(0,1), type='l', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
   axis(2,at=c(0,1), labels=c('lo','hi'), las=1, cex.axis=1.3, tick=TRUE)
   
-  # can I add the cc_modifier ? even if just temporarily
+  
   if (plot_cc)
   {
-    #beware currently this just takes cc_modifier, cc may be further modified by vector attributes
-    carry_cap <- sapply(l_time, "[[", "cc_modifier")
+    #carry_cap in this old version is copied from emergence which it has been renamed to
+    carry_cap <- sapply(l_time, "[[", "emergence")
     lines( carry_cap, col='red', lty=2 ) #lty=3 dotted, 2 dashed
     legend( "bottomleft", legend=c("popn","carry cap"), 
             col=c("black","red"), lty=c(1,2), bty="n" )
@@ -183,7 +183,7 @@ plot_sim_oldcc <- function(l_time, plot_cc=FALSE)
 #' plot insecticide use and resulting changes in population and resistance
 #'
 #' @param l_time list containing simulation results
-#' @param plot_cc whether to add carryin capacity to the population plot
+#' @param plot_emergence whether to add emergence rate to population plot
 #' @examples
 #' #blank plot
 #' l_time <- init_sim(20)
@@ -195,7 +195,7 @@ plot_sim_oldcc <- function(l_time, plot_cc=FALSE)
 #' @return maybe nothing, produces a plot
 #' @export
 
-plot_sim <- function(l_time, plot_cc=FALSE) 
+plot_sim <- function(l_time, plot_emergence=FALSE) 
 {
   
   
@@ -268,13 +268,12 @@ plot_sim <- function(l_time, plot_cc=FALSE)
   plot.default(pop, axes=FALSE, ylim=c(0,1), type='l', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
   axis(2,at=c(0,1), labels=c('lo','hi'), las=1, cex.axis=1.3, tick=TRUE)
   
-  # can I add the cc_modifier ? even if just temporarily
-  if (plot_cc)
+  #
+  if (plot_emergence)
   {
-    #beware currently this just takes cc_modifier, cc may be further modified by vector attributes
-    carry_cap <- sapply(l_time, "[[", "cc_modifier")
-    lines( carry_cap, col='red', lty=2 ) #lty=3 dotted, 2 dashed
-    legend( "bottomleft", legend=c("popn","carry cap"), 
+    emergence <- sapply(l_time, "[[", "emergence")
+    lines( emergence, col='red', lty=2 ) #lty=3 dotted, 2 dashed
+    legend( "bottomleft", legend=c("popn","emergence"), 
             col=c("black","red"), lty=c(1,2), bty="n" )
   }
   

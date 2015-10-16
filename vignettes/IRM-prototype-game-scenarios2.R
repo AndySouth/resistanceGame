@@ -6,7 +6,8 @@ require(resistanceGame)
 plot_sim_oldcc( run_sim_oldcc() )
 
 ## ---- eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6----
-l_config <- read_config()
+l_config <- read_config(in_folder=system.file("extdata","config_oldcc_no_control",
+                                              package="resistanceGame"))
 l_config2 <- config_plan(l_config, t_strt=1, t_stop=20, control_id='irs_pyr')
 plot_sim_oldcc( run_sim_oldcc(l_config=l_config2) )
 

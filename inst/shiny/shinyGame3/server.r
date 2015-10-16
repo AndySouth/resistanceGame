@@ -12,9 +12,9 @@ tstep <- 0
 l_time <- NULL
 
 
-#read config files into a list
+#read config files into a list, this is the old carrying capacity driven one
 #later could offer option to read different one
-l_config <- resistanceGame::read_config()
+l_config <- resistanceGame::read_config(in_folder=system.file("extdata","config_oldcc_no_control", package="resistanceGame"))
 
 
 
