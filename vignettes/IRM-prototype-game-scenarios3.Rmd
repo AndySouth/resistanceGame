@@ -8,7 +8,7 @@ date: "`r Sys.Date()`"
 #to produce a pdf
 output: rmarkdown::pdf_document
 vignette: >
-  %\VignetteIndexEntry{IRM-prototype-game-scenarios}
+  %\VignetteIndexEntry{IRM-prototype-game-scenarios3}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
@@ -22,7 +22,7 @@ We intend to tweak the input parameters to generate reasonable scenarios. We are
 In the following plots time is represented on the x axis, the top panel shows insecticide use, the middle panel shows vector population and the lower panel shows resistance (phenotypic). The code included e.g. `plot_sim(...)` is there merely to show us as developers how the scenarios were generated.
 
 
-For an interactive version of the equations used to generate these plots see [https://andysouth.shinyapps.io/shinyGame3](https://andysouth.shinyapps.io/shinyGame3).
+For an interactive version of the equations used to generate these plots see [https://andysouth.shinyapps.io/shinyGame4](https://andysouth.shinyapps.io/shinyGame4).
 
 
 ```{r, eval=TRUE, echo=FALSE, message=FALSE}
@@ -146,8 +146,8 @@ plot_sim2( run_sim_emerge(l_config=l_config2) )
 ## scenario 14 : change carrying capacity over time (6 tstep(month) cycle). High growth rate.
 
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
-carry_cap = c(rep(1,6),rep(0.1,6))
-plot_sim2( run_sim_emerge(carry_cap=carry_cap, rate_growth=1.6), plot_cc=TRUE )
+carry_cap = c(rep(0.5,6),rep(0,6))
+plot_sim2( run_sim_emerge(carry_cap=carry_cap, rate_growth=0.7), plot_cc=TRUE )
 ```
 
 \newpage
@@ -155,8 +155,8 @@ plot_sim2( run_sim_emerge(carry_cap=carry_cap, rate_growth=1.6), plot_cc=TRUE )
 ## scenario 15 : carrying capacity gradual change. High growth rate.
 
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
-carry_cap = seq(1,0.1,-0.1)
-plot_sim2( run_sim_emerge(carry_cap=carry_cap, rate_growth=1.6), plot_cc=TRUE )
+carry_cap = seq(0.5,0,-0.05)
+plot_sim2( run_sim_emerge(carry_cap=carry_cap, rate_growth=0.7), plot_cc=TRUE )
 ```
 
 \newpage
