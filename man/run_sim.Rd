@@ -2,13 +2,12 @@
 % Please edit documentation in R/run_sim.r
 \name{run_sim}
 \alias{run_sim}
-\title{run simulation of population and resistance change}
+\title{run flexible simulation of population and resistance change based on emergence driven by config file}
 \usage{
 run_sim(num_tsteps = 20, pop_start = 0.5, rate_resistance_start = 0.1,
-  rate_growth = 0.2, carry_cap = 1, rate_insecticide_kill = 0.2,
+  survival = 0.7, emergence = 0.3, rate_insecticide_kill = 0.8,
   resistance_modifier = 1, resist_incr = 0.2, resist_decr = 0.1,
-  use_pyr = rep(1, num_tsteps), use_ddt = NA, use_ops = NA,
-  use_car = NA, randomness = 0)
+  l_config = NULL, randomness = 0, never_go_below = 0.01)
 }
 \arguments{
 \item{num_tsteps}{number of timesteps to run simulation}
@@ -17,9 +16,9 @@ run_sim(num_tsteps = 20, pop_start = 0.5, rate_resistance_start = 0.1,
 
 \item{rate_resistance_start}{effect of resistance on insecticide kill rate}
 
-\item{rate_growth}{population growth rate}
+\item{survival}{adult survival rate}
 
-\item{carry_cap}{carrying capacity (K) in the logistic model}
+\item{emergence}{emerging adults, can be a vector can be greater than 1}
 
 \item{rate_insecticide_kill}{kill rate due to insecticide}
 
@@ -29,29 +28,27 @@ run_sim(num_tsteps = 20, pop_start = 0.5, rate_resistance_start = 0.1,
 
 \item{resist_decr}{decrease in resistance when correct insecticide absent}
 
-\item{use_pyr}{use pyrethroids NA for no, 1 for yes, or a vector e.g. c(NA,1) to give alternate use}
-
-\item{use_ddt}{use ddt see use_pyr}
-
-\item{use_ops}{use organophosphates see use_pyr}
-
-\item{use_car}{use carbamates see use_pyr}
+\item{l_config}{list of config parameters}
 
 \item{randomness}{0-1 0=none, 1=maximum}
+
+\item{never_go_below}{restock at this level if pop goes below it}
 }
 \value{
-dataframe of simulation results
+list of simulation results
 }
 \description{
-initially accepts single arg values next get it to accept vectors by time
+some params driven by config file, others by function args
 }
 \examples{
-dF <- run_sim(pop_start=0.5, rate_resistance_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
+l_time <- run_sim(pop_start=0.5, rate_resistance_start=0.2, survival=0.8, emergence=0.2, rate_insecticide_kill=0.4, resistance_modifier=1)
 #plot default run
 plot_sim( run_sim())
 #modify params
 plot_sim( run_sim( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
-#alternate use of pyr
-plot_sim( run_sim(use_pyr=c(NA,1)))
+#modify config file
+l_config <- read_config()
+l_config2 <- config_plan(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ddt'))
+plot_sim( run_sim(l_config=l_config2, resist_incr=0.1))
 }
 

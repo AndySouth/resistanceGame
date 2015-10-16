@@ -33,6 +33,6 @@ modifies the input from config files
 \examples{
 l_config <- read_config()
 l_config2 <- config_resistances(l_config, resistance_id="target_site", control_id=c('irs_ops'), resistance_strength=c(0.8), resistance_incr=c(0.2), resistance_decr=c(0.1))
-plot_sim2( run_sim2(l_config=l_config2))
+plot_sim_oldcc( run_sim_oldcc(l_config=l_config2))
 }
 

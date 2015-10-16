@@ -4,11 +4,11 @@
 #'
 #' @param num_tsteps number of timesteps to put in dataframe
 #' @examples
-#' dF <- init_sim(20)
+#' dF <- init_sim_oldest(20)
 #' @return dataframe to contain simulation results
 #' @export
 
-init_sim <- function(num_tsteps=20) 
+init_sim_oldest <- function(num_tsteps=20) 
 {
   
   dF <- data.frame( use_pyr = rep(NA,num_tsteps),
@@ -28,11 +28,11 @@ init_sim <- function(num_tsteps=20)
 #' @param num_tsteps number of timesteps to put in dataframe
 #' @param l_config list of config parameters
 #' @examples
-#' dF <- init_sim2(20, l_config=read_config())
+#' dF <- init_sim(20, l_config=read_config())
 #' @return list to contain simulation results
 #' @export
 #' 
-init_sim2 <- function(num_tsteps=20, l_config=NULL) 
+init_sim <- function(num_tsteps=20, l_config=NULL) 
 {
   
   #read default config if none specified

@@ -2,18 +2,18 @@
 % Please edit documentation in R/change_pop.r
 \name{change_pop}
 \alias{change_pop}
-\title{change vector population}
+\title{change vector population based on emergence}
 \usage{
-change_pop(pop, rate_growth, carry_cap, rate_insecticide_kill, rate_resistance,
+change_pop(pop, survival, emergence, rate_insecticide_kill, rate_resistance,
   resistance_modifier, insecticide_on, resistance_on, randomness = 0,
   never_go_below = 0.01)
 }
 \arguments{
 \item{pop}{vector population in this timestep}
 
-\item{rate_growth}{population growth rate}
+\item{survival}{adult survival rate}
 
-\item{carry_cap}{carrying capacity (K) in the logistic model}
+\item{emergence}{emerging adults, can be a vector can be greater than 1}
 
 \item{rate_insecticide_kill}{kill rate due to insecticide}
 
@@ -33,9 +33,9 @@ change_pop(pop, rate_growth, carry_cap, rate_insecticide_kill, rate_resistance,
 float population in next timestep
 }
 \description{
-simple logistic model to change vector population based on growth rate, K, insecticide and resistance
+simple simulation of vector population based upon emergence suggested by Nakul Chitnis
 }
 \examples{
-change_pop(pop=0.5, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, rate_resistance=0.2, resistance_modifier=1, resistance_on=1, insecticide_on=1)
+change_pop(pop=0.5, survival=0.4, emergence=1, rate_insecticide_kill=0.4, rate_resistance=0.2, resistance_modifier=1, resistance_on=1, insecticide_on=1)
 }
 

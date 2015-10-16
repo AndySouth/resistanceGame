@@ -25,7 +25,7 @@ shinyServer(function(input, output) {
     
     tstep <<- 0
     
-    dF <<- init_sim(num_tsteps=num_tsteps)
+    dF <<- init_sim_oldest(num_tsteps=num_tsteps)
     
     #if I scale all measures between 0 & 1 that may make life a lot easier later on
     
@@ -97,7 +97,7 @@ shinyServer(function(input, output) {
       #cat("insecticide & resistance on ",insecticide_on, resistance_on,"\n")
       
       # change population
-      dF$pop[tstep+1] <<- change_pop( pop = dF$pop[tstep],
+      dF$pop[tstep+1] <<- change_pop_oldcc( pop = dF$pop[tstep],
                                              rate_growth = rate_growth,
                                              carry_cap = carry_cap,
                                              rate_insecticide_kill = rate_insecticide_kill,
@@ -167,7 +167,7 @@ shinyServer(function(input, output) {
       #put this plotting into a package function
       #so that it can be called from elsewhere, e.g. to plot scenarios in a document
       #initially just get function to accept the dataframe with use_*, pop & resist_pyr
-      plot_sim(dF)
+      plot_sim_oldest(dF)
       
     }) #end isolate   
   }) #end plot1

@@ -26,7 +26,7 @@ shinyServer(function(input, output) {
     
     tstep <<- 0
     
-    #l_time <<- init_sim2(num_tsteps=input$tsteps_to_run, l_config=l_config)
+    #l_time <<- init_sim(num_tsteps=input$tsteps_to_run, l_config=l_config)
     l_time <<- NULL    
     
     
@@ -102,7 +102,7 @@ shinyServer(function(input, output) {
       resist_decr <- input$resist_decr   
       
       
-      l_time_this <<- run_sim2( l_config=l_config, 
+      l_time_this <<- run_sim_oldcc( l_config=l_config, 
                           num_tsteps=input$tsteps_to_run,
                           pop_start=pop,
                           rate_resistance_start=rate_resistance,
@@ -167,8 +167,7 @@ shinyServer(function(input, output) {
       #put this plotting into a package function
       #so that it can be called from elsewhere, e.g. to plot scenarios in a document
       #initially just get function to accept the dataframe with use_*, pop & resist_pyr
-      #plot_sim(dF)
-      plot_sim2(l_time)      
+      plot_sim_oldcc(l_time)      
       
     }) #end isolate   
   }) #end plot1

@@ -1,4 +1,4 @@
-#' change vector population
+#' change vector population based on old carrying capacity driven simulation
 #'
 #' simple logistic model to change vector population based on growth rate, K, insecticide and resistance
 #'
@@ -13,11 +13,11 @@
 #' @param randomness 0-1 0=none, 1=maximum
 #' @param never_go_below restock at this level if pop goes below it
 #' @examples
-#' change_pop(pop=0.5, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, rate_resistance=0.2, resistance_modifier=1, resistance_on=1, insecticide_on=1)
+#' change_pop_oldcc(pop=0.5, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, rate_resistance=0.2, resistance_modifier=1, resistance_on=1, insecticide_on=1)
 #' @return float population in next timestep
 #' @export
 
-change_pop <- function(pop,
+change_pop_oldcc <- function(pop,
                        rate_growth,
                        carry_cap,
                        rate_insecticide_kill,
@@ -108,8 +108,8 @@ change_pop <- function(pop,
 #' simple simulation of vector population based upon emergence suggested by Nakul Chitnis
 #'
 #' @param pop vector population in this timestep
-#' @param rate_growth population growth rate
-#' @param carry_cap carrying capacity (K) in the logistic model
+#' @param survival adult survival rate
+#' @param emergence emerging adults, can be a vector can be greater than 1
 #' @param rate_insecticide_kill kill rate due to insecticide
 #' @param rate_resistance effect on resistance on insecticide kill rate
 #' @param resistance_modifier modifies effect of resistance
@@ -118,13 +118,13 @@ change_pop <- function(pop,
 #' @param randomness 0-1 0=none, 1=maximum
 #' @param never_go_below restock at this level if pop goes below it
 #' @examples
-#' change_pop(pop=0.5, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, rate_resistance=0.2, resistance_modifier=1, resistance_on=1, insecticide_on=1)
+#' change_pop(pop=0.5, survival=0.4, emergence=1, rate_insecticide_kill=0.4, rate_resistance=0.2, resistance_modifier=1, resistance_on=1, insecticide_on=1)
 #' @return float population in next timestep
 #' @export
 
-change_pop_emerge <- function(pop,
-                       rate_growth,
-                       carry_cap,
+change_pop <- function(pop,
+                       survival,
+                       emergence,
                        rate_insecticide_kill,
                        rate_resistance,
                        resistance_modifier,
@@ -161,18 +161,6 @@ change_pop_emerge <- function(pop,
   if(is.na(insecticide_on)) insecticide_on <- 0
   if(is.na(resistance_on)) resistance_on <- 0  
   
-# previous logistic model  
-#   pop2 <- pop +
-#     rate_growth * pop * (1-pop/carry_cap) -
-#     insecticide_on * rate_insecticide_kill * pop *
-#     (1-resistance_on * rate_resistance ^ (1/resistance_modifier) )     
- 
-  
-  #beware first go
-  #just copy emergence from cc
-  emergence <- carry_cap
-  #and survival from rate_growth
-  survival <- rate_growth
   
   # new emergence model 
   #pop2 <- emergence + survivors

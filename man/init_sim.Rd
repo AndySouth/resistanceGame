@@ -2,20 +2,22 @@
 % Please edit documentation in R/init_sim.r
 \name{init_sim}
 \alias{init_sim}
-\title{initialise simulation results dataframe}
+\title{initialise simulation results list based on config file}
 \usage{
-init_sim(num_tsteps = 20)
+init_sim(num_tsteps = 20, l_config = NULL)
 }
 \arguments{
 \item{num_tsteps}{number of timesteps to put in dataframe}
+
+\item{l_config}{list of config parameters}
 }
 \value{
-dataframe to contain simulation results
+list to contain simulation results
 }
 \description{
-create dataframe to contain simulation results
+create list to contain simulation results
 }
 \examples{
-dF <- init_sim(20)
+dF <- init_sim(20, l_config=read_config())
 }
 

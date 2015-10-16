@@ -20,17 +20,17 @@
 #' @param randomness 0-1 0=none, 1=maximum
 #' 
 #' @examples
-#' dF <- run_sim(pop_start=0.5, rate_resistance_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
+#' dF <- run_sim_oldest(pop_start=0.5, rate_resistance_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
 #' #plot default run
-#' plot_sim( run_sim())
+#' plot_sim_oldest( run_sim_oldest())
 #' #modify params
-#' plot_sim( run_sim( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
+#' plot_sim_oldest( run_sim_oldest( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
 #' #alternate use of pyr
-#' plot_sim( run_sim(use_pyr=c(NA,1)))
+#' plot_sim_oldest( run_sim_oldest(use_pyr=c(NA,1)))
 #' @return dataframe of simulation results
 #' @export
 
-run_sim <- function(num_tsteps=20,
+run_sim_oldest <- function(num_tsteps=20,
                     pop_start=0.5,
                     rate_resistance_start=0.1,
                     rate_growth=0.2,
@@ -49,7 +49,7 @@ run_sim <- function(num_tsteps=20,
 ) 
 {
 
-  dF <- init_sim(num_tsteps)
+  dF <- init_sim_oldest(num_tsteps)
 
   dF$pop[1] <- pop_start
   dF$resist_pyr[1] <- rate_resistance_start
@@ -72,7 +72,7 @@ run_sim <- function(num_tsteps=20,
     
 
     # change population
-    dF$pop[tstep+1] <- change_pop( pop = dF$pop[tstep],
+    dF$pop[tstep+1] <- change_pop_oldcc( pop = dF$pop[tstep],
                                     rate_resistance = dF$resist_pyr[tstep],
                                     rate_growth = rate_growth,
                                     carry_cap = carry_cap,
@@ -118,19 +118,19 @@ run_sim <- function(num_tsteps=20,
 #' @param never_go_below restock at this level if pop goes below it
 #' 
 #' @examples
-#' l_time <- run_sim2(pop_start=0.5, rate_resistance_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
+#' l_time <- run_sim_oldcc(pop_start=0.5, rate_resistance_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
 #' #plot default run
-#' plot_sim2( run_sim2())
+#' plot_sim_oldcc( run_sim_oldcc())
 #' #modify params
-#' plot_sim2( run_sim2( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
+#' plot_sim_oldcc( run_sim_oldcc( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
 #' #modify config file
 #' l_config <- read_config()
 #' l_config2 <- config_plan(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ddt'))
-#' plot_sim2( run_sim2(l_config=l_config2, resist_incr=0.1))
+#' plot_sim_oldcc( run_sim_oldcc(l_config=l_config2, resist_incr=0.1))
 #' @return list of simulation results
 #' @export
 
-run_sim2 <- function(num_tsteps=20,
+run_sim_oldcc <- function(num_tsteps=20,
                     pop_start=0.5,
                     rate_resistance_start=0.1,
                     rate_growth=0.2,
@@ -151,7 +151,7 @@ run_sim2 <- function(num_tsteps=20,
   
   
   #initialise the list storing time data including what controls used
-  l_time <- init_sim2(num_tsteps=num_tsteps, l_config=l_config)
+  l_time <- init_sim(num_tsteps=num_tsteps, l_config=l_config)
   
   l_time[[1]]$pop <- pop_start
   l_time[[1]]$resist <- rate_resistance_start
@@ -210,7 +210,7 @@ run_sim2 <- function(num_tsteps=20,
     
     
     # change population
-    l_time[[tstep+1]]$pop <- change_pop( pop = l_time[[tstep]]$pop,
+    l_time[[tstep+1]]$pop <- change_pop_oldcc( pop = l_time[[tstep]]$pop,
                                    rate_resistance = l_time[[tstep]]$resist,
                                    rate_growth = rate_growth,
                                    #carry_cap = carry_cap,
@@ -246,8 +246,8 @@ run_sim2 <- function(num_tsteps=20,
 #' @param num_tsteps number of timesteps to run simulation
 #' @param pop_start start vector population
 #' @param rate_resistance_start effect of resistance on insecticide kill rate
-#' @param rate_growth population growth rate
-#' @param carry_cap carrying capacity (K) in the logistic model
+#' @param survival adult survival rate
+#' @param emergence emerging adults, can be a vector can be greater than 1
 #' @param rate_insecticide_kill kill rate due to insecticide
 #' @param resistance_modifier modifies effect of resistance
 #' @param resist_incr increase in resistance when correct insecticide present
@@ -257,23 +257,23 @@ run_sim2 <- function(num_tsteps=20,
 #' @param never_go_below restock at this level if pop goes below it
 #' 
 #' @examples
-#' l_time <- run_sim_emerge(pop_start=0.5, rate_resistance_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
+#' l_time <- run_sim(pop_start=0.5, rate_resistance_start=0.2, survival=0.8, emergence=0.2, rate_insecticide_kill=0.4, resistance_modifier=1)
 #' #plot default run
-#' plot_sim2( run_sim_emerge())
+#' plot_sim( run_sim())
 #' #modify params
-#' plot_sim2( run_sim_emerge( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
+#' plot_sim( run_sim( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
 #' #modify config file
 #' l_config <- read_config()
 #' l_config2 <- config_plan(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ddt'))
-#' plot_sim2( run_sim_emerge(l_config=l_config2, resist_incr=0.1))
+#' plot_sim( run_sim(l_config=l_config2, resist_incr=0.1))
 #' @return list of simulation results
 #' @export
 
-run_sim_emerge <- function(num_tsteps=20,
+run_sim <- function(num_tsteps=20,
                      pop_start=0.5,
                      rate_resistance_start=0.1,
-                     rate_growth=0.7, #now survival
-                     carry_cap=0.3, #now emergence (equilibrium pop = emergence/(1-survival))
+                     survival=0.7, 
+                     emergence=0.3, #(equilibrium pop = emergence/(1-survival))
                      rate_insecticide_kill=0.8, #default put up from 0.2 for emerge version
                      resistance_modifier=1,
                      resist_incr = 0.2,
@@ -290,13 +290,13 @@ run_sim_emerge <- function(num_tsteps=20,
   
   
   #initialise the list storing time data including what controls used
-  l_time <- init_sim2(num_tsteps=num_tsteps, l_config=l_config)
+  l_time <- init_sim(num_tsteps=num_tsteps, l_config=l_config)
   
   l_time[[1]]$pop <- pop_start
   l_time[[1]]$resist <- rate_resistance_start
   
-  #can I allow carry_cap to be passed as a vector ?
-  #be careful that later carry_cap may need to be specific to each vector
+  #can I allow emergence to be passed as a vector ?
+  #be careful that later emergence may need to be specific to each vector
   
   #OR can I get it from l_config$places$cc_by_season
   #l_config$places$cc_by_season[1]
@@ -305,16 +305,16 @@ run_sim_emerge <- function(num_tsteps=20,
   #tst3 <- strsplit(l_config$places$cc_by_season, split = ":")
   
   
-  #sneaky bit of code to replicate carry_cap as many times as needed to fill all tsteps
+  #sneaky bit of code to replicate emergence as many times as needed to fill all tsteps
   #this allows some flexibility in creating seasonal patterns
-  if (length(carry_cap) < num_tsteps)
+  if (length(emergence) < num_tsteps)
   {
-    carry_cap <- rep_len(carry_cap, num_tsteps)
+    emergence <- rep_len(emergence, num_tsteps)
   }
   
   for( tstep in 1:(num_tsteps) )
   {
-    l_time[[tstep]]$cc_modifier <- carry_cap[tstep]
+    l_time[[tstep]]$cc_modifier <- emergence[tstep]
   }
   
   
@@ -349,11 +349,10 @@ run_sim_emerge <- function(num_tsteps=20,
     
     
     # change population
-    l_time[[tstep+1]]$pop <- change_pop_emerge( pop = l_time[[tstep]]$pop,
+    l_time[[tstep+1]]$pop <- change_pop( pop = l_time[[tstep]]$pop,
                                          rate_resistance = l_time[[tstep]]$resist,
-                                         rate_growth = rate_growth,
-                                         #carry_cap = carry_cap,
-                                         carry_cap = l_time[[tstep]]$cc_modifier,
+                                         survival = survival,
+                                         emergence = l_time[[tstep]]$cc_modifier,
                                          rate_insecticide_kill = rate_insecticide_kill,
                                          resistance_modifier = resistance_modifier,
                                          #initially just test whether any insecticide

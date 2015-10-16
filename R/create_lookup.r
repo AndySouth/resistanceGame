@@ -45,7 +45,7 @@ create_lookup <- function(   input_values = list( use_pyr=c(0,1),
   insecticide_on <- inputs$use_pyr | inputs$use_ddt | inputs$use_ops | inputs$use_car
   resistance_on <- inputs$use_pyr | inputs$use_ddt
   
-  inputs$changed_pop_vector <- change_pop( pop = inputs$pop_vector,
+  inputs$changed_pop_vector <- change_pop_oldcc( pop = inputs$pop_vector,
                                           rate_growth = rate_growth,
                                           carry_cap = carry_cap,
                                           rate_insecticide_kill = rate_insecticide_kill,

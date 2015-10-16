@@ -2,12 +2,14 @@
 % Please edit documentation in R/plot_sim.R
 \name{plot_sim}
 \alias{plot_sim}
-\title{plot simulation results}
+\title{plot simulation results for newest flexible config driven simulations}
 \usage{
-plot_sim(dF)
+plot_sim(l_time, plot_cc = FALSE)
 }
 \arguments{
-\item{dF}{dataframe containing simulation results}
+\item{l_time}{list containing simulation results}
+
+\item{plot_cc}{whether to add carryin capacity to the population plot}
 }
 \value{
 maybe nothing, produces a plot
@@ -17,8 +19,8 @@ plot insecticide use and resulting changes in population and resistance
 }
 \examples{
 #blank plot
-dF <- init_sim(20)
-plot_sim(dF)
+l_time <- init_sim(20)
+plot_sim(l_time)
 #default run
 plot_sim( run_sim())
 #modify params

@@ -1,5 +1,5 @@
 ---
-title: "Insecticide resistance management : prototype game scenarios"
+title: "Insecticide Resistance Management : prototype game scenarios - OLD version based on carrying capacity"
 author: "Andy South"
 date: "`r Sys.Date()`"
 #output: rmarkdown::html_vignette
@@ -19,7 +19,7 @@ This document demonstrates how a few simple equations can simulate vector popula
 We intend to tweak the input parameters to generate reasonable scenarios. We are looking for assessment of the scenarios themselves rather than the input parameter values. The input parameters are simply a means by which we can generate reasonable scenarios.
 
 
-In the following plots time is represented on the x axis, the top panel shows insecticide use, the middle panel shows vector population and the lower panel shows resistance (phenotypic). The code included e.g. `plot_sim(...)` is there merely to show us as developers how the scenarios were generated.
+In the following plots time is represented on the x axis, the top panel shows insecticide use, the middle panel shows vector population and the lower panel shows resistance (phenotypic). The code included is there merely to show us as developers how the scenarios were generated.
 
 
 For an interactive version of the equations used to generate these plots see [https://andysouth.shinyapps.io/shinyGame3](https://andysouth.shinyapps.io/shinyGame3).
@@ -34,7 +34,7 @@ require(resistanceGame)
 
 ## scenario 1 : no insecticide use
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
-plot_sim2( run_sim2() )
+plot_sim_oldcc( run_sim_oldcc() )
 ```
 
 \newpage
@@ -43,7 +43,7 @@ plot_sim2( run_sim2() )
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 l_config <- read_config()
 l_config2 <- config_plan(l_config, t_strt=1, t_stop=20, control_id='irs_pyr')
-plot_sim2( run_sim2(l_config=l_config2) )
+plot_sim_oldcc( run_sim_oldcc(l_config=l_config2) )
 ```
 
 \newpage
@@ -51,7 +51,7 @@ plot_sim2( run_sim2(l_config=l_config2) )
 ## scenario 3 : continuous use of ops with no resistance
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 l_config2 <- config_plan(l_config, t_strt=1, t_stop=20, control_id='irs_ops')
-plot_sim2( run_sim2(l_config=l_config2) )
+plot_sim_oldcc( run_sim_oldcc(l_config=l_config2) )
 ```
 
 \newpage
@@ -60,7 +60,7 @@ plot_sim2( run_sim2(l_config=l_config2) )
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 l_config2 <- config_plan(l_config, t_strt=seq(1,20,2), t_stop=seq(1,20,2),
                             control_id='irs_pyr')
-plot_sim2( run_sim2(l_config=l_config2) )
+plot_sim_oldcc( run_sim_oldcc(l_config=l_config2) )
 ```
 
 \newpage
@@ -68,7 +68,7 @@ plot_sim2( run_sim2(l_config=l_config2) )
 ## scenario 5 : alternate use of ops and pyr
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 l_config2 <- config_plan(l_config, t_strt=seq(1,20), t_stop=seq(1,20), control_id=c('irs_pyr','irs_ops'))
-plot_sim2( run_sim2(l_config=l_config2) )
+plot_sim_oldcc( run_sim_oldcc(l_config=l_config2) )
 ```
 
 \newpage
@@ -77,7 +77,7 @@ plot_sim2( run_sim2(l_config=l_config2) )
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 l_config2 <- config_plan(l_config, t_strt=c(1,11), t_stop=c(10,20),
                             control_id=c('irs_pyr','irs_ops'))
-plot_sim2( run_sim2(l_config=l_config2) )
+plot_sim_oldcc( run_sim_oldcc(l_config=l_config2) )
 ```
 
 \newpage
@@ -86,28 +86,28 @@ plot_sim2( run_sim2(l_config=l_config2) )
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 l_config2 <- config_plan(l_config, t_strt=c(1,11), t_stop=c(10,20),
                             control_id=c('irs_pyr','irs_ddt'))
-plot_sim2( run_sim2(l_config=l_config2) )
+plot_sim_oldcc( run_sim_oldcc(l_config=l_config2) )
 ```
 
 \newpage
 
 ## scenario 8 : no insecticide use, 50% randomness added
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
-plot_sim2( run_sim2(randomness=0.5) )
+plot_sim_oldcc( run_sim_oldcc(randomness=0.5) )
 ```
 
 \newpage
 
 ## scenario 9 : same as previous but just a different randomisation
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
-plot_sim2( run_sim2(randomness=0.5) )
+plot_sim_oldcc( run_sim_oldcc(randomness=0.5) )
 ```
 
 \newpage
 
 ## scenario 10 : no insecticide use, 10% randomness added
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
-plot_sim2( run_sim2(randomness=0.1) )
+plot_sim_oldcc( run_sim_oldcc(randomness=0.1) )
 ```
 
 \newpage
@@ -115,14 +115,14 @@ plot_sim2( run_sim2(randomness=0.1) )
 ## scenario 11 : continuous pyr use, resistance_modifier < 1 decreases effect of resistance
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 l_config2 <- config_plan(l_config, t_strt=1, t_stop=20, control_id='irs_pyr')
-plot_sim2( run_sim2(l_config=l_config2, resistance_modifier=0.1) )
+plot_sim_oldcc( run_sim_oldcc(l_config=l_config2, resistance_modifier=0.1) )
 ```
 
 \newpage
 
 ## scenario 12 : continuous pyr use, resistance_modifier > 1 increases effect of resistance
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
-plot_sim2( run_sim2(l_config=l_config2, resistance_modifier=10) )
+plot_sim_oldcc( run_sim_oldcc(l_config=l_config2, resistance_modifier=10) )
 ```
 
 \newpage
@@ -137,7 +137,7 @@ l_config2 <- config_resistances(l_config2, control_id='new_ai', resistance_id="t
                                 resistance_incr=0.2,
                                 resistance_decr=0.1)
 l_config2 <- config_plan(l_config2, t_strt=1, t_stop=20, control_id='new_ai')
-plot_sim2( run_sim2(l_config=l_config2) )
+plot_sim_oldcc( run_sim_oldcc(l_config=l_config2) )
 
 ```
 
@@ -147,7 +147,7 @@ plot_sim2( run_sim2(l_config=l_config2) )
 
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 carry_cap = c(rep(1,6),rep(0.1,6))
-plot_sim2( run_sim2(carry_cap=carry_cap, rate_growth=1.6), plot_cc=TRUE )
+plot_sim_oldcc( run_sim_oldcc(carry_cap=carry_cap, rate_growth=1.6), plot_cc=TRUE )
 ```
 
 \newpage
@@ -156,7 +156,7 @@ plot_sim2( run_sim2(carry_cap=carry_cap, rate_growth=1.6), plot_cc=TRUE )
 
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 carry_cap = seq(1,0.1,-0.1)
-plot_sim2( run_sim2(carry_cap=carry_cap, rate_growth=1.6), plot_cc=TRUE )
+plot_sim_oldcc( run_sim_oldcc(carry_cap=carry_cap, rate_growth=1.6), plot_cc=TRUE )
 ```
 
 \newpage

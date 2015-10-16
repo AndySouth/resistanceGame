@@ -31,6 +31,6 @@ modifies the input from config files
 \examples{
 l_config <- read_config()
 l_config2 <- config_controls(l_config, control_id=c('irs_pyr','irs_ops'), vector_id='an_gamb', control_kill_rate=c(0.3,0.4))
-plot_sim2( run_sim2(l_config=l_config2))
+plot_sim( run_sim(l_config=l_config2))
 }
 

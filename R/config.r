@@ -13,7 +13,7 @@
 #' l_config2 <- config_plan(l_config, t_strt=c(1,15), t_stop=c(10,20), control_id='irs_pyr')
 #' l_config2 <- config_plan(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ops'))
 #' l_config2 <- config_plan(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ddt'))
-#' plot_sim2( run_sim2(l_config=l_config2))
+#' plot_sim_oldcc( run_sim_oldcc(l_config=l_config2))
 #' #to create a blank config_plan
 #' #l_config$control_plan <- l_config$control_plan[0,]
 #' @return list with modified control_plan
@@ -65,7 +65,7 @@ config_plan <- function( l_config,
 #' @examples
 #' l_config <- read_config()
 #' l_config2 <- config_controls(l_config, control_id=c('irs_pyr','irs_ops'), vector_id='an_gamb', control_kill_rate=c(0.3,0.4))
-#' plot_sim2( run_sim2(l_config=l_config2))
+#' plot_sim( run_sim(l_config=l_config2))
 #' @return list with modified controls
 #' @export
 config_controls <- function( l_config,
@@ -120,7 +120,7 @@ config_controls <- function( l_config,
 #' @examples
 #' l_config <- read_config()
 #' l_config2 <- config_resistances(l_config, resistance_id="target_site", control_id=c('irs_ops'), resistance_strength=c(0.8), resistance_incr=c(0.2), resistance_decr=c(0.1))
-#' plot_sim2( run_sim2(l_config=l_config2))
+#' plot_sim_oldcc( run_sim_oldcc(l_config=l_config2))
 #' @return list with modified controls
 #' @export
 config_resistances <- function( l_config,
