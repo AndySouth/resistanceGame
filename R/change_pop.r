@@ -30,6 +30,10 @@ change_pop <- function(pop,
 ) 
 {
   
+  #todo fix this temp fudge
+  if(is.na(insecticide_on)) insecticide_on <- 0
+  if(is.na(resistance_on)) resistance_on <- 0  
+  
   #warnings
   if ( length(insecticide_on) > 1 || 
        length(resistance_on) > 1 ||
@@ -50,11 +54,7 @@ change_pop <- function(pop,
   #cool yes it seems to work
   #mortn(c(0.8,0.5,0.5))
   #0.95
-  
-  
-  #todo fix this temp fudge
-  if(is.na(insecticide_on)) insecticide_on <- 0
-  if(is.na(resistance_on)) resistance_on <- 0  
+
   
  
   pop2 <- pop +
