@@ -1,5 +1,6 @@
-#shinyGame3/server.r
+#shinyGame4/server.r
 #andy south 10/9/15
+#based on emergence instead of carrying capacity
 
 library(shiny)
 
@@ -14,7 +15,7 @@ l_time <- NULL
 
 #read config files into a list, this is the old carrying capacity driven one
 #later could offer option to read different one
-l_config <- resistanceGame::read_config(in_folder=system.file("extdata","config_oldcc_no_control", package="resistanceGame"))
+l_config <- resistanceGame::read_config(in_folder=system.file("extdata","config_no_control", package="resistanceGame"))
 
 
 
@@ -91,27 +92,17 @@ shinyServer(function(input, output) {
       }
       
       
-      #set input parameters here to keep formulas more manageable
-      rate_growth <- input$rate_growth
-      rate_insecticide_kill <- input$rate_insecticide_kill
-      resistance_modifier <- input$resistance_modifier
-      carry_cap <- input$cc_modifier
       
-      #set resistance increase & decrease to same
-      resist_incr <- input$resist_incr
-      resist_decr <- input$resist_decr   
-      
-      
-      l_time_this <<- run_sim_oldcc( l_config=l_config, 
+      l_time_this <<- run_sim( l_config=l_config, 
                           num_tsteps=input$tsteps_to_run,
                           pop_start=pop,
                           rate_resistance_start=rate_resistance,
-                          rate_growth = rate_growth,
-                          carry_cap = carry_cap,
-                          rate_insecticide_kill = rate_insecticide_kill,
-                          resistance_modifier = resistance_modifier,
-                          resist_incr = resist_incr,
-                          resist_decr = resist_decr,
+                          survival = input$survival,
+                          emergence = input$emergence,
+                          rate_insecticide_kill = input$rate_insecticide_kill,
+                          resistance_modifier = input$resistance_modifier,
+                          resist_incr = input$resist_incr,
+                          resist_decr = input$resist_decr,
                           randomness = 0 )
       
       #concatenate new time series onto existing
@@ -130,7 +121,7 @@ shinyServer(function(input, output) {
   }) #end of runApply
   
   
-  # run mortality seeking  ##########################
+  # run simulation  ##########################
   restart <- reactive({
     
     #cat("in restart button=",input$aButtonRestart,"\n")
@@ -167,7 +158,7 @@ shinyServer(function(input, output) {
       #put this plotting into a package function
       #so that it can be called from elsewhere, e.g. to plot scenarios in a document
       #initially just get function to accept the dataframe with use_*, pop & resist_pyr
-      plot_sim_oldcc(l_time)      
+      plot_sim(l_time)      
       
     }) #end isolate   
   }) #end plot1
@@ -233,28 +224,24 @@ shinyServer(function(input, output) {
     print("This simple simulation could go on in the background of the game, game players could be provided selected information, e.g. with added randomness.
 
 Within the game equation parameters could be altered based on game play e.g. : 
-dry season : low growth rate and/or low carrying capacity
-rain events : increased growth rate or carrying capacity
+dry season : low emergence and/or low survival
+rain events : increased emergence or survival
 'better' insecticides : increased insecticide kill rate
 poor insecticide application : decreased insecticide kill rate, increased resistance change rate.
 
 These are the simple equations that drive the simulation.
 
-A) N[t+1] = N[t] + rate_growth * N[t] * (1-N[t] / carryingCapacity)
-                         - (rate_insecticide_kill * N[t]
-                         * (1-resistance[t] ^ (1/resistance_modifier) ) )
+A)
 
+  control_kill <- rate_insecticide_kill * (rate_resistance ^ (1/resistance_modifier) )   
+  
+  surviving_adults <- N[t] * survival * control_kill
+  
+  N[t+1] <- emergence + surviving_adults
+
+          
 Where N[t] is population now, and N[t+1] is population in the next time step.
 
-Line 1 does density dependence it just makes the population increase in a curve until it reaches the carrying capacity. This is the logistic model.
-Line 2 does killing of vectors by the insecticide
-Line 3 modifies vectors killed in line 2 according to resistance
-
-So in line 3, '1-resitance[t]' ensures that fewer vectors are killed when resistance is higher, and that no vectors are killed when resistance=1.
-
-A2) If N < low_threshold : N = low_threshold
-
-An additional line to stop the vector population from going extinct (which would be unrealistic).
 
 
 The equations for the change in resistance are even simpler.

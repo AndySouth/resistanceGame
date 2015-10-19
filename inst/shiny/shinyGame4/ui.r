@@ -1,6 +1,6 @@
-#shinyGame3/ui.r
-#andy south 10/9/15
-#runs 20 tsteps at once so you don't have to keep pressing button
+#shinyGame4/ui.r
+#andy south 19/10/15
+#based on emergence instead of carrying capacity
 
 library(shiny)
 library(shinythemes)
@@ -8,8 +8,8 @@ library(shinythemes)
 
 shinyUI(fluidPage(theme = shinytheme("flatly"),
 
-  #headerPanel("Insecticide Resistance Management 'Game model' prototype3"),  
-  h4("Insecticide Resistance Management 'Game model' prototype3"), 
+  #headerPanel("Insecticide Resistance Management 'Game model' prototype4"),  
+  h4("Insecticide Resistance Management 'Game model' prototype4"), 
   
   #29/9/2015    
   #navbarPage sets up navbar, title appears on left
@@ -26,7 +26,7 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
 
   #29/9/2015 simply include a link to pdf on dropbox, target="_blank" to open in new tab
   helpText(a("View a document of scenarios", 
-             href="https://www.dropbox.com/s/r7dnsf9e9hc2kil/IRM-prototype-game-scenarios2.pdf?dl=0",
+             href="https://www.dropbox.com/s/wudl9ic86oml7t1/IRM-prototype-game-scenarios3.pdf?dl=0",
              target="_blank")),
   
   fluidRow(
@@ -35,11 +35,6 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
                  
       helpText("Choose one or more controls to use in each time step. ",
                "Controls and resistances can be modified in configuration files."),    
-      
-#       checkboxInput('use_pyr', 'pyrethroid', TRUE),
-#       checkboxInput('use_ddt', 'ddt', FALSE),
-#       checkboxInput('use_ops', 'organophosphate', FALSE),
-#       checkboxInput('use_car', 'carbamate', FALSE),
       
       #controls checkboxes got from config file
       uiOutput("checkboxGroupControls"),
@@ -54,7 +49,8 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
       
       #helpText("Parameters that could be modified within the game to generate different scenarios."),      
       #growth parameters
-      numericInput('rate_growth', 'population growth rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
+      numericInput('emergence', 'emergence of adults from larvae', value = 0.3, min = 0, max = 1, step = 0.1),
+      numericInput('survival', 'adult survival', value = 0.7, min = 0.1, max = 1, step = 0.1),
       numericInput('rate_insecticide_kill', 'insecticide kill rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
       
       numericInput('pop_start', 'start population (vectors)', value = 0.3, min = 0.01, max = 1, step = 0.05),
@@ -62,8 +58,6 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
       
       numericInput('resist_incr', 'increase in resistance', value = 0.2, min = 0.01, max = 1, step = 0.05),
       numericInput('resist_decr', 'decrease in resistance', value = 0.1, min = 0.01, max = 1, step = 0.05),
-      
-      numericInput('cc_modifier', 'vector carrying capacity modifier', value = 1, min = 0.1, max = 1, step = 0.1),
 
       numericInput('resistance_modifier', 'resistance mortality modifier', value = 1, min = 0.1, max = 5, step = 0.1),
       helpText("Values above 1 for resistance modifier cause lower resistances to reduce mortality more")
