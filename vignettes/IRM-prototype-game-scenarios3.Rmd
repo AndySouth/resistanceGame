@@ -143,7 +143,7 @@ plot_sim( run_sim(l_config=l_config2) )
 
 \newpage
 
-## scenario 14 : change carrying capacity over time (6 tstep(month) cycle). High growth rate.
+## scenario 14 : change emergence over time (6 tstep(month) cycle).
 
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 emergence = c(rep(0.5,6),rep(0,6))
@@ -152,7 +152,7 @@ plot_sim( run_sim(emergence=emergence, survival=0.7), plot_emergence=TRUE )
 
 \newpage
 
-## scenario 15 : carrying capacity gradual change. High growth rate.
+## scenario 15 : emergence gradual change.
 
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 emergence = seq(0.5,0,-0.05)
@@ -160,6 +160,16 @@ plot_sim( run_sim(emergence=emergence, survival=0.7), plot_emergence=TRUE )
 ```
 
 \newpage
+
+## scenario 16 : emergence annual pattern of monthly values, daily time step
+
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+emergence = c(rep(0.3,180),rep(0,180))
+plot_sim( run_sim(num_tsteps=360,emergence=emergence, survival=0.7), plot_emergence=TRUE )
+```
+
+\newpage
+
 
 
 
