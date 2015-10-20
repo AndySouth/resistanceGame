@@ -66,7 +66,7 @@ shinyServer(function(input, output) {
 #       }
 
       
-      cat(input$controls_used," length:",length(input$controls_used),"\n")
+      #cat(input$controls_used," length:",length(input$controls_used),"\n")
       
       # set config file control_plan from inputs
       #first just set start & stop to the whole time
@@ -114,7 +114,7 @@ shinyServer(function(input, output) {
       #this is -1 to miss repeated tstep (last tstep of one run is same as first tstep of next)
       tstep <<- tstep -1 + input$tsteps_to_run
       
-      cat("tstep:",tstep," length(l_time):",length(l_time),"\n")
+      #cat("tstep:",tstep," length(l_time):",length(l_time),"\n")
       
       
     }) #end isolate   
