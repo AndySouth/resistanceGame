@@ -170,6 +170,19 @@ plot_sim( run_sim(num_tsteps=360,emergence=emergence, survival=0.7), plot_emerge
 
 \newpage
 
+## scenario 17 : as previous, with control
+
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+emergence = c(rep(0.3,180),rep(0,180))
+l_config2 <- config_plan(l_config, t_strt=c(1,181), t_stop=c(180,360),
+                         control_id=c('irs_ops','irs_pyr'))
+plot_sim( run_sim(l_config=l_config2, 
+                  num_tsteps=360, emergence=emergence, survival=0.7,
+                  resist_incr=0.02, resist_decr = 0.01), 
+          plot_emergence=TRUE )
+```
+
+\newpage
 
 
 

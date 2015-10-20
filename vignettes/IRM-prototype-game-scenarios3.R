@@ -68,6 +68,10 @@ plot_sim( run_sim(emergence=emergence, survival=0.7), plot_emergence=TRUE )
 emergence = seq(0.5,0,-0.05)
 plot_sim( run_sim(emergence=emergence, survival=0.7), plot_emergence=TRUE )
 
+## ---- eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6----
+emergence = c(rep(0.3,180),rep(0,180))
+plot_sim( run_sim(num_tsteps=360,emergence=emergence, survival=0.7), plot_emergence=TRUE )
+
 ## ---- eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6----
 places <- read.csv( system.file('extdata','config1','places.csv', package='resistanceGame'))
 print(places) 

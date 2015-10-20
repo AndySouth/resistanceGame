@@ -70,22 +70,22 @@ carry_cap = seq(1,0.1,-0.1)
 plot_sim_oldcc( run_sim_oldcc(carry_cap=carry_cap, rate_growth=1.6), plot_cc=TRUE )
 
 ## ---- eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6----
-places <- read.csv( system.file('extdata','config1','places.csv', package='resistanceGame'))
+places <- read.csv( system.file('extdata','config1_oldcc','places.csv', package='resistanceGame'))
 print(places) 
 
 ## ---- eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6----
-vectors <- read.csv( system.file('extdata','config1','vectors.csv', package='resistanceGame'))
+vectors <- read.csv( system.file('extdata','config1_oldcc','vectors.csv', package='resistanceGame'))
 print(vectors)
 
 ## ---- eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6----
-controls <- read.csv( system.file('extdata','config1','controls.csv', package='resistanceGame'))
+controls <- read.csv( system.file('extdata','config1_oldcc','controls.csv', package='resistanceGame'))
 print(controls)
 
 ## ---- eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6----
-resistances <- read.csv( system.file('extdata','config1','resistances.csv', package='resistanceGame'))
+resistances <- read.csv( system.file('extdata','config1_oldcc','resistances.csv', package='resistanceGame'))
 print(resistances)
 
 ## ---- eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6----
-control_plan <- read.csv( system.file('extdata','config1','control_plan.csv', package='resistanceGame'))
+control_plan <- read.csv( system.file('extdata','config1_oldcc','control_plan.csv', package='resistanceGame'))
 print(control_plan)
 
