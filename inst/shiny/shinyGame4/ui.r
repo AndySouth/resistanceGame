@@ -26,7 +26,7 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
 
   #29/9/2015 simply include a link to pdf on dropbox, target="_blank" to open in new tab
   helpText(a("View a document of scenarios", 
-             href="https://www.dropbox.com/s/wudl9ic86oml7t1/IRM-prototype-game-scenarios3.pdf?dl=0",
+             href="https://www.dropbox.com/s/6j9gle8de8f0op5/IRM-prototype-game-scenarios4.pdf?dl=0",
              target="_blank")),
   
   fluidRow(
@@ -56,8 +56,8 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
       numericInput('pop_start', 'start population (vectors)', value = 0.3, min = 0.01, max = 1, step = 0.05),
       numericInput('resist_start', 'starting resistance', value = 0.05, min = 0.01, max = 1, step = 0.05),
       
-      numericInput('resist_incr', 'increase in resistance', value = 0.2, min = 0.01, max = 1, step = 0.05),
-      numericInput('resist_decr', 'decrease in resistance', value = 0.1, min = 0.01, max = 1, step = 0.05),
+      numericInput('resist_incr', 'increase in resistance', value = 0.02, min = 0.001, max = 0.1, step = 0.01),
+      numericInput('resist_decr', 'decrease in resistance', value = 0.01, min = 0.001, max = 0.1, step = 0.01),
 
       numericInput('resistance_modifier', 'resistance mortality modifier', value = 1, min = 0.1, max = 5, step = 0.1),
       helpText("Values above 1 for resistance modifier cause lower resistances to reduce mortality more")
