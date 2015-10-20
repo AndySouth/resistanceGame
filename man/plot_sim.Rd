@@ -4,12 +4,14 @@
 \alias{plot_sim}
 \title{plot simulation results for newest flexible config driven simulations}
 \usage{
-plot_sim(l_time, plot_emergence = FALSE)
+plot_sim(l_time, plot_emergence = FALSE, verbose = FALSE)
 }
 \arguments{
 \item{l_time}{list containing simulation results}
 
 \item{plot_emergence}{whether to add emergence rate to population plot}
+
+\item{verbose}{output diagnostics to console}
 }
 \value{
 maybe nothing, produces a plot

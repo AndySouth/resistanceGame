@@ -184,6 +184,7 @@ plot_sim_oldcc <- function(l_time, plot_cc=FALSE)
 #'
 #' @param l_time list containing simulation results
 #' @param plot_emergence whether to add emergence rate to population plot
+#' @param verbose output diagnostics to console
 #' @examples
 #' #blank plot
 #' l_time <- init_sim(20)
@@ -195,7 +196,9 @@ plot_sim_oldcc <- function(l_time, plot_cc=FALSE)
 #' @return maybe nothing, produces a plot
 #' @export
 
-plot_sim <- function(l_time, plot_emergence=FALSE) 
+plot_sim <- function(l_time, 
+                     plot_emergence=FALSE,
+                     verbose=FALSE) 
 {
   
   
@@ -223,7 +226,7 @@ plot_sim <- function(l_time, plot_emergence=FALSE)
   mat_control <- sapply(l_time, function(x) x[["controls_used", drop=FALSE]])
   
   #testing
-  print(mat_control)
+  if (verbose) print(mat_control)
   
   #hack to cope if just one control (otherwise it stops being a matrix & fails)
   if (is.null(nrow(mat_control)))
@@ -263,7 +266,7 @@ plot_sim <- function(l_time, plot_emergence=FALSE)
   
   pop <- sapply(l_time, "[[", "pop")
   
-  cat("plotting pop :",pop,"\n")
+  if (verbose) cat("plotting pop :",pop,"\n")
   
   plot.default(pop, axes=FALSE, ylim=c(0,1), type='l', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
   axis(2,at=c(0,1), labels=c('lo','hi'), las=1, cex.axis=1.3, tick=TRUE)
@@ -283,7 +286,7 @@ plot_sim <- function(l_time, plot_emergence=FALSE)
   
   resist <- sapply(l_time, "[[", "resist")
   
-  cat("plotting resist :",resist,"\n")
+  if (verbose) cat("plotting resist :",resist,"\n")
   
   plot.default(resist, axes=FALSE, ylim=c(0,1), type='l', col='green', main="resistance", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
   #to add x axis labels, las=1 to make labels horizontal
