@@ -2,8 +2,8 @@ name: shinyGame4
 account: andysouth
 server: shinyapps.io
 appId: 64740
-bundleId: 291439
+bundleId: 292592
 url: https://andysouth.shinyapps.io/shinyGame4
-when: 1445255887.73148
+when: 1445356147.42737
 asMultiple: FALSE
 asStatic: FALSE
