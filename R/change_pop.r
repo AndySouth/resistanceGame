@@ -117,6 +117,7 @@ change_pop_oldcc <- function(pop,
 #' @param resistance_on whether there is resistance to the applied insecticide 0=no, 1=yes
 #' @param randomness 0-1 0=none, 1=maximum
 #' @param never_go_below restock at this level if pop goes below it
+#' @param verbose whether to output diagnostics to console
 #' @examples
 #' change_pop(pop=0.5, survival=0.4, emergence=1, rate_insecticide_kill=0.4, rate_resistance=0.2, resistance_modifier=1, resistance_on=1, insecticide_on=1)
 #' @return float population in next timestep
@@ -131,7 +132,8 @@ change_pop <- function(pop,
                        insecticide_on,
                        resistance_on,
                        randomness = 0,
-                       never_go_below = 0.01
+                       never_go_below = 0.01,
+                       verbose = FALSE
 ) 
 {
   
@@ -165,15 +167,25 @@ change_pop <- function(pop,
   # new emergence model 
   #pop2 <- emergence + survivors
   
-  control_kill <- (1-insecticide_on * rate_insecticide_kill *
-                  (1-resistance_on * rate_resistance ^ (1/resistance_modifier) ))    
+#worked but wrong  
+#   control_kill <- (1-insecticide_on * rate_insecticide_kill *
+#                   (1-resistance_on * rate_resistance ^ (1/resistance_modifier) ))    
+  
+  control_kill <- insecticide_on * rate_insecticide_kill *
+                      (1-(resistance_on * rate_resistance ^ (1/resistance_modifier) ))
   
   
-  surviving_adults <- pop * survival * control_kill
+  surviving_adults <- pop * survival * (1-control_kill)
   
   
   pop2 <- emergence + surviving_adults
-          
+   
+  if (verbose)
+    message("insecticide_on:",insecticide_on,
+            " rate_insecticide_kill:",rate_insecticide_kill,
+            " resistance_on:",resistance_on,
+            " rate_resistance:",rate_resistance,
+            " control_kill:",control_kill )       
   
   
   #randomness 0-1
