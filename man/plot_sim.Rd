@@ -11,7 +11,7 @@ plot_sim(l_time, plot_emergence = FALSE, verbose = FALSE)
 
 \item{plot_emergence}{whether to add emergence rate to population plot}
 
-\item{verbose}{output diagnostics to console}
+\item{verbose}{whether to output diagnostics to console}
 }
 \value{
 maybe nothing, produces a plot

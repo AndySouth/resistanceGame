@@ -184,7 +184,7 @@ plot_sim_oldcc <- function(l_time, plot_cc=FALSE)
 #'
 #' @param l_time list containing simulation results
 #' @param plot_emergence whether to add emergence rate to population plot
-#' @param verbose output diagnostics to console
+#' @param verbose whether to output diagnostics to console
 #' @examples
 #' #blank plot
 #' l_time <- init_sim(20)
