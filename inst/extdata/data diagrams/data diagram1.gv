@@ -1,0 +1,49 @@
+digraph nicegraph {
+
+  # graph, node, and edge definitions
+  # compound = false allows edges between components of clusters
+  graph [compound = false, nodesep = .5, ranksep = .25,
+         color = crimson]
+
+  node [fontname = Helvetica, fontcolor = darkslategray,
+        shape = rectangle, #fixedsize = true, width = 1,
+        color = darkslategray]
+
+  edge [color = grey, arrowhead = none, arrowtail = none]
+
+
+  subgraph cluster_vectors {
+    #node [fixedsize = true, width = 3]
+    edge [len=0, color=transparent];
+    label = "A:Vectors";
+    'A1:Survival' -> 'A2:Outdoor biting%'
+  }
+
+  subgraph cluster_controls {
+    #node [fixedsize = true, width = 3]
+    edge [len=0, color=transparent];
+    label = "B:Controls";
+    'B1:list of kill rates' -> 'B2:residual life' -> 'B3:cost'
+  }
+
+  subgraph cluster_resistances {
+    #node [fixedsize = true] #, width = 3
+    edge [len=0, color=transparent];
+    label = "C:Resistances";
+    'C1:list of controls and % effect on each' -> 'C2:rate of increase' -> 'C3:rate of decrease'
+  }
+
+  #edges (links) between nodes
+
+
+
+  'B1:list of kill rates' -> 'A1:Survival'           # [lhead = cluster0] #determines which is start & end of line
+  'C1:list of controls and % effect on each' -> 'A1:Survival'
+  
+  #RStudio -> '2'        [lhead = cluster1]
+
+  #specifies a new node
+  #Information             [width = 1.5]
+
+}
+
