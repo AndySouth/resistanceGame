@@ -16,21 +16,21 @@ digraph {
     #node [fixedsize = true, width = 3]
     edge [len=0, color=transparent];
     label = "A:Vectors";
-    'A1:Survival' -> 'A2:Outdoor biting%'
+    "A1:Survival" -> "A2:Outdoor biting%"
   }
 
   subgraph cluster_controls {
     #node [fixedsize = true, width = 3]
     edge [len=0, color=transparent];
     label = "B:Controls";
-    'B1:list of kill rates' -> 'B2:residual life' -> 'B3:cost'
+    "B1:list of kill rates" -> "B2:residual life" -> "B3:cost"
   }
 
   subgraph cluster_resistances {
     #node [fixedsize = true] #, width = 3
     edge [len=0, color=transparent];
     label = "C:Resistances";
-    'C1:list of controls and % effect on each' -> 'C2:rate of increase' -> 'C3:rate of decrease'
+    "C1:list of controls and % effect on each" -> "C2:rate of increase" -> "C3:rate of decrease"
   }
 **/  
 
@@ -38,23 +38,26 @@ digraph {
 
 #can add labels to edges but might make less clear
 #[ label = " -" ]
-  'increase vector popn.' -> 'health'  [ label = " -ve" ]
-  'decrease vector popn.' -> 'health'  [ label = " +ve" ]  
+  "increase vector popn." -> "health"  [ label = " -ve" ]
+  "decrease vector popn." -> "health"  [ label = " +ve" ]  
 
-  'poor spray coverage' -> 'reduce control_kill_rate' -> 'increase vector popn.' # -> 'reduce health'  
+  "poor spray coverage" -> "reduce control_kill_rate" -> "increase vector popn." # -> "reduce health"  
   
-  'poor spray coverage' -> 'increase freq. of resistance' -> 'reduce control_kill_rate'  
+  "poor spray coverage" -> "increase freq. of resistance" -> "reduce control_kill_rate"  
   
-  'rain' -> 'increase emergence' -> 'increase vector popn.' 
+  "rain" -> "increase emergence" -> "increase vector popn." 
   
-  'vector sp. with higher outdoor biting' -> 'reduce control_kill_rate'
+  "vector sp. with higher outdoor biting" -> "reduce control_kill_rate"
   
-  'use control to which vector susceptible' -> 'decrease vector popn.'
+  "use control to which vector susceptible" -> "decrease vector popn."
 
-  'use control to which vector susceptible' -> 'cost' [ label = " +ve" ]
+  "use control to which vector susceptible" -> "cost" [ label = " +ve" ]
 
-  'higher intensity of resistance' -> 'shows in intensity assay'
-  'increase freq. of resistance' -> 'shows in bioassay'
+  "higher intensity of resistance" -> "shows in intensity assay"
+  "increase freq. of resistance" -> "shows in bioassay"
+
+  "use control to which vector resistant" -> "increase freq. of resistance"
+  "use control to which vector resistant" -> "cost" [ label = " +ve" ]
 
   #specifies a new node
   #Information             [width = 1.5]
