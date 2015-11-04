@@ -158,14 +158,13 @@ run_sim_oldcc <- function(num_tsteps=20,
   l_time[[1]]$pop <- pop_start
   l_time[[1]]$resist <- rate_resistance_start
 
-  #can I allow carry_cap to be passed as a vector ?
-  #be careful that later carry_cap may need to be specific to each vector
+  #can I allow emergence to be passed as a vector ?
+  #be careful that later emergence may need to be specific to each vector
   
-  #OR can I get it from l_config$places$cc_by_season
-  #l_config$places$cc_by_season[1]
+  #OR can I get it from l_config$places$emergence
+  #l_config$places$emergence[1]
   #[1] "0.1:0.1:0.1:0.1:0.1:0.1:0.9:0.9:0.9:0.9:0.9:0.9"
-  #converting all places to a list of vectors
-  #tst3 <- strsplit(l_config$places$cc_by_season, split = ":")
+
   
   
   #sneaky bit of code to replicate carry_cap as many times as needed to fill all tsteps
@@ -297,15 +296,13 @@ run_sim <- function(num_tsteps=20,
   l_time[[1]]$pop <- pop_start
   l_time[[1]]$resist <- rate_resistance_start
   
-  #can I allow emergence to be passed as a vector ?
-  #be careful that later emergence may need to be specific to each vector
-  
-  #OR can I get it from l_config$places$cc_by_season
-  #l_config$places$cc_by_season[1]
-  #[1] "0.1:0.1:0.1:0.1:0.1:0.1:0.9:0.9:0.9:0.9:0.9:0.9"
-  #converting all places to a list of vectors
-  #tst3 <- strsplit(l_config$places$cc_by_season, split = ":")
-  
+  #allowing seasonal emergence to be got from config files 
+  #emergence <- expand_season(season_string=l_config$places$emergence[1]) 
+  #doesn't work yet ...
+  #because we need to decide which entry in config file do we want if there are multiple places
+  #instead can use expand_season() to set emergence (e.g. in vignette) & pass emergence to this function
+  #emergence <- expand_season(season_string="6:0.1;6:0.9")
+ 
   
   #sneaky bit of code to replicate emergence as many times as needed to fill all tsteps
   #this allows some flexibility in creating seasonal patterns
