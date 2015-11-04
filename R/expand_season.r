@@ -23,6 +23,8 @@ expand_season <- function(season_string="6:0.1;6:0.9",
   
   by_month <- unlist(lapply(tmp2, function(x) rep(x[2],x[1])))
   
+  by_month <- as.numeric(by_month)
+  
   if (return_tstep == 'days')
   {
     return(rep(by_month,each=28)) 
