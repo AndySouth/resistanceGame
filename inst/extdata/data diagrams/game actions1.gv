@@ -3,7 +3,9 @@ digraph {
   # graph, node, and edge definitions
   # compound = false allows edges between components of clusters
   graph [compound = false, overlap = true, #nodesep = .5, ranksep = .25,
-         color = crimson]
+         color = crimson] #, layout = neato]
+
+1
 
   node [fontname = Helvetica, fontcolor = darkslategray,
         shape = rectangle, #fixedsize = true, width = 1,
