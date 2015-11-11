@@ -31,7 +31,7 @@ init_sim_oldest <- function(num_tsteps=20)
 #' dF <- init_sim(20, l_config=read_config())
 #' @return list to contain simulation results
 #' @export
-#' 
+
 init_sim <- function(num_tsteps=20, l_config=NULL) 
 {
   
