@@ -23,7 +23,6 @@ In the following plots time in days is represented on the x axis, the top panel 
 
 The code included is there merely to show us as developers how the scenarios were generated.
 
-
 For an interactive version of the equations used to generate these plots see [https://andysouth.shinyapps.io/shinyGame4](https://andysouth.shinyapps.io/shinyGame4).
 
 
@@ -32,49 +31,56 @@ For an interactive version of the equations used to generate these plots see [ht
 require(resistanceGame)
 ```
 
-\newpage
-
-
-## scenario 14 : change emergence over time (6 tstep(month) cycle).
-
-```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
-emergence = c(rep(0.3,180),rep(0,180))
-plot_sim( run_sim(emergence=emergence, num_tsteps=360, resist_incr=0.02, resist_decr = 0.01), plot_emergence=TRUE )
-```
+Remember that years are 336 days (7days * 4weeks * 12months), half=168.
 
 \newpage
 
-## scenario 15 : emergence gradual change.
+## seasonal scenario 1 : 6 months high, 6 months low
 
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
-#sin curve to create a gradual change from 0 to 0.3
-emergence = 0.3*sin(seq(0,3.1,0.01))
-plot_sim( run_sim(emergence=emergence, num_tsteps=360, resist_incr=0.02, resist_decr = 0.01), plot_emergence=TRUE )
-```
-
-\newpage
-
-## scenario 16 : emergence annual pattern of monthly values, daily time step
-
-```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
-emergence = c(rep(0.3,180),rep(0,180))
-plot_sim( run_sim(num_tsteps=360,emergence=emergence, survival=0.7,
+emergence <- expand_season(season_string="6:0.3;6:0.1")
+plot_sim( run_sim(num_tsteps=336, emergence=emergence, survival=0.7,
                   resist_incr=0.02, resist_decr = 0.01), 
-          plot_emergence=TRUE )
+                  plot_emergence=TRUE )
 ```
 
 \newpage
 
-## scenario 17 : as previous, with control
+## seasonal scenario 2 : as previous, with constant control no resistance
 
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
-emergence = c(rep(0.3,180),rep(0,180))
-l_config2 <- config_plan(l_config, t_strt=c(1,181), t_stop=c(180,360),
+emergence <- expand_season(season_string="6:0.3;6:0.1")
+l_config2 <- config_plan(l_config, t_strt=c(1), t_stop=c(336),
+                         control_id=c('irs_ops'))
+plot_sim( run_sim(l_config=l_config2, 
+                  num_tsteps=336, emergence=emergence, survival=0.7,
+                  resist_incr=0.02, resist_decr = 0.01), 
+                  plot_emergence=TRUE )
+```
+
+## seasonal scenario 2 : as previous, with constant control with resistance
+
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+emergence <- expand_season(season_string="6:0.3;6:0.1")
+l_config2 <- config_plan(l_config, t_strt=c(1), t_stop=c(336),
+                         control_id=c('irs_pyr'))
+plot_sim( run_sim(l_config=l_config2, 
+                  num_tsteps=336, emergence=emergence, survival=0.7,
+                  resist_incr=0.02, resist_decr = 0.01), 
+                  plot_emergence=TRUE )
+```
+
+
+## seasonal scenario 3 : as previous, with changing control
+
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+emergence <- expand_season(season_string="6:0.3;6:0.1")
+l_config2 <- config_plan(l_config, t_strt=c(1,169), t_stop=c(168,336),
                          control_id=c('irs_ops','irs_pyr'))
 plot_sim( run_sim(l_config=l_config2, 
-                  num_tsteps=360, emergence=emergence, survival=0.7,
+                  num_tsteps=336, emergence=emergence, survival=0.7,
                   resist_incr=0.02, resist_decr = 0.01), 
-          plot_emergence=TRUE )
+                  plot_emergence=TRUE )
 ```
 
 \newpage
