@@ -50,6 +50,7 @@ plot_sim( run_sim(num_tsteps=336, emergence=emergence, survival=0.7,
 
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
 emergence <- expand_season(season_string="6:0.3;6:0.1")
+l_config <- read_config()
 l_config2 <- config_plan(l_config, t_strt=c(1), t_stop=c(336),
                          control_id=c('irs_ops'))
 plot_sim( run_sim(l_config=l_config2, 

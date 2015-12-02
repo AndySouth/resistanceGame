@@ -4,18 +4,17 @@
 \alias{run_sim_oldcc}
 \title{run flexible simulation of population and resistance change driven by config file}
 \usage{
-run_sim_oldcc(num_tsteps = 20, pop_start = 0.5,
-  rate_resistance_start = 0.1, rate_growth = 0.2, carry_cap = 1,
-  rate_insecticide_kill = 0.2, resistance_modifier = 1, resist_incr = 0.2,
-  resist_decr = 0.1, l_config = NULL, randomness = 0,
-  never_go_below = 0.01)
+run_sim_oldcc(num_tsteps = 20, pop_start = 0.5, resist_freq_start = 0.1,
+  rate_growth = 0.2, carry_cap = 1, rate_insecticide_kill = 0.2,
+  resistance_modifier = 1, resist_incr = 0.2, resist_decr = 0.1,
+  l_config = NULL, randomness = 0, never_go_below = 0.01)
 }
 \arguments{
 \item{num_tsteps}{number of timesteps to run simulation}
 
 \item{pop_start}{start vector population}
 
-\item{rate_resistance_start}{effect of resistance on insecticide kill rate}
+\item{resist_freq_start}{effect of resistance on insecticide kill rate}
 
 \item{rate_growth}{population growth rate}
 
@@ -42,7 +41,7 @@ list of simulation results
 some params driven by config file, others by function args
 }
 \examples{
-l_time <- run_sim_oldcc(pop_start=0.5, rate_resistance_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
+l_time <- run_sim_oldcc(pop_start=0.5, resist_freq_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
 #plot default run
 plot_sim_oldcc( run_sim_oldcc())
 #modify params

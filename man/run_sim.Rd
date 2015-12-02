@@ -4,7 +4,7 @@
 \alias{run_sim}
 \title{run flexible simulation of population and resistance change based on emergence driven by config file}
 \usage{
-run_sim(num_tsteps = 20, pop_start = 0.5, rate_resistance_start = 0.1,
+run_sim(num_tsteps = 20, pop_start = 0.5, resist_freq_start = 0.1,
   survival = 0.7, emergence = 0.3, rate_insecticide_kill = 0.8,
   resistance_modifier = 1, resist_incr = 0.2, resist_decr = 0.1,
   l_config = NULL, randomness = 0, never_go_below = 0.01)
@@ -14,7 +14,7 @@ run_sim(num_tsteps = 20, pop_start = 0.5, rate_resistance_start = 0.1,
 
 \item{pop_start}{start vector population}
 
-\item{rate_resistance_start}{effect of resistance on insecticide kill rate}
+\item{resist_freq_start}{effect of resistance on insecticide kill rate}
 
 \item{survival}{adult survival rate}
 
@@ -41,7 +41,7 @@ list of simulation results
 some params driven by config file, others by function args
 }
 \examples{
-l_time <- run_sim(pop_start=0.5, rate_resistance_start=0.2, survival=0.8, emergence=0.2, rate_insecticide_kill=0.4, resistance_modifier=1)
+l_time <- run_sim(pop_start=0.5, resist_freq_start=0.2, survival=0.8, emergence=0.2, rate_insecticide_kill=0.4, resistance_modifier=1)
 #plot default run
 plot_sim( run_sim())
 #modify params

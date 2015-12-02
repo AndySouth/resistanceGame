@@ -4,18 +4,18 @@
 \alias{run_sim_oldest}
 \title{run simulation of population and resistance change}
 \usage{
-run_sim_oldest(num_tsteps = 20, pop_start = 0.5,
-  rate_resistance_start = 0.1, rate_growth = 0.2, carry_cap = 1,
-  rate_insecticide_kill = 0.2, resistance_modifier = 1, resist_incr = 0.2,
-  resist_decr = 0.1, use_pyr = rep(1, num_tsteps), use_ddt = NA,
-  use_ops = NA, use_car = NA, randomness = 0)
+run_sim_oldest(num_tsteps = 20, pop_start = 0.5, resist_freq_start = 0.1,
+  rate_growth = 0.2, carry_cap = 1, rate_insecticide_kill = 0.2,
+  resistance_modifier = 1, resist_incr = 0.2, resist_decr = 0.1,
+  use_pyr = rep(1, num_tsteps), use_ddt = NA, use_ops = NA,
+  use_car = NA, randomness = 0)
 }
 \arguments{
 \item{num_tsteps}{number of timesteps to run simulation}
 
 \item{pop_start}{start vector population}
 
-\item{rate_resistance_start}{effect of resistance on insecticide kill rate}
+\item{resist_freq_start}{effect of resistance on insecticide kill rate}
 
 \item{rate_growth}{population growth rate}
 
@@ -46,7 +46,7 @@ dataframe of simulation results
 initially accepts single arg values next get it to accept vectors by time
 }
 \examples{
-dF <- run_sim_oldest(pop_start=0.5, rate_resistance_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
+dF <- run_sim_oldest(pop_start=0.5, resist_freq_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
 #plot default run
 plot_sim_oldest( run_sim_oldest())
 #modify params
