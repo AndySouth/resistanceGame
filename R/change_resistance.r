@@ -33,9 +33,12 @@ change_resistance <- function(resistance,
   resistance2 <- NULL
   
   
-  resistance2 <- ifelse( resistance_on, resistance + resist_incr * (1-resistance),
-                                        resistance * (1-resist_decr) )
-    
+#   resistance2 <- ifelse( resistance_on, resistance + resist_incr * (1-resistance),
+#                                         resistance * (1-resist_decr) )
+  
+  #add * resistance for slower starting changes
+  resistance2 <- ifelse( resistance_on, resistance + resist_incr * (1-resistance) * resistance,
+                         resistance * (1-resist_decr) )  
   
 #   if ( resistance_on )
 #   {
