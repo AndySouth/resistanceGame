@@ -96,7 +96,7 @@ shinyServer(function(input, output) {
       l_time_this <<- run_sim( l_config=l_config, 
                           num_tsteps=input$tsteps_to_run,
                           pop_start=pop,
-                          rate_resistance_start=rate_resistance,
+                          resist_freq_start=rate_resistance,
                           survival = input$survival,
                           emergence = input$emergence,
                           rate_insecticide_kill = input$rate_insecticide_kill,

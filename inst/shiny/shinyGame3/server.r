@@ -105,7 +105,7 @@ shinyServer(function(input, output) {
       l_time_this <<- run_sim_oldcc( l_config=l_config, 
                           num_tsteps=input$tsteps_to_run,
                           pop_start=pop,
-                          rate_resistance_start=rate_resistance,
+                          resist_freq_start=rate_resistance,
                           rate_growth = rate_growth,
                           carry_cap = carry_cap,
                           rate_insecticide_kill = rate_insecticide_kill,
