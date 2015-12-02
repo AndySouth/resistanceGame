@@ -55,11 +55,5 @@ change_resistance <- function(resistance,
   
   return(resistance2)
   
-#   if ( input$pyrOn || input$ddtOn ) 
-#     #constraining resistance to 1
-#     dF$pyrResist[runNum+1] <<- dF$pyrResist[runNum] +
-#       rateResistance * (1 - dF$pyrResist[runNum])
-#   else 
-#     dF$pyrResist[runNum+1] <<- dF$pyrResist[runNum] * (1-rateResistance)  
   
 }
