@@ -1,0 +1,73 @@
+digraph {
+
+  #i think that doing this by hand with xmind may be more effective and flexible
+
+  # graph, node, and edge definitions
+  # compound = false allows edges between components of clusters
+  #graph [compound = false, overlap = true, #nodesep = .5, ranksep = .25,
+  #       color = crimson, layout = neato]
+  
+  graph [compound = false, overlap = true, #nodesep = .5, ranksep = .25,
+         color = crimson, layout = circo]
+
+  node [fontname = Helvetica, fontcolor = darkslategray,
+        shape = rectangle, #fixedsize = true, width = 1,
+        color = darkslategray]
+
+  edge [color = orangered, arrowhead = normal, arrowtail = none]
+
+/**
+  subgraph cluster_vectors {
+    #node [fixedsize = true, width = 3]
+    edge [len=0, color=transparent];
+    label = "A:Vectors";
+    "A1:Survival" -> "A2:Outdoor biting%"
+  }
+
+  subgraph cluster_controls {
+    #node [fixedsize = true, width = 3]
+    edge [len=0, color=transparent];
+    label = "B:Controls";
+    "B1:list of kill rates" -> "B2:residual life" -> "B3:cost"
+  }
+
+  subgraph cluster_resistances {
+    #node [fixedsize = true] #, width = 3
+    edge [len=0, color=transparent];
+    label = "C:Resistances";
+    "C1:list of controls and % effect on each" -> "C2:rate of increase" -> "C3:rate of decrease"
+  }
+**/  
+
+  #edges (links) between nodes
+
+#can add labels to edges [ label = " -" ]
+
+  "intervention ideal kill rate" -> "effective kill rate"  [ label = " +ve" ] 
+  
+  "time since intervention" -> "effective kill rate"  [ label = " -ve" ]
+  "intervention coverage" -> "effective kill rate"  [ label = " -ve" ] 
+  
+  "resistance mechanism" -> "resistance intensity" -> "resistance effect" -> "effective kill rate"  [ label = " -ve" ]   
+
+  "resistance frequency" -> "resistance effect"  [ label = " +ve" ]
+  
+  #"poor spray coverage" -> "reduce control_kill_rate" -> "increase vector popn." # -> "reduce health"  
+  
+  #"poor spray coverage" -> "increase freq. of resistance" -> "reduce control_kill_rate"  
+  
+  #"rain" -> "increase emergence" -> "increase vector popn." 
+  
+  #"vector sp. with higher outdoor biting" -> "reduce control_kill_rate"
+  
+  #"use control to which vector susceptible" -> "decrease vector popn."
+
+  #"use control to which vector susceptible" -> "cost" [ label = " +ve" ]
+
+  #"higher intensity of resistance" -> "shows in intensity assay"
+  #"increase freq. of resistance" -> "shows in bioassay"
+
+
+
+}
+
