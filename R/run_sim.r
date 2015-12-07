@@ -109,12 +109,14 @@ run_sim <- function(num_tsteps=20,
     
     #cat("insecticide & resistance on ",insecticide_on, resistance_on,"\n")
     
+    #7/12/15 initially just set resist_intensity to 10*resist_freq
+    resist_intensity <- 10 * l_time[[tstep]]$resist
     
     # change population
     l_time[[tstep+1]]$pop <- change_pop( pop = l_time[[tstep]]$pop,
                                          resist_freq = l_time[[tstep]]$resist,
                                          #initially have this at constant
-                                         resist_intensity = resist_intensity_start,
+                                         resist_intensity = resist_intensity,
                                          survival = survival,
                                          emergence = l_time[[tstep]]$emergence,
                                          rate_insecticide_kill = rate_insecticide_kill,
