@@ -6,7 +6,7 @@
 \usage{
 change_pop(pop, survival, emergence, rate_insecticide_kill, resist_freq,
   resistance_modifier, resist_intensity = 10, insecticide_on, resistance_on,
-  randomness = 0, never_go_below = 0.01, verbose = FALSE)
+  randomness = 0, verbose = FALSE)
 }
 \arguments{
 \item{pop}{vector population in this timestep}
@@ -28,8 +28,6 @@ change_pop(pop, survival, emergence, rate_insecticide_kill, resist_freq,
 \item{resistance_on}{whether there is resistance to the applied insecticide 0=no, 1=yes}
 
 \item{randomness}{0-1 0=none, 1=maximum}
-
-\item{never_go_below}{restock at this level if pop goes below it}
 
 \item{verbose}{whether to output diagnostics to console}
 }

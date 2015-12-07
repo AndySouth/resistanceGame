@@ -12,7 +12,6 @@
 #' @param insecticide_on whether insecticide is applied 0=no, 1=yes
 #' @param resistance_on whether there is resistance to the applied insecticide 0=no, 1=yes
 #' @param randomness 0-1 0=none, 1=maximum
-#' @param never_go_below restock at this level if pop goes below it
 #' @param verbose whether to output diagnostics to console
 #' @examples
 #' change_pop(pop=0.5, survival=0.4, emergence=1, rate_insecticide_kill=0.4, resist_freq=0.2, resistance_modifier=1, resistance_on=1, insecticide_on=1)
@@ -29,7 +28,6 @@ change_pop <- function(pop,
                        insecticide_on,
                        resistance_on,
                        randomness = 0,
-                       never_go_below = 0.01,
                        verbose = FALSE
 ) 
 {
@@ -94,13 +92,11 @@ change_pop <- function(pop,
     pop2 <- pop2 + (randomness * runif(1, min=-1, max=1))
   
   
-  #restock popn if it goes below a defined level
-  #this shouldn't be needed with new emergence based sim
-#   if ( pop2 < never_go_below )
-#     pop2 <- never_go_below
+  #stop pop going negative by randomness
+  if ( pop2 < 0 ) pop2 <- 0
+
   
-  
-  
+
   return(pop2)
   
 }
