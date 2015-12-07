@@ -84,7 +84,7 @@ shinyServer(function(input, output) {
       rate_growth <- input$rate_growth
       rate_insecticide_kill <- input$rate_insecticide_kill
       resistance_modifier <- input$resistance_modifier
-      rate_resistance <- dF$resist_pyr[tstep]
+      resist_freq <- dF$resist_pyr[tstep]
       carry_cap <- input$cc_modifier
       
       #set resistance increase & decrease to same
@@ -101,7 +101,7 @@ shinyServer(function(input, output) {
                                              rate_growth = rate_growth,
                                              carry_cap = carry_cap,
                                              rate_insecticide_kill = rate_insecticide_kill,
-                                             rate_resistance = rate_resistance,
+                                             resist_freq = resist_freq,
                                              resistance_modifier = resistance_modifier,
                                              #initially just test whether any insecticide
                                              insecticide_on = insecticide_on,
@@ -109,7 +109,7 @@ shinyServer(function(input, output) {
                                              resistance_on = resistance_on )
       
       # change resistance
-      dF$resist_pyr[tstep+1] <<- change_resistance( resistance = rate_resistance,
+      dF$resist_pyr[tstep+1] <<- change_resistance( resistance = resist_freq,
                                                     resist_incr = resist_incr,
                                                     resist_decr = resist_decr,
                                                     #initially just test whether pyr or ddt
@@ -202,7 +202,7 @@ So in line 3, '1-resitance[t]' ensures that fewer vectors are killed when resist
 The equation for the change in resistance is even simpler.
 
 If an insecticide prompting resistance is present :
-B) resistance[t+1] = resistance[t] + rate_resistance * (1 - resistance[t])
+B) resistance[t+1] = resistance[t] + resist_freq * (1 - resistance[t])
 
 If no insecticide prompting resistance :
 C) resistance[t+1] = resistance[t]  * (1 - resistance[t])
@@ -230,8 +230,8 @@ These simply make resistance go up towards a plateau when the insecticide is pre
                                   resistance_modifier = input$resistance_modifier,
                                   carry_cap = input$cc_modifier,
                                   #beware increase & decrease set to same rate here
-                                  resist_incr = input$rate_resistance,
-                                  resist_decr = input$rate_resistance )
+                                  resist_incr = input$resist_freq,
+                                  resist_decr = input$resist_freq )
     
 
     

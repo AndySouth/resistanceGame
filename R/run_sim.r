@@ -112,7 +112,7 @@ run_sim <- function(num_tsteps=20,
     
     # change population
     l_time[[tstep+1]]$pop <- change_pop( pop = l_time[[tstep]]$pop,
-                                         rate_resistance = l_time[[tstep]]$resist,
+                                         resist_freq = l_time[[tstep]]$resist,
                                          #initially have this at constant
                                          resist_intensity = resist_intensity_start,
                                          survival = survival,

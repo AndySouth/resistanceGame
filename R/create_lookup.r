@@ -49,7 +49,7 @@ create_lookup <- function(   input_values = list( use_pyr=c(0,1),
                                           rate_growth = rate_growth,
                                           carry_cap = carry_cap,
                                           rate_insecticide_kill = rate_insecticide_kill,
-                                          rate_resistance = inputs$resist_pyr,
+                                          resist_freq = inputs$resist_pyr,
                                           resistance_modifier = resistance_modifier,
                                           #initially just test whether any insecticide
                                           insecticide_on = insecticide_on,

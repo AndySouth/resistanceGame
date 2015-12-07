@@ -83,11 +83,11 @@ shinyServer(function(input, output) {
       if (is.null(l_time))
       {
         pop <- input$pop_start
-        rate_resistance <- input$resist_start
+        resist_freq <- input$resist_start
       } else
       {
         pop <- l_time[[tstep]]$pop
-        rate_resistance <- l_time[[tstep]]$resist
+        resist_freq <- l_time[[tstep]]$resist
       }
       
       
@@ -105,7 +105,7 @@ shinyServer(function(input, output) {
       l_time_this <<- run_sim_oldcc( l_config=l_config, 
                           num_tsteps=input$tsteps_to_run,
                           pop_start=pop,
-                          resist_freq_start=rate_resistance,
+                          resist_freq_start=resist_freq,
                           rate_growth = rate_growth,
                           carry_cap = carry_cap,
                           rate_insecticide_kill = rate_insecticide_kill,

@@ -37,23 +37,3 @@ plot_sim( run_sim(l_config=l_config2,
                   resist_incr=0.02, resist_decr = 0.01), 
                   plot_emergence=TRUE )
 
-## ---- eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6----
-places <- read.csv( system.file('extdata','config1','places.csv', package='resistanceGame'))
-print(places) 
-
-## ---- eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6----
-vectors <- read.csv( system.file('extdata','config1','vectors.csv', package='resistanceGame'))
-print(vectors)
-
-## ---- eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6----
-controls <- read.csv( system.file('extdata','config1','controls.csv', package='resistanceGame'))
-print(controls)
-
-## ---- eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6----
-resistances <- read.csv( system.file('extdata','config1','resistances.csv', package='resistanceGame'))
-print(resistances)
-
-## ---- eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6----
-control_plan <- read.csv( system.file('extdata','config1','control_plan.csv', package='resistanceGame'))
-print(control_plan)
-

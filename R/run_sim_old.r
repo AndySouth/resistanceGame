@@ -73,7 +73,7 @@ run_sim_oldest <- function(num_tsteps=20,
     
     # change population
     dF$pop[tstep+1] <- change_pop_oldcc( pop = dF$pop[tstep],
-                                         rate_resistance = dF$resist_pyr[tstep],
+                                         resist_freq = dF$resist_pyr[tstep],
                                          rate_growth = rate_growth,
                                          carry_cap = carry_cap,
                                          rate_insecticide_kill = rate_insecticide_kill,
@@ -212,7 +212,7 @@ run_sim_oldcc <- function(num_tsteps=20,
     
     # change population
     l_time[[tstep+1]]$pop <- change_pop_oldcc( pop = l_time[[tstep]]$pop,
-                                               rate_resistance = l_time[[tstep]]$resist,
+                                               resist_freq = l_time[[tstep]]$resist,
                                                rate_growth = rate_growth,
                                                #carry_cap = carry_cap,
                                                carry_cap = l_time[[tstep]]$emergence,
