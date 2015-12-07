@@ -15,7 +15,7 @@ run_sim_oldest(num_tsteps = 20, pop_start = 0.5, resist_freq_start = 0.1,
 
 \item{pop_start}{start vector population}
 
-\item{resist_freq_start}{effect of resistance on insecticide kill rate}
+\item{resist_freq_start}{frequency of resistance at start, 0 to 1}
 
 \item{rate_growth}{population growth rate}
 

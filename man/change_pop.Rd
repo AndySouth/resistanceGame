@@ -5,8 +5,8 @@
 \title{change vector population based on emergence}
 \usage{
 change_pop(pop, survival, emergence, rate_insecticide_kill, rate_resistance,
-  resistance_modifier, resistance_intensity = 1, insecticide_on,
-  resistance_on, randomness = 0, never_go_below = 0.01, verbose = FALSE)
+  resistance_modifier, resist_intensity = 10, insecticide_on, resistance_on,
+  randomness = 0, never_go_below = 0.01, verbose = FALSE)
 }
 \arguments{
 \item{pop}{vector population in this timestep}
@@ -21,7 +21,7 @@ change_pop(pop, survival, emergence, rate_insecticide_kill, rate_resistance,
 
 \item{resistance_modifier}{modifies effect of resistance (unlikely to be used in game)}
 
-\item{resistance_intensity}{intensity of resistance 1,2,5 & 10 fold}
+\item{resist_intensity}{intensity of resistance 1,2,5 & 10 fold}
 
 \item{insecticide_on}{whether insecticide is applied 0=no, 1=yes}
 

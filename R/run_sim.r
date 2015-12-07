@@ -4,7 +4,7 @@
 #'
 #' @param num_tsteps number of timesteps to run simulation
 #' @param pop_start start vector population
-#' @param resist_freq_start effect of resistance on insecticide kill rate
+#' @param resist_freq_start frequency of resistance at start, 0 to 1
 #' @param rate_growth population growth rate
 #' @param carry_cap carrying capacity (K) in the logistic model
 #' @param rate_insecticide_kill kill rate due to insecticide
@@ -246,7 +246,8 @@ run_sim_oldcc <- function(num_tsteps=20,
 #'
 #' @param num_tsteps number of timesteps to run simulation
 #' @param pop_start start vector population
-#' @param resist_freq_start effect of resistance on insecticide kill rate
+#' @param resist_freq_start frequency of resistance at start, 0 to 1
+#' @param resist_intensity_start intensity of resistance at start, 1 to 10
 #' @param survival adult survival rate
 #' @param emergence emerging adults, can be a vector can be greater than 1
 #' @param rate_insecticide_kill kill rate due to insecticide
@@ -273,6 +274,7 @@ run_sim_oldcc <- function(num_tsteps=20,
 run_sim <- function(num_tsteps=20,
                      pop_start=0.5,
                      resist_freq_start=0.1,
+                     resist_intensity_start=1,
                      survival=0.7, 
                      emergence=0.3, #(equilibrium pop = emergence/(1-survival))
                      rate_insecticide_kill=0.8, #default put up from 0.2 for emerge version
@@ -295,6 +297,9 @@ run_sim <- function(num_tsteps=20,
   
   l_time[[1]]$pop <- pop_start
   l_time[[1]]$resist <- resist_freq_start
+  
+  #todo later put this here
+  #resist_intense_start
   
   #allowing seasonal emergence to be got from config files 
   #emergence <- expand_season(season_string=l_config$places$emergence[1]) 
@@ -350,6 +355,8 @@ run_sim <- function(num_tsteps=20,
     # change population
     l_time[[tstep+1]]$pop <- change_pop( pop = l_time[[tstep]]$pop,
                                          rate_resistance = l_time[[tstep]]$resist,
+                                         #initially have this at constant
+                                         resist_intensity = resist_intensity_start,
                                          survival = survival,
                                          emergence = l_time[[tstep]]$emergence,
                                          rate_insecticide_kill = rate_insecticide_kill,

@@ -113,7 +113,7 @@ change_pop_oldcc <- function(pop,
 #' @param rate_insecticide_kill kill rate due to insecticide
 #' @param rate_resistance effect on resistance on insecticide kill rate
 #' @param resistance_modifier modifies effect of resistance (unlikely to be used in game)
-#' @param resistance_intensity intensity of resistance 1,2,5 & 10 fold
+#' @param resist_intensity intensity of resistance 1,2,5 & 10 fold
 #' @param insecticide_on whether insecticide is applied 0=no, 1=yes
 #' @param resistance_on whether there is resistance to the applied insecticide 0=no, 1=yes
 #' @param randomness 0-1 0=none, 1=maximum
@@ -130,7 +130,7 @@ change_pop <- function(pop,
                        rate_insecticide_kill,
                        rate_resistance,
                        resistance_modifier,
-                       resistance_intensity = 1,
+                       resist_intensity = 10,
                        insecticide_on,
                        resistance_on,
                        randomness = 0,
@@ -178,7 +178,7 @@ change_pop <- function(pop,
   #todo: check this
   control_kill <- insecticide_on * rate_insecticide_kill *
                       (1-(resistance_on * rate_resistance ^ (1/resistance_modifier) )) *
-                      10/resistance_intensity
+                      10/resist_intensity
   
   
   surviving_adults <- pop * survival * (1-control_kill)

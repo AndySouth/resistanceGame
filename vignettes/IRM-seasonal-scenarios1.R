@@ -24,6 +24,7 @@ l_config2 <- config_plan(l_config, t_strt=c(1), t_stop=c(336),
                          control_id=c('irs_pyr'))
 plot_sim( run_sim(l_config=l_config2, 
                   num_tsteps=336, emergence=emergence, survival=0.7,
+                  resist_freq_start = 0.01,
                   resist_incr=0.02, resist_decr = 0.01), 
                   plot_emergence=TRUE )
 

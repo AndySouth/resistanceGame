@@ -5,16 +5,19 @@
 \title{run flexible simulation of population and resistance change based on emergence driven by config file}
 \usage{
 run_sim(num_tsteps = 20, pop_start = 0.5, resist_freq_start = 0.1,
-  survival = 0.7, emergence = 0.3, rate_insecticide_kill = 0.8,
-  resistance_modifier = 1, resist_incr = 0.2, resist_decr = 0.1,
-  l_config = NULL, randomness = 0, never_go_below = 0.01)
+  resist_intensity_start = 1, survival = 0.7, emergence = 0.3,
+  rate_insecticide_kill = 0.8, resistance_modifier = 1, resist_incr = 0.2,
+  resist_decr = 0.1, l_config = NULL, randomness = 0,
+  never_go_below = 0.01)
 }
 \arguments{
 \item{num_tsteps}{number of timesteps to run simulation}
 
 \item{pop_start}{start vector population}
 
-\item{resist_freq_start}{effect of resistance on insecticide kill rate}
+\item{resist_freq_start}{frequency of resistance at start, 0 to 1}
+
+\item{resist_intensity_start}{intensity of resistance at start, 1 to 10}
 
 \item{survival}{adult survival rate}
 
