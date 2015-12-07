@@ -89,39 +89,4 @@ plot_sim( run_sim(l_config=l_config2,
 
 
 
-## How controls and resistance mechanisms can be specified.
-
-Our generic approach allows us to specify any combination of controls and resistance mechanisms. The controls cause a specified kill rate(s) on specified vector(s). The resistance mechanisms specify which controls they apply to and how fast resistance increases and decreases in the presence and absence respectively of that control. Cross resistance can be specified simply by specifiying multiple controls for one resistance mechanism.
-
-The relationships between vectors, controls and resistance mechanisms are specified in simple configuration files. Here is a simple example of a collection of such configuration files :
-
-#### places.csv
-```{r, eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6}
-places <- read.csv( system.file('extdata','config1','places.csv', package='resistanceGame'))
-print(places) 
-```    
-
-#### vectors.csv
-```{r, eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6}
-vectors <- read.csv( system.file('extdata','config1','vectors.csv', package='resistanceGame'))
-print(vectors)
-```
-
-#### controls.csv
-```{r, eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6}
-controls <- read.csv( system.file('extdata','config1','controls.csv', package='resistanceGame'))
-print(controls)
-```
-
-#### resistances.csv
-```{r, eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6}
-resistances <- read.csv( system.file('extdata','config1','resistances.csv', package='resistanceGame'))
-print(resistances)
-```
-
-#### control_plan.csv
-```{r, eval=TRUE, echo=FALSE, message=FALSE, results='markup', fig.width=7, fig.height=6}
-control_plan <- read.csv( system.file('extdata','config1','control_plan.csv', package='resistanceGame'))
-print(control_plan)
-```
 

@@ -175,11 +175,6 @@ change_pop <- function(pop,
   
   #11/11/15 adding in resistance_intensity which can be 1,2,5,10
   #for 10 should have same effect
-  #todo: check this
-#   control_kill <- insecticide_on * rate_insecticide_kill *
-#                       (1-(resistance_on * rate_resistance ^ (1/resistance_modifier) )) *
-#                       10/resist_intensity
-  
   #7/12/15 corrected
   control_kill <- insecticide_on * rate_insecticide_kill *
                   (1-(resistance_on * (rate_resistance^(1/resistance_modifier)) * 
