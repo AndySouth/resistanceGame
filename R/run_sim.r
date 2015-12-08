@@ -32,6 +32,7 @@ run_sim <- function(num_tsteps=20,
                      pop_start=0.5,
                      resist_freq_start=0.1,
                      resist_intensity_start=1,
+                     resist_mech='metabolic',
                      survival=0.7, 
                      emergence=0.3, #(equilibrium pop = emergence/(1-survival))
                      rate_insecticide_kill=0.8, #default put up from 0.2 for emerge version
@@ -107,8 +108,16 @@ run_sim <- function(num_tsteps=20,
     
     #cat("insecticide & resistance on ",insecticide_on, resistance_on,"\n")
     
-    #7/12/15 initially just set resist_intensity to 10*resist_freq
-    resist_intensity <- 10 * l_time[[tstep]]$resist
+    #8/12/15 set resist_intensity to 10*resist_freq
+    #unless target-site in which case restrict it to 1
+    if (resist_mech=='metabolic')
+        resist_intensity <- 10 * l_time[[tstep]]$resist
+    
+    else if (resist_mech=='target')
+      resist_intensity <- 1
+    
+    else stop("resist_mech needs to be one of 'metabolic' or 'target', not", resist_mech)
+    
     
     # change population
     l_time[[tstep+1]]$pop <- change_pop( pop = l_time[[tstep]]$pop,
