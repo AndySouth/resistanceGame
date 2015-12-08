@@ -19,7 +19,7 @@ This document demonstrates seasonal scenarios for vector populations and resista
 The game will modify input parameters to generate reasonable scenarios. The input parameters are simply a means to generate reasonable scenarios.
 
 
-In the following plots time in days is represented on the x axis, the top panel shows insecticide use, the middle panel shows vector population and the lower panel shows resistance (phenotypic). 
+In the following plots time in days is represented on the x axis, the top panel shows insecticide use, the middle panel shows vector population and the lower panel shows frequency of resistance. 
 
 The code included is there merely to show us as developers how the scenarios were generated.
 
@@ -31,61 +31,161 @@ For an interactive version of the equations used to generate these plots see [ht
 require(resistanceGame)
 ```
 
-Remember that years are 336 days (7days * 4weeks * 12months), half=168.
+Remember that years are 336 days (7days * 4weeks * 12months), half=168, 2 years=672.
 
 \newpage
 
-## seasonal scenario 1 : 6 months high, 6 months low
+##1 constant emergence, no intervention, 2 years
 
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
-emergence <- expand_season(season_string="6:0.3;6:0.1")
-plot_sim( run_sim(num_tsteps=336, emergence=emergence, survival=0.7,
+
+emergence <- 0.3
+plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
                   resist_incr=0.02, resist_decr = 0.01), 
                   plot_emergence=TRUE )
 ```
 
 \newpage
 
-## seasonal scenario 2 : as previous, with constant control no resistance
+##2 constant emergence, intervention, no resistance
 
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
-emergence <- expand_season(season_string="6:0.3;6:0.1")
+
+emergence <- 0.3
 l_config <- read_config()
-l_config2 <- config_plan(l_config, t_strt=c(1), t_stop=c(336),
+l_config2 <- config_plan(l_config, t_strt=c(168), t_stop=c(672),
                          control_id=c('irs_ops'))
-plot_sim( run_sim(l_config=l_config2, 
-                  num_tsteps=336, emergence=emergence, survival=0.7,
-                  resist_incr=0.02, resist_decr = 0.01), 
-                  plot_emergence=TRUE )
-```
-
-## seasonal scenario 2 : as previous, with constant control with resistance
-
-```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
-emergence <- expand_season(season_string="6:0.3;6:0.1")
-l_config2 <- config_plan(l_config, t_strt=c(1), t_stop=c(336),
-                         control_id=c('irs_pyr'))
-plot_sim( run_sim(l_config=l_config2, 
-                  num_tsteps=336, emergence=emergence, survival=0.7,
-                  resist_freq_start = 0.01,
-                  resist_incr=0.02, resist_decr = 0.01), 
-                  plot_emergence=TRUE )
-```
-
-
-## seasonal scenario 3 : as previous, with changing control
-
-```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
-emergence <- expand_season(season_string="6:0.3;6:0.1")
-l_config2 <- config_plan(l_config, t_strt=c(1,169), t_stop=c(168,336),
-                         control_id=c('irs_ops','irs_pyr'))
-plot_sim( run_sim(l_config=l_config2, 
-                  num_tsteps=336, emergence=emergence, survival=0.7,
+plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
+                  l_config=l_config2,
+                  rate_insecticide_kill=0.5,
                   resist_incr=0.02, resist_decr = 0.01), 
                   plot_emergence=TRUE )
 ```
 
 \newpage
+
+
+##3 constant emergence, intervention, resistance metabolic
+
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+
+emergence <- 0.3
+l_config <- read_config()
+l_config2 <- config_plan(l_config, t_strt=c(168), t_stop=c(672),
+                         control_id=c('irs_pyr'))
+plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
+                  l_config=l_config2,
+                  rate_insecticide_kill=0.6, resist_freq_start = 0.1, resist_mech='metabolic',
+                  resist_incr=0.02, resist_decr = 0.01), 
+                  plot_emergence=TRUE )
+```
+
+\newpage
+
+
+##4 constant emergence, intervention, resistance target
+
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+
+emergence <- 0.3
+l_config <- read_config()
+l_config2 <- config_plan(l_config, t_strt=c(168), t_stop=c(672),
+                         control_id=c('irs_pyr'))
+plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
+                  l_config=l_config2,
+                  rate_insecticide_kill=0.6, resist_freq_start = 0.1, resist_mech='target',
+                  resist_incr=0.02, resist_decr = 0.01), 
+                  plot_emergence=TRUE )
+```
+
+\newpage
+
+
+##5 seasonal emergence, no intervention, 2 years
+
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+
+emergence <- expand_season(season_string="6:0.3;6:0.1;6:0.3;6:0.1")
+plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
+                  resist_incr=0.02, resist_decr = 0.01), 
+                  plot_emergence=TRUE )
+```
+
+\newpage
+
+
+##6 seasonal emergence, intervention, no resistance
+
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+
+emergence <- expand_season(season_string="6:0.3;6:0.1;6:0.3;6:0.1")
+l_config <- read_config()
+l_config2 <- config_plan(l_config, t_strt=c(168), t_stop=c(672),
+                         control_id=c('irs_ops'))
+plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
+                  l_config=l_config2,
+                  rate_insecticide_kill=0.5,
+                  resist_incr=0.02, resist_decr = 0.01), 
+                  plot_emergence=TRUE )
+```
+
+\newpage
+
+
+##7 seasonal emergence, intervention, resistance metabolic
+
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+
+emergence <- expand_season(season_string="6:0.3;6:0.1;6:0.3;6:0.1")
+l_config <- read_config()
+l_config2 <- config_plan(l_config, t_strt=c(168), t_stop=c(672),
+                         control_id=c('irs_pyr'))
+plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
+                  l_config=l_config2,
+                  rate_insecticide_kill=0.6, resist_freq_start = 0.1, resist_mech='metabolic',
+                  resist_incr=0.02, resist_decr = 0.01), 
+                  plot_emergence=TRUE )
+```
+
+\newpage
+
+
+##8 seasonal emergence, intervention, resistance target
+
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+
+emergence <- expand_season(season_string="6:0.3;6:0.1;6:0.3;6:0.1")
+l_config <- read_config()
+l_config2 <- config_plan(l_config, t_strt=c(168), t_stop=c(672),
+                         control_id=c('irs_pyr'))
+plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
+                  l_config=l_config2,
+                  rate_insecticide_kill=0.6, resist_freq_start = 0.1, resist_mech='target',
+                  resist_incr=0.02, resist_decr = 0.01), 
+                  plot_emergence=TRUE )
+```
+
+\newpage
+
+
+##9 seasonal emergence, intervention, resistance metabolic, change intervention to susceptible
+
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+
+emergence <- expand_season(season_string="6:0.3;6:0.1;6:0.3;6:0.1")
+l_config <- read_config()
+l_config2 <- config_plan(l_config, t_strt=c(1,169), t_stop=c(168,336),
+                         control_id=c('irs_pyr','irs_ops'))
+plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
+                  l_config=l_config2,
+                  rate_insecticide_kill=0.6, resist_freq_start = 0.1, resist_mech='metabolic',
+                  resist_incr=0.02, resist_decr = 0.01), 
+                  plot_emergence=TRUE )
+```
+
+\newpage
+
+
 
 
 
