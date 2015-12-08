@@ -43,20 +43,6 @@ change_pop_oldcc <- function(pop,
     warning("insecticide_on & resistance_on should be single value between 0 & 1 they are : ", insecticide_on,", ", resistance_on, "\n")
   }
   
-  #todo incorporate dealing with multiple kill rates
-  #this might be how I can add multiple kill rates
-  #i'm sure there must be a simpler way of doing, ask Ian
-  #   mortn = function(x) { y<-x[1] 
-  #                         for(i in 2:length(x))
-  #                           { y = y + (1-y) * x[i] } 
-  #                         y
-  #                       }
-  #cool yes it seems to work
-  #mortn(c(0.8,0.5,0.5))
-  #0.95
-  
-  
-  
   pop2 <- pop +
     rate_growth * pop * (1-pop/carry_cap) -
     insecticide_on * rate_insecticide_kill * pop *
