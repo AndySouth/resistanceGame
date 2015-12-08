@@ -4,9 +4,10 @@
 \alias{change_pop}
 \title{change vector population based on emergence}
 \usage{
-change_pop(pop, survival, emergence, rate_insecticide_kill, resist_freq,
-  resistance_modifier, resist_intensity = 10, insecticide_on, resistance_on,
-  randomness = 0, verbose = FALSE)
+change_pop(pop, survival, emergence, rate_insecticide_kill = 0.5,
+  resist_freq = 0, resistance_modifier = 1, resist_intensity = 10,
+  insecticide_on = 0, resistance_on = 0, randomness = 0,
+  verbose = FALSE)
 }
 \arguments{
 \item{pop}{vector population in this timestep}
@@ -38,6 +39,7 @@ float population in next timestep
 simple simulation of vector population based upon emergence suggested by Nakul Chitnis
 }
 \examples{
-change_pop(pop=0.5, survival=0.4, emergence=1, rate_insecticide_kill=0.4, resist_freq=0.2, resistance_modifier=1, resistance_on=1, insecticide_on=1)
+change_pop(pop=0.5, survival=0.4, emergence=1, rate_insecticide_kill=0.4, resist_freq=0.2, resistance_modifier=1, resistance_on=1, insecticide_on=1, verbose=TRUE)
+change_pop(pop=0.5, survival=0.7, emergence=0.3, rate_insecticide_kill=0.4, resistance_on=0, insecticide_on=1, verbose=TRUE)
 }
 
