@@ -7,7 +7,7 @@
 expand_season(season_string = "6:0.1;6:0.9", return_tstep = "days")
 }
 \arguments{
-\item{season_string}{a season string of months:value;months:value e.g. "6:0.1;6:0.9"}
+\item{season_string}{a season string of months:value;months:value e.g. "6:0.1;6:0.9", or value;value for 1 month each}
 
 \item{return_tstep}{either 'months', 'weeks' or 'days'[default]}
 }
@@ -19,5 +19,6 @@ initially assumes 28 days per month (4*7 day weeks) 336 day year
 }
 \examples{
 tst <- expand_season(season_string="6:0.1;6:0.9")
+tst <- expand_season(season_string="0.1;0.2;0.3")
 }
 
