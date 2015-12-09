@@ -93,7 +93,7 @@ shinyServer(function(input, output) {
       
       #set input parameters here to keep formulas more manageable
       rate_growth <- input$rate_growth
-      rate_insecticide_kill <- input$rate_insecticide_kill
+      insecticide_kill <- input$insecticide_kill
       resistance_modifier <- input$resistance_modifier
       carry_cap <- input$cc_modifier
       
@@ -108,7 +108,7 @@ shinyServer(function(input, output) {
                           resist_freq_start=resist_freq,
                           rate_growth = rate_growth,
                           carry_cap = carry_cap,
-                          rate_insecticide_kill = rate_insecticide_kill,
+                          insecticide_kill = insecticide_kill,
                           resistance_modifier = resistance_modifier,
                           resist_incr = resist_incr,
                           resist_decr = resist_decr,
@@ -241,7 +241,7 @@ poor insecticide application : decreased insecticide kill rate, increased resist
 These are the simple equations that drive the simulation.
 
 A) N[t+1] = N[t] + rate_growth * N[t] * (1-N[t] / carryingCapacity)
-                         - (rate_insecticide_kill * N[t]
+                         - (insecticide_kill * N[t]
                          * (1-resistance[t] ^ (1/resistance_modifier) ) )
 
 Where N[t] is population now, and N[t+1] is population in the next time step.

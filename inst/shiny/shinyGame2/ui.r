@@ -34,7 +34,7 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
       helpText("Parameters that could be modified within the game to generate different scenarios."),      
       #growth parameters
       numericInput('rate_growth', 'population growth rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
-      numericInput('rate_insecticide_kill', 'insecticide kill rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
+      numericInput('insecticide_kill', 'insecticide kill rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
       
       numericInput('resistance_modifier', 'resistance mortality modifier', value = 1, min = 0.1, max = 5, step = 0.1),
       helpText("Values above 1 for resistance modifier cause lower resistances to reduce mortality more"),

@@ -4,7 +4,7 @@
 #'
 #' @param input_values a list of inputs and values
 #' @param rate_growth vector popn growth rate
-#' @param rate_insecticide_kill insecticide kill rate
+#' @param insecticide_kill insecticide kill rate
 #' @param resistance_modifier resistance modifier
 #' @param carry_cap carrying capacity
 #' @param resist_incr increase in resistance when correct insecticide present
@@ -23,7 +23,7 @@ create_lookup <- function(   input_values = list( use_pyr=c(0,1),
                                                  pop_vector=seq(0.1,1,0.1),
                                                  resist_pyr=seq(0.1,1,0.1) ),
                              rate_growth = 0.4,
-                             rate_insecticide_kill = 0.4,
+                             insecticide_kill = 0.4,
                              resistance_modifier = 1,
                              carry_cap = 1,
                              resist_incr = 0.4,
@@ -48,7 +48,7 @@ create_lookup <- function(   input_values = list( use_pyr=c(0,1),
   inputs$changed_pop_vector <- change_pop_oldcc( pop = inputs$pop_vector,
                                           rate_growth = rate_growth,
                                           carry_cap = carry_cap,
-                                          rate_insecticide_kill = rate_insecticide_kill,
+                                          insecticide_kill = insecticide_kill,
                                           resist_freq = inputs$resist_pyr,
                                           resistance_modifier = resistance_modifier,
                                           #initially just test whether any insecticide

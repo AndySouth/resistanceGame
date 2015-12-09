@@ -12,7 +12,7 @@
 #' #default run
 #' plot_sim( run_sim())
 #' #modify params
-#' plot_sim( run_sim( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
+#' plot_sim( run_sim( insecticide_kill = 0.3, resist_incr = 0.05 ))
 #' @return maybe nothing, produces a plot
 #' @export
 

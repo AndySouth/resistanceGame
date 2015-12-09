@@ -4,9 +4,9 @@
 \alias{change_pop_oldcc}
 \title{change vector population based on old carrying capacity driven simulation}
 \usage{
-change_pop_oldcc(pop, rate_growth, carry_cap, rate_insecticide_kill,
-  resist_freq, resistance_modifier, insecticide_on, resistance_on,
-  randomness = 0, never_go_below = 0.01)
+change_pop_oldcc(pop, rate_growth, carry_cap, insecticide_kill, resist_freq,
+  resistance_modifier, insecticide_on, resistance_on, randomness = 0,
+  never_go_below = 0.01)
 }
 \arguments{
 \item{pop}{vector population in this timestep}
@@ -15,7 +15,7 @@ change_pop_oldcc(pop, rate_growth, carry_cap, rate_insecticide_kill,
 
 \item{carry_cap}{carrying capacity (K) in the logistic model}
 
-\item{rate_insecticide_kill}{kill rate due to insecticide}
+\item{insecticide_kill}{kill rate due to insecticide}
 
 \item{resist_freq}{frequency of resistance}
 
@@ -36,6 +36,6 @@ float population in next timestep
 simple logistic model to change vector population based on growth rate, K, insecticide and resistance
 }
 \examples{
-change_pop_oldcc(pop=0.5, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resist_freq=0.2, resistance_modifier=1, resistance_on=1, insecticide_on=1)
+change_pop_oldcc(pop=0.5, rate_growth=0.4, carry_cap=1, insecticide_kill=0.4, resist_freq=0.2, resistance_modifier=1, resistance_on=1, insecticide_on=1)
 }
 

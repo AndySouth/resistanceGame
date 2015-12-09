@@ -22,6 +22,6 @@ plot_sim_oldest(dF)
 #default run
 plot_sim_oldest( run_sim_oldest())
 #modify params
-plot_sim_oldest( run_sim_oldest( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
+plot_sim_oldest( run_sim_oldest( insecticide_kill = 0.3, resist_incr = 0.05 ))
 }
 

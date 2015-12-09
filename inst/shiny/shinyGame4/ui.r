@@ -51,7 +51,7 @@ shinyUI(fluidPage(theme = shinytheme("flatly"),
       #growth parameters
       numericInput('emergence', 'emergence of adults from larvae', value = 0.3, min = 0, max = 1, step = 0.1),
       numericInput('survival', 'adult survival', value = 0.7, min = 0.1, max = 1, step = 0.1),
-      numericInput('rate_insecticide_kill', 'insecticide kill rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
+      numericInput('insecticide_kill', 'insecticide kill rate', value = 0.4, min = 0.1, max = 2, step = 0.1),
       
       numericInput('pop_start', 'start population (vectors)', value = 0.3, min = 0.01, max = 1, step = 0.05),
       numericInput('resist_start', 'starting resistance', value = 0.05, min = 0.01, max = 1, step = 0.05),

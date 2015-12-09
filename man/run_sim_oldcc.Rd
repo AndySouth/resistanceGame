@@ -5,7 +5,7 @@
 \title{run flexible simulation of population and resistance change driven by config file}
 \usage{
 run_sim_oldcc(num_tsteps = 20, pop_start = 0.5, resist_freq_start = 0.1,
-  rate_growth = 0.2, carry_cap = 1, rate_insecticide_kill = 0.2,
+  rate_growth = 0.2, carry_cap = 1, insecticide_kill = 0.2,
   resistance_modifier = 1, resist_incr = 0.2, resist_decr = 0.1,
   l_config = NULL, randomness = 0, never_go_below = 0.01)
 }
@@ -20,7 +20,7 @@ run_sim_oldcc(num_tsteps = 20, pop_start = 0.5, resist_freq_start = 0.1,
 
 \item{carry_cap}{carrying capacity (K) in the logistic model}
 
-\item{rate_insecticide_kill}{kill rate due to insecticide}
+\item{insecticide_kill}{kill rate due to insecticide}
 
 \item{resistance_modifier}{modifies effect of resistance}
 
@@ -41,11 +41,11 @@ list of simulation results
 some params driven by config file, others by function args
 }
 \examples{
-l_time <- run_sim_oldcc(pop_start=0.5, resist_freq_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
+l_time <- run_sim_oldcc(pop_start=0.5, resist_freq_start=0.2, rate_growth=0.4, carry_cap=1, insecticide_kill=0.4, resistance_modifier=1)
 #plot default run
 plot_sim_oldcc( run_sim_oldcc())
 #modify params
-plot_sim_oldcc( run_sim_oldcc( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
+plot_sim_oldcc( run_sim_oldcc( insecticide_kill = 0.3, resist_incr = 0.05 ))
 #modify config file
 l_config <- read_config()
 l_config2 <- config_plan(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ddt'))

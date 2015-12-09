@@ -4,7 +4,7 @@
 \alias{change_pop}
 \title{change vector population based on emergence}
 \usage{
-change_pop(pop, survival, emergence, rate_insecticide_kill = 0.5,
+change_pop(pop, survival, emergence, insecticide_kill = 0.5,
   resist_freq = 0, resistance_modifier = 1, resist_intensity = 10,
   insecticide_on = 0, resistance_on = 0, randomness = 0,
   verbose = FALSE)
@@ -16,7 +16,7 @@ change_pop(pop, survival, emergence, rate_insecticide_kill = 0.5,
 
 \item{emergence}{emerging adults, can be a vector can be greater than 1}
 
-\item{rate_insecticide_kill}{kill rate due to insecticide}
+\item{insecticide_kill}{kill rate due to insecticide}
 
 \item{resist_freq}{ferquency of resistance}
 
@@ -39,7 +39,7 @@ float population in next timestep
 simple simulation of vector population based upon emergence suggested by Nakul Chitnis
 }
 \examples{
-change_pop(pop=0.5, survival=0.4, emergence=1, rate_insecticide_kill=0.4, resist_freq=0.2, resistance_modifier=1, resistance_on=1, insecticide_on=1, verbose=TRUE)
-change_pop(pop=0.5, survival=0.7, emergence=0.3, rate_insecticide_kill=0.4, resistance_on=0, insecticide_on=1, verbose=TRUE)
+change_pop(pop=0.5, survival=0.4, emergence=1, insecticide_kill=0.4, resist_freq=0.2, resistance_modifier=1, resistance_on=1, insecticide_on=1, verbose=TRUE)
+change_pop(pop=0.5, survival=0.7, emergence=0.3, insecticide_kill=0.4, resistance_on=0, insecticide_on=1, verbose=TRUE)
 }
 

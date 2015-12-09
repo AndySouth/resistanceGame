@@ -302,7 +302,7 @@ These simply make resistance go up towards a plateau when the insecticide is pre
     #default lookup table
     resistanceGame::create_lookup(write_csv=NULL,
                                   rate_growth = input$rateGrowth,
-                                  rate_insecticide_kill = input$rateInsecticideKill,
+                                  insecticide_kill = input$rateInsecticideKill,
                                   resistance_modifier = input$resistanceModifier,
                                   carry_cap = input$ccModifier,
                                   #beware increase & decrease set to same rate here

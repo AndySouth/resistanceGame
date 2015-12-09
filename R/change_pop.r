@@ -5,7 +5,7 @@
 #' @param pop vector population in this timestep
 #' @param survival adult survival rate
 #' @param emergence emerging adults, can be a vector can be greater than 1
-#' @param rate_insecticide_kill kill rate due to insecticide
+#' @param insecticide_kill kill rate due to insecticide
 #' @param resist_freq ferquency of resistance
 #' @param resistance_modifier modifies effect of resistance (unlikely to be used in game)
 #' @param resist_intensity intensity of resistance 1,2,5 & 10 fold
@@ -14,15 +14,15 @@
 #' @param randomness 0-1 0=none, 1=maximum
 #' @param verbose whether to output diagnostics to console
 #' @examples
-#' change_pop(pop=0.5, survival=0.4, emergence=1, rate_insecticide_kill=0.4, resist_freq=0.2, resistance_modifier=1, resistance_on=1, insecticide_on=1, verbose=TRUE)
-#' change_pop(pop=0.5, survival=0.7, emergence=0.3, rate_insecticide_kill=0.4, resistance_on=0, insecticide_on=1, verbose=TRUE)
+#' change_pop(pop=0.5, survival=0.4, emergence=1, insecticide_kill=0.4, resist_freq=0.2, resistance_modifier=1, resistance_on=1, insecticide_on=1, verbose=TRUE)
+#' change_pop(pop=0.5, survival=0.7, emergence=0.3, insecticide_kill=0.4, resistance_on=0, insecticide_on=1, verbose=TRUE)
 #' @return float population in next timestep
 #' @export
 
 change_pop <- function(pop,
                        survival,
                        emergence,
-                       rate_insecticide_kill = 0.5,
+                       insecticide_kill = 0.5,
                        resist_freq = 0,
                        resistance_modifier = 1,
                        resist_intensity = 10,
@@ -64,18 +64,18 @@ change_pop <- function(pop,
   #pop2 <- emergence + survivors
   
 #previous working version without intensity   
-#   kill <- insecticide_on * rate_insecticide_kill *
+#   kill <- insecticide_on * insecticide_kill *
 #                       (1-(resistance_on * resist_freq ^ (1/resistance_modifier) ))
   
   #11/11/15 adding in resistance_intensity which can be 1,2,5,10
   #for 10 should have same effect
   #8/12/15 corrected twice
-#   kill <- insecticide_on * rate_insecticide_kill *
+#   kill <- insecticide_on * insecticide_kill *
 #                   (1-(resistance_on * (resist_freq^(1/resistance_modifier)) * 
 #                       resist_intensity/10 ))
 
   #if i removed the resistance modifier which we aren't using
-  kill <- insecticide_on * rate_insecticide_kill *
+  kill <- insecticide_on * insecticide_kill *
     (1-(resistance_on * resist_freq * resist_intensity/10 ))  
     
     
@@ -96,7 +96,7 @@ change_pop <- function(pop,
    
   if (verbose)
     message("insecticide_on:",insecticide_on,
-            " rate_insecticide_kill:",rate_insecticide_kill,
+            " insecticide_kill:",insecticide_kill,
             " resistance_on:",resistance_on,
             " resist_freq:",resist_freq,
             " kill:",kill )       

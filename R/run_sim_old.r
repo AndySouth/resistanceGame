@@ -7,7 +7,7 @@
 #' @param resist_freq_start frequency of resistance at start, 0 to 1
 #' @param rate_growth population growth rate
 #' @param carry_cap carrying capacity (K) in the logistic model
-#' @param rate_insecticide_kill kill rate due to insecticide
+#' @param insecticide_kill kill rate due to insecticide
 #' @param resistance_modifier modifies effect of resistance
 # @param insecticide_on whether insecticide is applied 0=no, 1=yes
 # @param resistance_on whether there is resistance to the applied insecticide 0=no, 1=yes
@@ -20,11 +20,11 @@
 #' @param randomness 0-1 0=none, 1=maximum
 #' 
 #' @examples
-#' dF <- run_sim_oldest(pop_start=0.5, resist_freq_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
+#' dF <- run_sim_oldest(pop_start=0.5, resist_freq_start=0.2, rate_growth=0.4, carry_cap=1, insecticide_kill=0.4, resistance_modifier=1)
 #' #plot default run
 #' plot_sim_oldest( run_sim_oldest())
 #' #modify params
-#' plot_sim_oldest( run_sim_oldest( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
+#' plot_sim_oldest( run_sim_oldest( insecticide_kill = 0.3, resist_incr = 0.05 ))
 #' #alternate use of pyr
 #' plot_sim_oldest( run_sim_oldest(use_pyr=c(NA,1)))
 #' @return dataframe of simulation results
@@ -35,7 +35,7 @@ run_sim_oldest <- function(num_tsteps=20,
                            resist_freq_start=0.1,
                            rate_growth=0.2,
                            carry_cap=1,
-                           rate_insecticide_kill=0.2,
+                           insecticide_kill=0.2,
                            resistance_modifier=1,
                            #insecticide_on=1,
                            #resistance_on=1,
@@ -76,7 +76,7 @@ run_sim_oldest <- function(num_tsteps=20,
                                          resist_freq = dF$resist_pyr[tstep],
                                          rate_growth = rate_growth,
                                          carry_cap = carry_cap,
-                                         rate_insecticide_kill = rate_insecticide_kill,
+                                         insecticide_kill = insecticide_kill,
                                          resistance_modifier = resistance_modifier,
                                          #initially just test whether any insecticide
                                          insecticide_on = insecticide_on,
@@ -109,7 +109,7 @@ run_sim_oldest <- function(num_tsteps=20,
 #' @param resist_freq_start effect of resistance on insecticide kill rate
 #' @param rate_growth population growth rate
 #' @param carry_cap carrying capacity (K) in the logistic model
-#' @param rate_insecticide_kill kill rate due to insecticide
+#' @param insecticide_kill kill rate due to insecticide
 #' @param resistance_modifier modifies effect of resistance
 #' @param resist_incr increase in resistance when correct insecticide present
 #' @param resist_decr decrease in resistance when correct insecticide absent
@@ -118,11 +118,11 @@ run_sim_oldest <- function(num_tsteps=20,
 #' @param never_go_below restock at this level if pop goes below it
 #' 
 #' @examples
-#' l_time <- run_sim_oldcc(pop_start=0.5, resist_freq_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
+#' l_time <- run_sim_oldcc(pop_start=0.5, resist_freq_start=0.2, rate_growth=0.4, carry_cap=1, insecticide_kill=0.4, resistance_modifier=1)
 #' #plot default run
 #' plot_sim_oldcc( run_sim_oldcc())
 #' #modify params
-#' plot_sim_oldcc( run_sim_oldcc( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
+#' plot_sim_oldcc( run_sim_oldcc( insecticide_kill = 0.3, resist_incr = 0.05 ))
 #' #modify config file
 #' l_config <- read_config()
 #' l_config2 <- config_plan(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ddt'))
@@ -135,7 +135,7 @@ run_sim_oldcc <- function(num_tsteps=20,
                           resist_freq_start=0.1,
                           rate_growth=0.2,
                           carry_cap=1,
-                          rate_insecticide_kill=0.2,
+                          insecticide_kill=0.2,
                           resistance_modifier=1,
                           resist_incr = 0.2,
                           resist_decr = 0.1,
@@ -216,7 +216,7 @@ run_sim_oldcc <- function(num_tsteps=20,
                                                rate_growth = rate_growth,
                                                #carry_cap = carry_cap,
                                                carry_cap = l_time[[tstep]]$emergence,
-                                               rate_insecticide_kill = rate_insecticide_kill,
+                                               insecticide_kill = insecticide_kill,
                                                resistance_modifier = resistance_modifier,
                                                #initially just test whether any insecticide
                                                insecticide_on = insecticide_on,

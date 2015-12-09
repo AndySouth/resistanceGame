@@ -5,7 +5,7 @@
 #' @param pop vector population in this timestep
 #' @param rate_growth population growth rate
 #' @param carry_cap carrying capacity (K) in the logistic model
-#' @param rate_insecticide_kill kill rate due to insecticide
+#' @param insecticide_kill kill rate due to insecticide
 #' @param resist_freq frequency of resistance
 #' @param resistance_modifier modifies effect of resistance
 #' @param insecticide_on whether insecticide is applied 0=no, 1=yes
@@ -13,14 +13,14 @@
 #' @param randomness 0-1 0=none, 1=maximum
 #' @param never_go_below restock at this level if pop goes below it
 #' @examples
-#' change_pop_oldcc(pop=0.5, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resist_freq=0.2, resistance_modifier=1, resistance_on=1, insecticide_on=1)
+#' change_pop_oldcc(pop=0.5, rate_growth=0.4, carry_cap=1, insecticide_kill=0.4, resist_freq=0.2, resistance_modifier=1, resistance_on=1, insecticide_on=1)
 #' @return float population in next timestep
 #' @export
 
 change_pop_oldcc <- function(pop,
                              rate_growth,
                              carry_cap,
-                             rate_insecticide_kill,
+                             insecticide_kill,
                              resist_freq,
                              resistance_modifier,
                              insecticide_on,
@@ -45,7 +45,7 @@ change_pop_oldcc <- function(pop,
   
   pop2 <- pop +
     rate_growth * pop * (1-pop/carry_cap) -
-    insecticide_on * rate_insecticide_kill * pop *
+    insecticide_on * insecticide_kill * pop *
     (1-resistance_on * resist_freq ^ (1/resistance_modifier) )     
   
   
@@ -66,7 +66,7 @@ change_pop_oldcc <- function(pop,
   #     
   #     pop2 <- pop +
   #       rate_growth * pop * (1-pop/carry_cap) -
-  #       rate_insecticide_kill * pop *
+  #       insecticide_kill * pop *
   #       (1-resist_freq ^ (1/resistance_modifier) )    
   #     
   #   } else if ( insecticide_on )
@@ -74,7 +74,7 @@ change_pop_oldcc <- function(pop,
   #     
   #     pop2 <- pop +
   #       rate_growth * pop * (1-pop/carry_cap) -
-  #       rate_insecticide_kill * pop 
+  #       insecticide_kill * pop 
   #     
   #   } else
   #   {

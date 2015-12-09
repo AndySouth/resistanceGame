@@ -57,7 +57,7 @@ l_config2 <- config_plan(l_config, t_strt=c(168), t_stop=c(672),
                          control_id=c('irs_ops'))
 plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
                   l_config=l_config2,
-                  rate_insecticide_kill=0.5,
+                  insecticide_kill=0.5,
                   resist_incr=0.02, resist_decr = 0.01), 
                   plot_emergence=TRUE )
 ```
@@ -75,7 +75,7 @@ l_config2 <- config_plan(l_config, t_strt=c(168), t_stop=c(672),
                          control_id=c('irs_pyr'))
 plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
                   l_config=l_config2,
-                  rate_insecticide_kill=0.6, resist_freq_start = 0.1, resist_mech='metabolic',
+                  insecticide_kill=0.6, resist_freq_start = 0.1, resist_mech='metabolic',
                   resist_incr=0.02, resist_decr = 0.01), 
                   plot_emergence=TRUE )
 ```
@@ -93,7 +93,7 @@ l_config2 <- config_plan(l_config, t_strt=c(168), t_stop=c(672),
                          control_id=c('irs_pyr'))
 plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
                   l_config=l_config2,
-                  rate_insecticide_kill=0.6, resist_freq_start = 0.1, resist_mech='target',
+                  insecticide_kill=0.6, resist_freq_start = 0.1, resist_mech='target',
                   resist_incr=0.02, resist_decr = 0.01), 
                   plot_emergence=TRUE )
 ```
@@ -124,7 +124,7 @@ l_config2 <- config_plan(l_config, t_strt=c(168), t_stop=c(672),
                          control_id=c('irs_ops'))
 plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
                   l_config=l_config2,
-                  rate_insecticide_kill=0.5,
+                  insecticide_kill=0.5,
                   resist_incr=0.02, resist_decr = 0.01), 
                   plot_emergence=TRUE )
 ```
@@ -142,7 +142,7 @@ l_config2 <- config_plan(l_config, t_strt=c(168), t_stop=c(672),
                          control_id=c('irs_pyr'))
 plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
                   l_config=l_config2,
-                  rate_insecticide_kill=0.6, resist_freq_start = 0.1, resist_mech='metabolic',
+                  insecticide_kill=0.6, resist_freq_start = 0.1, resist_mech='metabolic',
                   resist_incr=0.02, resist_decr = 0.01), 
                   plot_emergence=TRUE )
 ```
@@ -160,7 +160,7 @@ l_config2 <- config_plan(l_config, t_strt=c(168), t_stop=c(672),
                          control_id=c('irs_pyr'))
 plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
                   l_config=l_config2,
-                  rate_insecticide_kill=0.6, resist_freq_start = 0.1, resist_mech='target',
+                  insecticide_kill=0.6, resist_freq_start = 0.1, resist_mech='target',
                   resist_incr=0.02, resist_decr = 0.01), 
                   plot_emergence=TRUE )
 ```
@@ -178,7 +178,7 @@ l_config2 <- config_plan(l_config, t_strt=c(1,169), t_stop=c(168,336),
                          control_id=c('irs_pyr','irs_ops'))
 plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
                   l_config=l_config2,
-                  rate_insecticide_kill=0.6, resist_freq_start = 0.1, resist_mech='metabolic',
+                  insecticide_kill=0.6, resist_freq_start = 0.1, resist_mech='metabolic',
                   resist_incr=0.02, resist_decr = 0.01), 
                   plot_emergence=TRUE )
 ```

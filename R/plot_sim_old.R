@@ -10,7 +10,7 @@
 #' #default run
 #' plot_sim_oldest( run_sim_oldest())
 #' #modify params
-#' plot_sim_oldest( run_sim_oldest( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
+#' plot_sim_oldest( run_sim_oldest( insecticide_kill = 0.3, resist_incr = 0.05 ))
 #' @return maybe nothing, produces a plot
 #' @export
 
@@ -73,7 +73,7 @@ plot_sim_oldest <- function(dF)
 #' #default run
 #' plot_sim_oldcc( run_sim_oldcc())
 #' #modify params
-#' plot_sim_oldcc( run_sim_oldcc( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
+#' plot_sim_oldcc( run_sim_oldcc( insecticide_kill = 0.3, resist_incr = 0.05 ))
 #' @return maybe nothing, produces a plot
 #' @export
 

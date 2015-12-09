@@ -5,7 +5,7 @@
 \title{run oldest simulation of population and resistance change}
 \usage{
 run_sim_oldest(num_tsteps = 20, pop_start = 0.5, resist_freq_start = 0.1,
-  rate_growth = 0.2, carry_cap = 1, rate_insecticide_kill = 0.2,
+  rate_growth = 0.2, carry_cap = 1, insecticide_kill = 0.2,
   resistance_modifier = 1, resist_incr = 0.2, resist_decr = 0.1,
   use_pyr = rep(1, num_tsteps), use_ddt = NA, use_ops = NA,
   use_car = NA, randomness = 0)
@@ -21,7 +21,7 @@ run_sim_oldest(num_tsteps = 20, pop_start = 0.5, resist_freq_start = 0.1,
 
 \item{carry_cap}{carrying capacity (K) in the logistic model}
 
-\item{rate_insecticide_kill}{kill rate due to insecticide}
+\item{insecticide_kill}{kill rate due to insecticide}
 
 \item{resistance_modifier}{modifies effect of resistance}
 
@@ -46,11 +46,11 @@ dataframe of simulation results
 initially accepts single arg values next get it to accept vectors by time
 }
 \examples{
-dF <- run_sim_oldest(pop_start=0.5, resist_freq_start=0.2, rate_growth=0.4, carry_cap=1, rate_insecticide_kill=0.4, resistance_modifier=1)
+dF <- run_sim_oldest(pop_start=0.5, resist_freq_start=0.2, rate_growth=0.4, carry_cap=1, insecticide_kill=0.4, resistance_modifier=1)
 #plot default run
 plot_sim_oldest( run_sim_oldest())
 #modify params
-plot_sim_oldest( run_sim_oldest( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
+plot_sim_oldest( run_sim_oldest( insecticide_kill = 0.3, resist_incr = 0.05 ))
 #alternate use of pyr
 plot_sim_oldest( run_sim_oldest(use_pyr=c(NA,1)))
 }

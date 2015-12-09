@@ -6,16 +6,16 @@
 \usage{
 create_lookup(input_values = list(use_pyr = c(0, 1), use_ddt = c(0, 1),
   use_ops = c(0, 1), use_car = c(0, 1), pop_vector = seq(0.1, 1, 0.1),
-  resist_pyr = seq(0.1, 1, 0.1)), rate_growth = 0.4,
-  rate_insecticide_kill = 0.4, resistance_modifier = 1, carry_cap = 1,
-  resist_incr = 0.4, resist_decr = 0.4, write_csv = "demoLookupTable.csv")
+  resist_pyr = seq(0.1, 1, 0.1)), rate_growth = 0.4, insecticide_kill = 0.4,
+  resistance_modifier = 1, carry_cap = 1, resist_incr = 0.4,
+  resist_decr = 0.4, write_csv = "demoLookupTable.csv")
 }
 \arguments{
 \item{input_values}{a list of inputs and values}
 
 \item{rate_growth}{vector popn growth rate}
 
-\item{rate_insecticide_kill}{insecticide kill rate}
+\item{insecticide_kill}{insecticide kill rate}
 
 \item{resistance_modifier}{resistance modifier}
 

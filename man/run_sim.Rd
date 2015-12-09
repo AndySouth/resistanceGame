@@ -6,7 +6,7 @@
 \usage{
 run_sim(num_tsteps = 20, pop_start = 0.5, resist_freq_start = 0.1,
   resist_intensity_start = 1, resist_mech = "metabolic", survival = 0.7,
-  emergence = 0.3, rate_insecticide_kill = 0.8, resistance_modifier = 1,
+  emergence = 0.3, insecticide_kill = 0.8, resistance_modifier = 1,
   resist_incr = 0.2, resist_decr = 0.1, l_config = NULL, randomness = 0)
 }
 \arguments{
@@ -22,7 +22,7 @@ run_sim(num_tsteps = 20, pop_start = 0.5, resist_freq_start = 0.1,
 
 \item{emergence}{emerging adults, can be a vector can be greater than 1}
 
-\item{rate_insecticide_kill}{kill rate due to insecticide}
+\item{insecticide_kill}{kill rate due to insecticide}
 
 \item{resistance_modifier}{modifies effect of resistance}
 
@@ -41,11 +41,11 @@ list of simulation results
 some params driven by config file, others by function args
 }
 \examples{
-l_time <- run_sim(pop_start=0.5, resist_freq_start=0.2, survival=0.8, emergence=0.2, rate_insecticide_kill=0.4, resistance_modifier=1)
+l_time <- run_sim(pop_start=0.5, resist_freq_start=0.2, survival=0.8, emergence=0.2, insecticide_kill=0.4, resistance_modifier=1)
 #plot default run
 plot_sim( run_sim())
 #modify params
-plot_sim( run_sim( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
+plot_sim( run_sim( insecticide_kill = 0.3, resist_incr = 0.05 ))
 #modify config file
 l_config <- read_config()
 l_config2 <- config_plan(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ddt'))

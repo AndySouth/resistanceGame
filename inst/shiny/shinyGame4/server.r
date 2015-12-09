@@ -99,7 +99,7 @@ shinyServer(function(input, output) {
                           resist_freq_start=resist_freq,
                           survival = input$survival,
                           emergence = input$emergence,
-                          rate_insecticide_kill = input$rate_insecticide_kill,
+                          insecticide_kill = input$insecticide_kill,
                           resistance_modifier = input$resistance_modifier,
                           resist_incr = input$resist_incr,
                           resist_decr = input$resist_decr,
@@ -233,7 +233,7 @@ These are the simple equations that drive the simulation.
 
 A)
 
-  kill <- rate_insecticide_kill * (resist_freq ^ (1/resistance_modifier) )   
+  kill <- insecticide_kill * (resist_freq ^ (1/resistance_modifier) )   
   
   surviving_adults <- N[t] * survival * kill
   

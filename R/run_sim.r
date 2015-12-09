@@ -8,7 +8,7 @@
 #' @param resist_intensity_start intensity of resistance at start, 1 to 10
 #' @param survival adult survival rate
 #' @param emergence emerging adults, can be a vector can be greater than 1
-#' @param rate_insecticide_kill kill rate due to insecticide
+#' @param insecticide_kill kill rate due to insecticide
 #' @param resistance_modifier modifies effect of resistance
 #' @param resist_incr increase in resistance when correct insecticide present
 #' @param resist_decr decrease in resistance when correct insecticide absent
@@ -16,11 +16,11 @@
 #' @param randomness 0-1 0=none, 1=maximum
 #' 
 #' @examples
-#' l_time <- run_sim(pop_start=0.5, resist_freq_start=0.2, survival=0.8, emergence=0.2, rate_insecticide_kill=0.4, resistance_modifier=1)
+#' l_time <- run_sim(pop_start=0.5, resist_freq_start=0.2, survival=0.8, emergence=0.2, insecticide_kill=0.4, resistance_modifier=1)
 #' #plot default run
 #' plot_sim( run_sim())
 #' #modify params
-#' plot_sim( run_sim( rate_insecticide_kill = 0.3, resist_incr = 0.05 ))
+#' plot_sim( run_sim( insecticide_kill = 0.3, resist_incr = 0.05 ))
 #' #modify config file
 #' l_config <- read_config()
 #' l_config2 <- config_plan(l_config, t_strt=c(1,11), t_stop=c(10,20), control_id=c('irs_pyr','irs_ddt'))
@@ -35,7 +35,7 @@ run_sim <- function(num_tsteps=20,
                      resist_mech='metabolic',
                      survival=0.7, 
                      emergence=0.3, #(equilibrium pop = emergence/(1-survival))
-                     rate_insecticide_kill=0.8, #default put up from 0.2 for emerge version
+                     insecticide_kill=0.8, #default put up from 0.2 for emerge version
                      resistance_modifier=1,
                      resist_incr = 0.2,
                      resist_decr = 0.1,
@@ -126,7 +126,7 @@ run_sim <- function(num_tsteps=20,
                                          resist_intensity = resist_intensity,
                                          survival = survival,
                                          emergence = l_time[[tstep]]$emergence,
-                                         rate_insecticide_kill = rate_insecticide_kill,
+                                         insecticide_kill = insecticide_kill,
                                          resistance_modifier = resistance_modifier,
                                          #initially just test whether any insecticide
                                          insecticide_on = insecticide_on,
