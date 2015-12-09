@@ -1,55 +1,15 @@
----
-title: "Seasonal scenarios for Insecticide Resistance Management game. v2"
-author: "Andy South"
-date: "`r Sys.Date()`"
-#output: rmarkdown::html_vignette
-# trying to increase width fails
-#  width: "110" 
-#to produce a pdf
-output: rmarkdown::pdf_document
-vignette: >
-  %\VignetteIndexEntry{IRM-seasonal-scenarios2}
-  %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
----
-
-This document demonstrates seasonal scenarios for vector populations and resistance to be used in the game. It follows on from IRM-seasonal-scenarios1.
-
-
-The game will modify input parameters to generate reasonable scenarios. The input parameters are simply a means to generate reasonable scenarios.
-
-
-In the following plots time in days is represented on the x axis, the top panel shows insecticide use, the middle panel shows vector population and the lower panel shows frequency of resistance. 
-
-The code included is there merely to show us as developers how the scenarios were generated.
-
-For an interactive version of the equations used to generate these plots see [https://andysouth.shinyapps.io/shinyGame4](https://andysouth.shinyapps.io/shinyGame4).
-
-
-```{r, eval=TRUE, echo=FALSE, message=FALSE}
+## ---- eval=TRUE, echo=FALSE, message=FALSE-------------------------------
 #### load required packages
 require(resistanceGame)
-```
 
-Remember that years are 336 days (7days * 4weeks * 12months), half=168, 2 years=672.
-
-\newpage
-
-##constant emergence, no intervention, 2 years
-
-```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+## ---- eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6----
 
 emergence <- 0.3
 plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
                   resist_incr=0.02, resist_decr = 0.01), 
                   plot_emergence=TRUE )
-```
 
-\newpage
-
-##constant emergence, intervention, no resistance
-
-```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+## ---- eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6----
 
 emergence <- 0.3
 l_config <- read_config()
@@ -60,14 +20,8 @@ plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
                   rate_insecticide_kill=0.5,
                   resist_incr=0.02, resist_decr = 0.01), 
                   plot_emergence=TRUE )
-```
 
-\newpage
-
-
-##constant emergence, intervention, resistance metabolic
-
-```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+## ---- eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6----
 
 emergence <- 0.3
 l_config <- read_config()
@@ -78,14 +32,8 @@ plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
                   rate_insecticide_kill=0.6, resist_freq_start = 0.1, resist_mech='metabolic',
                   resist_incr=0.02, resist_decr = 0.01), 
                   plot_emergence=TRUE )
-```
 
-\newpage
-
-
-##constant emergence, intervention, resistance target
-
-```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+## ---- eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6----
 
 emergence <- 0.3
 l_config <- read_config()
@@ -96,28 +44,16 @@ plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
                   rate_insecticide_kill=0.6, resist_freq_start = 0.1, resist_mech='target',
                   resist_incr=0.02, resist_decr = 0.01), 
                   plot_emergence=TRUE )
-```
 
-\newpage
-
-
-##seasonal emergence, no intervention, 2 years
-
-```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+## ---- eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6----
 
 #emergence <- expand_season(season_string="6:0.3;6:0.1;6:0.3;6:0.1")
 emergence <- expand_season(season_string="3:0.3;1:0.25;1:0.24;1:0.23;1:0.22;1:0.21;1:0.20;1:0.19;1:0.18;1:0.17;1:0.16;6:0.3;6:0.1")
 plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
                   resist_incr=0.02, resist_decr = 0.01), 
                   plot_emergence=TRUE )
-```
 
-\newpage
-
-
-##seasonal emergence, intervention, no resistance
-
-```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+## ---- eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6----
 
 emergence <- expand_season(season_string="6:0.3;6:0.1;6:0.3;6:0.1")
 l_config <- read_config()
@@ -128,14 +64,8 @@ plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
                   rate_insecticide_kill=0.5,
                   resist_incr=0.02, resist_decr = 0.01), 
                   plot_emergence=TRUE )
-```
 
-\newpage
-
-
-##seasonal emergence, intervention, resistance metabolic
-
-```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+## ---- eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6----
 
 emergence <- expand_season(season_string="6:0.3;6:0.1;6:0.3;6:0.1")
 l_config <- read_config()
@@ -146,14 +76,8 @@ plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
                   rate_insecticide_kill=0.6, resist_freq_start = 0.1, resist_mech='metabolic',
                   resist_incr=0.02, resist_decr = 0.01), 
                   plot_emergence=TRUE )
-```
 
-\newpage
-
-
-##seasonal emergence, intervention, resistance target
-
-```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+## ---- eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6----
 
 emergence <- expand_season(season_string="6:0.3;6:0.1;6:0.3;6:0.1")
 l_config <- read_config()
@@ -164,14 +88,8 @@ plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
                   rate_insecticide_kill=0.6, resist_freq_start = 0.1, resist_mech='target',
                   resist_incr=0.02, resist_decr = 0.01), 
                   plot_emergence=TRUE )
-```
 
-\newpage
-
-
-##seasonal emergence, intervention, resistance metabolic, change intervention to susceptible
-
-```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+## ---- eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6----
 
 emergence <- expand_season(season_string="6:0.3;6:0.1;6:0.3;6:0.1")
 l_config <- read_config()
@@ -182,12 +100,4 @@ plot_sim( run_sim(num_tsteps=672, emergence=emergence, survival=0.7,
                   rate_insecticide_kill=0.6, resist_freq_start = 0.1, resist_mech='metabolic',
                   resist_incr=0.02, resist_decr = 0.01), 
                   plot_emergence=TRUE )
-```
-
-\newpage
-
-
-
-
-
 

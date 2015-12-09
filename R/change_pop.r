@@ -64,24 +64,32 @@ change_pop <- function(pop,
   #pop2 <- emergence + survivors
   
 #previous working version without intensity   
-#   control_kill <- insecticide_on * rate_insecticide_kill *
+#   kill <- insecticide_on * rate_insecticide_kill *
 #                       (1-(resistance_on * resist_freq ^ (1/resistance_modifier) ))
   
   #11/11/15 adding in resistance_intensity which can be 1,2,5,10
   #for 10 should have same effect
   #8/12/15 corrected twice
-  control_kill <- insecticide_on * rate_insecticide_kill *
-                  (1-(resistance_on * (resist_freq^(1/resistance_modifier)) * 
-                      resist_intensity/10 ))
-  
+#   kill <- insecticide_on * rate_insecticide_kill *
+#                   (1-(resistance_on * (resist_freq^(1/resistance_modifier)) * 
+#                       resist_intensity/10 ))
+
+  #if i removed the resistance modifier which we aren't using
+  kill <- insecticide_on * rate_insecticide_kill *
+    (1-(resistance_on * resist_freq * resist_intensity/10 ))  
     
-  surviving_adults <- pop * survival * (1-control_kill)
+    
+  surviving_adults <- pop * survival * (1-kill)
   
   #7/12/15 I could multiply emergence by pop to represent 
   #that higher populations of adults are likely to generate greater emergence
-  #this should help to show a slower effect of intereventions
-  #but didn't seem to work
   #emergence <- emergence * pop
+  #above didn't work well, equilibrium values of emergence & survival led to pop not growing
+  #increasing emergence e.g. just from 0.3 to 0.31 led to exponential growth
+  #cool this experiment does work well
+  #seems that the sqrt increases emergence at low pops just enough to get pop to grow to equilibrium
+  #even when pop_start is as low as 0.01
+  emergence <- emergence * sqrt(pop)
   
   
   pop2 <- emergence + surviving_adults
@@ -91,7 +99,7 @@ change_pop <- function(pop,
             " rate_insecticide_kill:",rate_insecticide_kill,
             " resistance_on:",resistance_on,
             " resist_freq:",resist_freq,
-            " control_kill:",control_kill )       
+            " kill:",kill )       
   
   
   #randomness 0-1

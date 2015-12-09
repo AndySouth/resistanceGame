@@ -233,9 +233,9 @@ These are the simple equations that drive the simulation.
 
 A)
 
-  control_kill <- rate_insecticide_kill * (resist_freq ^ (1/resistance_modifier) )   
+  kill <- rate_insecticide_kill * (resist_freq ^ (1/resistance_modifier) )   
   
-  surviving_adults <- N[t] * survival * control_kill
+  surviving_adults <- N[t] * survival * kill
   
   N[t+1] <- emergence + surviving_adults
 
