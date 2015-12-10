@@ -8,6 +8,7 @@
 #' @param verbose whether to output diagnostics to console
 #' @param time_label time label to add to x axis, default='weeks'
 #' @param plot_type 'month_only' to just plot points per month
+#' @param plot_resist 'frequency' or 'mortality'
 #' @examples
 #' #blank plot
 #' l_time <- init_sim(20)
@@ -24,7 +25,8 @@ plot_sim <- function(l_time,
                      plot_thresholds=TRUE,
                      verbose=FALSE,
                      time_label='weeks',
-                     plot_type='month_only') #='line') # 
+                     plot_type='month_only', #='line')
+                     plot_resist='mortality') #frequency
 {
   
   
@@ -129,19 +131,31 @@ plot_sim <- function(l_time,
   
   if (verbose) cat("plotting resist :",resist,"\n")
   
+  if (plot_resist == 'mortality')
+  {
+    ylim <- c(1,0)
+    main <- "mortality in resistance assay"
+    labels=c(100,0)
+  } else
+  {
+    ylim <- c(0,1) 
+    main <- "resistance frequency"
+    labels=c(0,1)
+  }
+  
   if (plot_type == 'month_only')
   {
     #plot as points
-    plot.default(resist[month_indices], axes=FALSE, ylim=c(0,1), type='p', col='green', main="resistance frequency", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+    plot.default(resist[month_indices], axes=FALSE, ylim=ylim, type='p', col='green', main=main, adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
   } else 
   {
     #plot as a line
-    plot.default(resist, axes=FALSE, ylim=c(0,1), type='l', col='green', main="resistance frequency", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+    plot.default(resist, axes=FALSE, ylim=ylim, type='l', col='green', main=main, adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
   }
   
-  #to add x axis labels, las=1 to make labels horizontal
-  #for resistance constrain 0-1
-  axis(2,at=c(0,1), labels=c(0,1), las=1, cex.axis=1.3, tick=TRUE)
+  #y axis labels, las=1 to make labels horizontal
+  #0,1 for resist freq, 1,0 for mortality
+  axis(2,at=c(0,1), labels=labels, las=1, cex.axis=1.2, tick=TRUE)
   
   #add an x axis to the lower plot, let R set values
   axis(1)
@@ -154,10 +168,19 @@ plot_sim <- function(l_time,
   
   if ( plot_thresholds )
   {
+    if (plot_resist == 'mortality')
+    {
+      leg_pos="bottomleft"
+    } else
+    {
+      leg_pos="topleft"    
+    }
+    
+    
     abline(h = 0.1, col='orange', lty=3)
     abline(h = 0.02, col='blue', lty=3)  
     
-    legend( "topleft", legend=c("resistant <90% mortality","susceptible >98% mortality"), 
+    legend( leg_pos, legend=c("resistant <90% mortality","susceptible >98% mortality"), 
             col=c("orange","blue"), lty=c(3), bty="n" )
   }
 

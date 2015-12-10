@@ -5,7 +5,8 @@
 \title{plot simulation results for newest flexible config driven simulations}
 \usage{
 plot_sim(l_time, plot_emergence = TRUE, plot_thresholds = TRUE,
-  verbose = FALSE, time_label = "weeks", plot_type = "month_only")
+  verbose = FALSE, time_label = "weeks", plot_type = "month_only",
+  plot_resist = "mortality")
 }
 \arguments{
 \item{l_time}{list containing simulation results}
@@ -19,6 +20,8 @@ plot_sim(l_time, plot_emergence = TRUE, plot_thresholds = TRUE,
 \item{time_label}{time label to add to x axis, default='weeks'}
 
 \item{plot_type}{'month_only' to just plot points per month}
+
+\item{plot_resist}{'frequency' or 'mortality'}
 }
 \value{
 maybe nothing, produces a plot
