@@ -30,7 +30,7 @@
 
 run_sim <- function(num_tsteps=20,
                      pop_start=0.5,
-                     resist_freq_start=0.1,
+                     resist_freq_start=0.01,
                      resist_intensity_start=1,
                      resist_mech='metabolic',
                      survival=0.7, 

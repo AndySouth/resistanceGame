@@ -4,8 +4,8 @@
 \alias{plot_sim}
 \title{plot simulation results for newest flexible config driven simulations}
 \usage{
-plot_sim(l_time, plot_emergence = FALSE, plot_thresholds = TRUE,
-  verbose = FALSE)
+plot_sim(l_time, plot_emergence = TRUE, plot_thresholds = TRUE,
+  verbose = FALSE, time_label = "weeks")
 }
 \arguments{
 \item{l_time}{list containing simulation results}
@@ -15,6 +15,8 @@ plot_sim(l_time, plot_emergence = FALSE, plot_thresholds = TRUE,
 \item{plot_thresholds}{whether to add WHO resistance threholds to resistance plot}
 
 \item{verbose}{whether to output diagnostics to console}
+
+\item{time_label}{time label to add to x axis, default='weeks'}
 }
 \value{
 maybe nothing, produces a plot

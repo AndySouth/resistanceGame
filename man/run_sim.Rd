@@ -4,7 +4,7 @@
 \alias{run_sim}
 \title{run flexible simulation of population and resistance change based on emergence driven by config file}
 \usage{
-run_sim(num_tsteps = 20, pop_start = 0.5, resist_freq_start = 0.1,
+run_sim(num_tsteps = 20, pop_start = 0.5, resist_freq_start = 0.01,
   resist_intensity_start = 1, resist_mech = "metabolic", survival = 0.7,
   emergence = 0.3, insecticide_kill = 0.8, resistance_modifier = 1,
   resist_incr = 0.2, resist_decr = 0.1, l_config = NULL, randomness = 0)

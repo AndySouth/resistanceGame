@@ -6,6 +6,7 @@
 #' @param plot_emergence whether to add emergence rate to population plot
 #' @param plot_thresholds whether to add WHO resistance threholds to resistance plot
 #' @param verbose whether to output diagnostics to console
+#' @param time_label time label to add to x axis, default='weeks'
 #' @examples
 #' #blank plot
 #' l_time <- init_sim(20)
@@ -20,7 +21,8 @@
 plot_sim <- function(l_time, 
                      plot_emergence=TRUE,
                      plot_thresholds=TRUE,
-                     verbose=FALSE) 
+                     verbose=FALSE,
+                     time_label='weeks') 
 {
   
   
@@ -110,7 +112,9 @@ plot_sim <- function(l_time,
   
   if (verbose) cat("plotting resist :",resist,"\n")
   
+  #plot as a line
   plot.default(resist, axes=FALSE, ylim=c(0,1), type='l', col='green', main="resistance frequency", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+  
   #to add x axis labels, las=1 to make labels horizontal
   #for resistance constrain 0-1
   axis(2,at=c(0,1), labels=c(0,1), las=1, cex.axis=1.3, tick=TRUE)
@@ -133,6 +137,6 @@ plot_sim <- function(l_time,
             col=c("orange","blue"), lty=c(3), bty="n" )
   }
 
-  
+  mtext('weeks',side=1,line=1)
   
 }
