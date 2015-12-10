@@ -7,6 +7,7 @@
 #' @param plot_thresholds whether to add WHO resistance threholds to resistance plot
 #' @param verbose whether to output diagnostics to console
 #' @param time_label time label to add to x axis, default='weeks'
+#' @param plot_type 'month_only' to just plot points per month
 #' @examples
 #' #blank plot
 #' l_time <- init_sim(20)
@@ -22,7 +23,8 @@ plot_sim <- function(l_time,
                      plot_emergence=TRUE,
                      plot_thresholds=TRUE,
                      verbose=FALSE,
-                     time_label='weeks') 
+                     time_label='weeks',
+                     plot_type='month_only') #='line') # 
 {
   
   
@@ -92,7 +94,22 @@ plot_sim <- function(l_time,
   
   if (verbose) cat("plotting pop :",pop,"\n")
   
-  plot.default(pop, axes=FALSE, ylim=c(0,1), type='l', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+  #for if just plotting months
+  #create indices of months every 4 weeks
+  month_indices <- seq(1,length(pop),4)  
+ 
+  if (plot_type == 'month_only')
+  {
+    #plot as points
+    plot.default(pop[month_indices], axes=FALSE, ylim=c(0,1), type='p', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+  } else 
+  {
+    #plot as a line
+    plot.default(pop, axes=FALSE, ylim=c(0,1), type='l', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+  } 
+  
+  
+  
   axis(2,at=c(0,1), labels=c('lo','hi'), las=1, cex.axis=1.3, tick=TRUE)
   
   #
@@ -112,8 +129,15 @@ plot_sim <- function(l_time,
   
   if (verbose) cat("plotting resist :",resist,"\n")
   
-  #plot as a line
-  plot.default(resist, axes=FALSE, ylim=c(0,1), type='l', col='green', main="resistance frequency", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+  if (plot_type == 'month_only')
+  {
+    #plot as points
+    plot.default(resist[month_indices], axes=FALSE, ylim=c(0,1), type='p', col='green', main="resistance frequency", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+  } else 
+  {
+    #plot as a line
+    plot.default(resist, axes=FALSE, ylim=c(0,1), type='l', col='green', main="resistance frequency", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+  }
   
   #to add x axis labels, las=1 to make labels horizontal
   #for resistance constrain 0-1

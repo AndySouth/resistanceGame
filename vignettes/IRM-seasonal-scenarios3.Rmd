@@ -172,6 +172,7 @@ plot_sim( run_sim(num_tsteps=96, emergence=emergence, survival=0.7,
 \newpage
 
 
+
 ##seasonal emergence, intervention, resistance metabolic, change intervention to susceptible
 
 ```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
