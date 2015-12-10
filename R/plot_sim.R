@@ -4,6 +4,7 @@
 #'
 #' @param l_time list containing simulation results
 #' @param plot_emergence whether to add emergence rate to population plot
+#' @param plot_thresholds whether to add WHO resistance threholds to resistance plot
 #' @param verbose whether to output diagnostics to console
 #' @examples
 #' #blank plot
@@ -17,7 +18,8 @@
 #' @export
 
 plot_sim <- function(l_time, 
-                     plot_emergence=FALSE,
+                     plot_emergence=TRUE,
+                     plot_thresholds=TRUE,
                      verbose=FALSE) 
 {
   
@@ -108,12 +110,29 @@ plot_sim <- function(l_time,
   
   if (verbose) cat("plotting resist :",resist,"\n")
   
-  plot.default(resist, axes=FALSE, ylim=c(0,1), type='l', col='green', main="resistance", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+  plot.default(resist, axes=FALSE, ylim=c(0,1), type='l', col='green', main="resistance frequency", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
   #to add x axis labels, las=1 to make labels horizontal
   #for resistance constrain 0-1
   axis(2,at=c(0,1), labels=c(0,1), las=1, cex.axis=1.3, tick=TRUE)
   
   #add an x axis to the lower plot, let R set values
   axis(1)
+  
+  #add WHO resistance thresholds to lower plot
+  #mortalities
+  #>0.1       < 90% = resistant
+  #0.1-0.02   90-98 = suggested resistance
+  #<0.02      > 98% = susceptible
+  
+  if ( plot_thresholds )
+  {
+    abline(h = 0.1, col='orange', lty=3)
+    abline(h = 0.02, col='blue', lty=3)  
+    
+    legend( "topleft", legend=c("resistant <90% mortality","susceptible >98% mortality"), 
+            col=c("orange","blue"), lty=c(3), bty="n" )
+  }
+
+  
   
 }
