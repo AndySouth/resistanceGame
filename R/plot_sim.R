@@ -103,8 +103,12 @@ plot_sim <- function(l_time,
   if (plot_type == 'month_only')
   {
     #plot as points
-    plot.default(pop[month_indices], axes=FALSE, ylim=c(0,1), type='p', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
-  } else 
+    #plot.default(pop[month_indices], axes=FALSE, ylim=c(0,1), type='p', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+    #above looked right but axis & emergence were wrong
+    #instead could replace non month points with NAs
+    pop[-month_indices] <- NA
+    plot.default(pop, axes=FALSE, ylim=c(0,1), type='p', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+  }   else 
   {
     #plot as a line
     plot.default(pop, axes=FALSE, ylim=c(0,1), type='l', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
@@ -146,7 +150,10 @@ plot_sim <- function(l_time,
   if (plot_type == 'month_only')
   {
     #plot as points
-    plot.default(resist[month_indices], axes=FALSE, ylim=ylim, type='p', col='green', main=main, adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+    #plot.default(resist[month_indices], axes=FALSE, ylim=ylim, type='p', col='green', main=main, adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+    #instead could replace non month points with NAs
+    resist[-month_indices] <- NA
+    plot.default(resist, axes=FALSE, ylim=ylim, type='p', col='green', main=main, adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
   } else 
   {
     #plot as a line
@@ -159,6 +166,10 @@ plot_sim <- function(l_time,
   
   #add an x axis to the lower plot, let R set values
   axis(1)
+  #or use modify axis of upper plot
+  #num_x_labs <- 5
+  #axis( 1, at=seq(0,1,length.out=num_x_labs), labels=seq(0,ncol( mat_control ),length.out=num_x_labs))
+  
   
   #add WHO resistance thresholds to lower plot
   #mortalities
