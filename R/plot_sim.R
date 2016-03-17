@@ -7,8 +7,9 @@
 #' @param plot_thresholds whether to add WHO resistance threholds to resistance plot
 #' @param verbose whether to output diagnostics to console
 #' @param time_label time label to add to x axis, default='weeks'
-#' @param plot_type 'month_only' to just plot points per month
+#' @param plot_type 'month' to just plot points per month, '6month' to plot 6months
 #' @param plot_resist 'frequency' or 'mortality'
+#' 
 #' @examples
 #' #blank plot
 #' l_time <- init_sim(20)
@@ -25,8 +26,8 @@ plot_sim <- function(l_time,
                      plot_thresholds=TRUE,
                      verbose=FALSE,
                      time_label='weeks',
-                     plot_type='month_only', #='line')
-                     plot_resist='mortality') #frequency
+                     plot_type='month', #='line', 6month, year)
+                     plot_resist='mortality' ) #frequency
 {
   
   
@@ -35,6 +36,25 @@ plot_sim <- function(l_time,
   {
     warning("null list")
     return()
+  }
+  
+  #to subset monthly points (every 4 weeks)
+  #if (weeks2months)
+  if ( plot_type == 'month' )  
+  {
+    month_weeks <- seq(1,length(l_time),4)
+    l_time <- l_time[month_weeks]
+    time_label='months'
+  } else if ( plot_type == '6month' )
+  {
+    month6_weeks <- seq(1,length(l_time),4*6)
+    l_time <- l_time[month6_weeks]
+    time_label='6 months'   
+  } else if ( plot_type == 'year' )
+  {
+    year_weeks <- seq(1,length(l_time),4*12)
+    l_time <- l_time[year_weeks]
+    time_label='year'   
   }
   
   #set up space for a number of plots
@@ -100,13 +120,14 @@ plot_sim <- function(l_time,
   #create indices of months every 4 weeks
   month_indices <- seq(1,length(pop),4)  
  
-  if (plot_type == 'month_only')
+  if (plot_type == 'month' | plot_type == '6month' | plot_type == 'year')
   {
     #plot as points
     #plot.default(pop[month_indices], axes=FALSE, ylim=c(0,1), type='p', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
     #above looked right but axis & emergence were wrong
     #instead could replace non month points with NAs
-    pop[-month_indices] <- NA
+    #pop[-month_indices] <- NA
+    #above did work but not necessary as data now subsetted at start
     plot.default(pop, axes=FALSE, ylim=c(0,1), type='p', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
   }   else 
   {
@@ -147,12 +168,13 @@ plot_sim <- function(l_time,
     labels=c(0,1)
   }
   
-  if (plot_type == 'month_only')
+  if (plot_type == 'month' | plot_type == '6month' | plot_type == 'year')
   {
     #plot as points
     #plot.default(resist[month_indices], axes=FALSE, ylim=ylim, type='p', col='green', main=main, adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
     #instead could replace non month points with NAs
-    resist[-month_indices] <- NA
+    #resist[-month_indices] <- NA
+    #above did work but not necessary as data now subsetted at start
     plot.default(resist, axes=FALSE, ylim=ylim, type='p', col='green', main=main, adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
   } else 
   {
@@ -195,6 +217,6 @@ plot_sim <- function(l_time,
             col=c("orange","blue"), lty=c(3), bty="n" )
   }
 
-  mtext('weeks',side=1,line=1)
+  mtext(time_label,side=1,line=1)
   
 }
