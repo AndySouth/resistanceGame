@@ -1,0 +1,55 @@
+---
+title: "Check config google docs"
+author: "Andy South"
+date: "`r Sys.Date()`"
+#output: rmarkdown::html_vignette
+# trying to increase width fails
+#  width: "110" 
+#to produce a pdf
+output: rmarkdown::pdf_document
+vignette: >
+  %\VignetteIndexEntry{Check-config}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE}
+#### load required packages
+library(googlesheets)
+library(readr)
+library(resistanceGame)
+library(dplyr)
+```
+
+
+```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+
+#reading location config file from googledocs
+gd <- gs_url("https://docs.google.com/spreadsheets/d/1w6vZvxqX3FgtkmM8mUSvB67reekKz148LoQY2OT012M/")
+locations <- gs_read(gd)
+
+#cut first 2 rows which have junk in
+locations <- locations[-c(1:2),]
+
+#emergences are here
+emergences <- locations[,"Vector\nEmergences"]
+#but there are up to 2 emergence patterns per cell
+#so will need to add to/modify expand_season() function
+
+#not sure this bit below quite copes with emergences being a vector
+
+tmp <- emergences
+#remove comma from middle and split in two
+tmp <- unlist(strsplit(tmp, split = ","))
+#remove brackets
+tmp <- gsub('\\(','',tmp)
+tmp <- gsub('\\)','',tmp)
+
+#expanding the string
+expand_season(emergences, return_tstep = 'months')
+
+
+
+
+```
