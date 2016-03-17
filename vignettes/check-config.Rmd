@@ -30,24 +30,44 @@ gd <- gs_url("https://docs.google.com/spreadsheets/d/1w6vZvxqX3FgtkmM8mUSvB67ree
 locations <- gs_read(gd)
 
 #cut first 2 rows which have junk in
-locations <- locations[-c(1:2),]
+locations <- as.data.frame( locations[-c(1:2),] )
+#cut columns after 8 which contain non useful stuff
+locations <- locations[,c(1:8)] 
+#cut rows with NULL & NA in Vector ID column
+locations <- locations[ -which(is.na(locations["Vector IDs"]) | locations["Vector IDs"]=='NULL'), ] 
 
-#emergences are here
-emergences <- locations[,"Vector\nEmergences"]
+#rename emergences column
+colnames(locations)[colnames(locations)=="Vector\nEmergences"] <- "emergences"
+
+#emergences are here (but I may want to keep in the locations df)
+#emergences <- as.data.frame(locations[,"Vector\nEmergences"])
 #but there are up to 2 emergence patterns per cell
 #so will need to add to/modify expand_season() function
 
+#emergences <- emergences[-which(is.na(emergences) | emergences=='0')]
+
 #not sure this bit below quite copes with emergences being a vector
+for (i in nrow(locations))
+{
+  tmp <- locations$emergences[i]
+  
+  #remove comma from middle and split in two
+  tmp <- unlist(strsplit(tmp, split = ","))
+  #remove brackets
+  tmp <- gsub('\\(','',tmp)
+  tmp <- gsub('\\)','',tmp)
+  
+  #for each vector at this location
+  for (j in length(tmp))
+  {
+    #expanding the string
+    tmp2 <- expand_season(tmp, return_tstep = 'months')
+    
+    cat(tmp2,"\n")
+  }    
+  
+}
 
-tmp <- emergences
-#remove comma from middle and split in two
-tmp <- unlist(strsplit(tmp, split = ","))
-#remove brackets
-tmp <- gsub('\\(','',tmp)
-tmp <- gsub('\\)','',tmp)
-
-#expanding the string
-expand_season(emergences, return_tstep = 'months')
 
 
 
