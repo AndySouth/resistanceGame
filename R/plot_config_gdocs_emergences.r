@@ -45,6 +45,8 @@ plot_config_gdocs_emergences <- function(locations)
   #emers
   library(reshape2)
   emers2 <- melt(emers,variable.name='month')
+  
+  
   print(
     ggplot(emers2, aes(x=month, y=value, colour=id)) +
              #scale_x_discrete("month")

@@ -43,8 +43,33 @@ plot_sim( run_sim(num_tsteps=144, emergence=emergence, survival=0.7,
                   l_config=l_config2,
                   insecticide_kill=0.6, resist_freq_start = 0.01, resist_mech='metabolic',
                   #resist_incr=0.2, resist_decr = 0.1), 
-                  resist_incr=0.05, resist_decr = 0.02),           
+                  resist_incr=0.1, resist_decr = 0.02),           
                   plot_emergence=TRUE )
+
+## ---- eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6----
+
+emergence <- 0.3
+l_config2 <- config_plan(l_config, t_strt=c(6*4, 18*4, 30*4), t_stop=c(12*4,24*4,36*4),
+                          control_id=c('irs_pyr'))
+plot_sim( run_sim(num_tsteps=144, emergence=emergence, survival=0.7,
+                   l_config=l_config2,
+                   insecticide_kill=0.6, resist_freq_start = 0.01, resist_mech='metabolic',
+                   #resist_incr=0.2, resist_decr = 0.1), 
+                   resist_incr=0.1, resist_decr = 0.02),           
+                   plot_emergence=TRUE )
+
+## ---- eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6----
+
+#emergence <- 0.3
+emergence <- expand_season(season_string="6:0.1;6:0.3;6:0.1;6:0.3;6:0.1;6:0.3",return_tstep='weeks')
+l_config2 <- config_plan(l_config, t_strt=c(6*4, 18*4, 30*4), t_stop=c(12*4,24*4,36*4),
+                          control_id=c('irs_pyr'))
+plot_sim( run_sim(num_tsteps=144, emergence=emergence, survival=0.7,
+                   l_config=l_config2,
+                   insecticide_kill=0.6, resist_freq_start = 0.01, resist_mech='metabolic',
+                   #resist_incr=0.2, resist_decr = 0.1), 
+                   resist_incr=0.1, resist_decr = 0.02),           
+                   plot_emergence=TRUE )
 
 ## ---- eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6----
 
