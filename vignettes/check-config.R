@@ -1,30 +1,12 @@
----
-title: "Check config google docs"
-author: "Andy South"
-date: "`r Sys.Date()`"
-#output: rmarkdown::html_vignette
-# trying to increase width fails
-#  width: "110" 
-#to produce a pdf
-output: rmarkdown::pdf_document
-vignette: >
-  %\VignetteIndexEntry{Check-config}
-  %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
----
-
-
-```{r, eval=TRUE, echo=FALSE, message=FALSE}
+## ---- eval=TRUE, echo=FALSE, message=FALSE-------------------------------
 #### load required packages
 library(googlesheets)
 library(readr)
 library(resistanceGame)
 library(dplyr)
 library(ggplot2)
-```
 
-
-```{r, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6}
+## ---- eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=7, fig.height=6----
 
 #reading location config file from googledocs
 gd <- gs_url("https://docs.google.com/spreadsheets/d/1w6vZvxqX3FgtkmM8mUSvB67reekKz148LoQY2OT012M/")
@@ -79,4 +61,4 @@ plot_config_gdocs(locations)
 
 
 
-```
+
