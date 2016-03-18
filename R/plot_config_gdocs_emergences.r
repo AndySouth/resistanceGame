@@ -5,14 +5,14 @@
 #' @return maybe nothing, produces a plot
 #' @export
 #' 
-plot_config_gdocs <- function(locations)
+plot_config_gdocs_emergences <- function(locations)
 {
 
   library(ggplot2)
   
   emers <- data.frame()
   
-  #not sure this bit below quite copes with emergences being a vector
+  #for each location
   for (i in 1:nrow(locations))
   {
     tmp <- locations$emergences[i]
@@ -24,7 +24,7 @@ plot_config_gdocs <- function(locations)
     tmp4 <- gsub('\\)','',tmp3)
     
     #this might not work if just one vector
-    vec_ids <- unlist(strsplit(locations$`Vector IDs`[i], split = ","))
+    vec_ids <- unlist(strsplit(locations$`vec_ids`[i], split = ","))
     
     #for each vector at this location
     for (j in 1:length(tmp4))
@@ -35,7 +35,7 @@ plot_config_gdocs <- function(locations)
       #cat(tmp5,"\n")
 
       emers <- rbind(emers,tmp5)
-      rownames(emers)[nrow(emers)] <- paste0(locations$`Location ID`[i],"_",vec_ids[j])
+      rownames(emers)[nrow(emers)] <- paste0(locations$loc_id[i],"_",vec_ids[j])
     }    
     
   }
