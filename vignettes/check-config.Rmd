@@ -83,7 +83,7 @@ plot_config_gdocs_emergences(locations)
 ```
 
 
-##trying to run simulations based on emergence patterns
+##expected abundance patterns in absence of interventions (initially assuming survival 0.7 for all)
 
 ```{r, eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE, results='hide', fig.width=7, fig.height=7}
 
@@ -113,7 +113,8 @@ plot_config_gdocs_emergences(locations)
       
       #run sim & plot
       plot_sim(run_sim(num_tsteps=144,
-                       emergence=tmp5))
+                       emergence=tmp5),
+               title=paste0(locations$loc_id[i],"_",vec_ids[j]))
     }  
     
   }

@@ -27,7 +27,8 @@ plot_sim <- function(l_time,
                      verbose=FALSE,
                      time_label='weeks',
                      plot_type='month', #='line', 6month, year)
-                     plot_resist='mortality' ) #frequency
+                     plot_resist='mortality', #frequency
+                     title=NULL )
 {
   
   
@@ -99,6 +100,13 @@ plot_sim <- function(l_time,
     image(t(mat_control),yaxt="n",xaxt="n",col='white')
     
   }
+  
+  if (!is.null(title))
+  {
+    mtext(title)
+  }
+  
+
   
   #xaxis
   #axis( 1, at=seq(0,1,length.out=ncol( mat_control ) ), labels= colnames( mat_control ), las= 2 )

@@ -6,7 +6,7 @@
 \usage{
 plot_sim(l_time, plot_emergence = TRUE, plot_thresholds = TRUE,
   verbose = FALSE, time_label = "weeks", plot_type = "month",
-  plot_resist = "mortality")
+  plot_resist = "mortality", title = NULL)
 }
 \arguments{
 \item{l_time}{list containing simulation results}

@@ -86,7 +86,8 @@ plot_config_gdocs_emergences(locations)
       
       #run sim & plot
       plot_sim(run_sim(num_tsteps=144,
-                       emergence=tmp5))
+                       emergence=tmp5),
+               title=paste0(locations$loc_id[i],"_",vec_ids[j]))
     }  
     
   }
