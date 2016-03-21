@@ -9,6 +9,8 @@
 #' @param time_label time label to add to x axis, default='weeks'
 #' @param plot_type 'month' to just plot points per month, '6month' to plot 6months
 #' @param plot_resist 'frequency' or 'mortality'
+#' @param leg_pos legend position defaults to 'bottomleft', other combinations of 'top','right' etc.
+#' @param title plot title added at top
 #' 
 #' @examples
 #' #blank plot
@@ -28,6 +30,7 @@ plot_sim <- function(l_time,
                      time_label='weeks',
                      plot_type='month', #='line', 6month, year)
                      plot_resist='mortality', #frequency
+                     leg_pos="bottomleft",
                      title=NULL )
 {
   
@@ -118,44 +121,53 @@ plot_sim <- function(l_time,
   
   #cat(dF$pop,"\n")
   
+  #######################
   #plot vector population
-  
-  pop <- sapply(l_time, "[[", "pop")
-  
-  if (verbose) cat("plotting pop :",pop,"\n")
-  
-  #for if just plotting months
-  #create indices of months every 4 weeks
-  month_indices <- seq(1,length(pop),4)  
- 
-  if (plot_type == 'month' | plot_type == '6month' | plot_type == 'year')
-  {
-    #plot as points
-    #plot.default(pop[month_indices], axes=FALSE, ylim=c(0,1), type='p', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
-    #above looked right but axis & emergence were wrong
-    #instead could replace non month points with NAs
-    #pop[-month_indices] <- NA
-    #above did work but not necessary as data now subsetted at start
-    plot.default(pop, axes=FALSE, ylim=c(0,1), type='p', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
-  }   else 
-  {
-    #plot as a line
-    plot.default(pop, axes=FALSE, ylim=c(0,1), type='l', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
-  } 
+  #now in its own function
+  plot_sim_pop(l_time=l_time, 
+               plot_emergence=plot_emergence,
+               verbose=verbose,
+               time_label=time_label,
+               subset_data=FALSE,
+               plot_type=plot_type)
   
   
-  
-  axis(2,at=c(0,1), labels=c('lo','hi'), las=1, cex.axis=1.3, tick=TRUE)
-  
-  #
-  if (plot_emergence)
-  {
-    emergence <- sapply(l_time, "[[", "emergence")
-    lines( emergence, col='red', lty=2 ) #lty=3 dotted, 2 dashed
-    legend( "bottomleft", legend=c("popn","emergence"), 
-            col=c("black","red"), lty=c(1,2), bty="n" )
-  }
-  
+  # pop <- sapply(l_time, "[[", "pop")
+  # 
+  # if (verbose) cat("plotting pop :",pop,"\n")
+  # 
+  # #for if just plotting months
+  # #create indices of months every 4 weeks
+  # month_indices <- seq(1,length(pop),4)  
+  # 
+  # if (plot_type == 'month' | plot_type == '6month' | plot_type == 'year')
+  # {
+  #   #plot as points
+  #   #plot.default(pop[month_indices], axes=FALSE, ylim=c(0,1), type='p', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+  #   #above looked right but axis & emergence were wrong
+  #   #instead could replace non month points with NAs
+  #   #pop[-month_indices] <- NA
+  #   #above did work but not necessary as data now subsetted at start
+  #   plot.default(pop, axes=FALSE, ylim=c(0,1), type='p', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+  # }   else 
+  # {
+  #   #plot as a line
+  #   plot.default(pop, axes=FALSE, ylim=c(0,1), type='l', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='')
+  # } 
+  # 
+  # 
+  # 
+  # axis(2,at=c(0,1), labels=c('lo','hi'), las=1, cex.axis=1.3, tick=TRUE)
+  # 
+  # #
+  # if (plot_emergence)
+  # {
+  #   emergence <- sapply(l_time, "[[", "emergence")
+  #   lines( emergence, col='red', lty=2 ) #lty=3 dotted, 2 dashed
+  #   legend( "bottomleft", legend=c("popn","emergence"), 
+  #           col=c("black","red"), lty=c(1,2), bty="n" )
+  # }
+  # 
   
   
   #plot resistance (can have diff colour lines for diff insecticides)
