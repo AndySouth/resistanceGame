@@ -6,7 +6,7 @@
 \usage{
 plot_sim_pop(l_time, plot_emergence = TRUE, verbose = FALSE,
   time_label = "weeks", plot_type = "month", subset_data = TRUE,
-  leg_pos = "bottomleft", title = NULL)
+  leg_pos = "bottomleft", axis_x = FALSE, title = NULL)
 }
 \arguments{
 \item{l_time}{list containing simulation results}
@@ -22,6 +22,8 @@ plot_sim_pop(l_time, plot_emergence = TRUE, verbose = FALSE,
 \item{subset_data}{whether to subset_data, set to FALSE when calling from other plot funcs}
 
 \item{leg_pos}{legend position defaults to 'bottomleft', other combinations of 'top','right' etc.}
+
+\item{axis_x}{whether to add x axis to pop lot. default FALSE because axis shown under lower plot}
 
 \item{title}{plot title added at top}
 }

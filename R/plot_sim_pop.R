@@ -9,6 +9,7 @@
 #' @param plot_type 'month' to just plot points per month, '6month' to plot 6months
 #' @param subset_data whether to subset_data, set to FALSE when calling from other plot funcs 
 #' @param leg_pos legend position defaults to 'bottomleft', other combinations of 'top','right' etc.
+#' @param axis_x whether to add x axis to pop lot. default FALSE because axis shown under lower plot
 #' @param title plot title added at top
 #' 
 #' @examples
@@ -29,6 +30,7 @@ plot_sim_pop <- function(l_time,
                      plot_type='month', #='line', 6month, year)
                      subset_data=TRUE,
                      leg_pos="bottomleft",
+                     axis_x=FALSE,
                      title=NULL )
 {
   
@@ -89,8 +91,12 @@ plot_sim_pop <- function(l_time,
   } 
   
   
-  
+  #y axis
   axis(2,at=c(0,1), labels=c('lo','hi'), las=1, cex.axis=1.3, tick=TRUE)
+  
+  #x axis, let R set values
+  if (axis_x)
+    axis(1)
   
   #
   if (plot_emergence)
