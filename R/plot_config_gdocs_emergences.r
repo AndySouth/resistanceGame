@@ -9,6 +9,7 @@ plot_config_gdocs_emergences <- function(locations)
 {
 
   library(ggplot2)
+  library(reshape2)
   
   emers <- data.frame()
   
@@ -43,7 +44,6 @@ plot_config_gdocs_emergences <- function(locations)
   emers$id <- rownames(emers)
   
   #emers
-  library(reshape2)
   emers2 <- melt(emers,variable.name='month')
   
   
