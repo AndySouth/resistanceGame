@@ -83,11 +83,11 @@ plot_sim_pop <- function(l_time,
     #instead could replace non month points with NAs
     #pop[-month_indices] <- NA
     #above did work but not necessary as data now subsetted at start
-    plot.default(pop, axes=FALSE, ylim=c(0,1), type='p', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='', xlab ='')
+    plot.default(pop, axes=FALSE, ylim=c(0,1), type='p', main=title, adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='', xlab ='')
   }   else 
   {
     #plot as a line
-    plot.default(pop, axes=FALSE, ylim=c(0,1), type='l', main="vector population", adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='', xlab ='')
+    plot.default(pop, axes=FALSE, ylim=c(0,1), type='l', main=title, adj=0, cex.main=1.4, font.main=1, frame.plot=FALSE, ylab='', xlab ='')
   } 
   
   
@@ -108,9 +108,9 @@ plot_sim_pop <- function(l_time,
   }
   
 
-  if (!is.null(title))
-  {
-    mtext(title)
-  }  
+  # if (!is.null(title))
+  # {
+  #   mtext(title)
+  # }  
   
 }

@@ -4,10 +4,7 @@
 \alias{plot_config_gdocs_emergences}
 \title{plot parts of config files to aid checking}
 \usage{
-plot_config_gdocs_emergences(locations)
-}
-\arguments{
-\item{locations}{dataframe from locations config file}
+plot_config_gdocs_emergences()
 }
 \value{
 maybe nothing, produces a plot

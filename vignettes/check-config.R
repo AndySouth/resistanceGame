@@ -44,54 +44,68 @@ library(ggplot2)
 #  colnames(locations)[colnames(locations)=="Vector Resistance\nFrequencies (*)"] <- "vec_res_freqs"
 #  colnames(locations)[colnames(locations)=="Vector Resistance\nIntensities (*)"] <- "vec_res_ints"
 #  
+#  colnames(vectors)[colnames(vectors)=="Vector ID"] <- "vec_id"
+#  colnames(vectors)[colnames(vectors)=="Name"] <- "name"
+#  colnames(vectors)[colnames(vectors)=="Survival Rate"] <- "survival"
+#  colnames(vectors)[colnames(vectors)=="Infection Rate"] <- "infection"
+#  
 #  #save example edited data to the package
-#  devtools::use_data(locations)
-#  devtools::use_data(resistances)
-#  devtools::use_data(interventions)
-#  devtools::use_data(vectors)
+#  devtools::use_data(locations, overwrite=TRUE)
+#  devtools::use_data(resistances, overwrite=TRUE)
+#  devtools::use_data(interventions, overwrite=TRUE)
+#  devtools::use_data(vectors, overwrite=TRUE)
+
+## ---- eval=FALSE, echo=FALSE, message=FALSE, warning=FALSE, results='hide'----
+#  
+#  #create a composite dataframe of vectors at locations for later use
+#  vecbyloc <- vecbyloc_from_gdocs()
+#  devtools::use_data(vecbyloc, overwrite=TRUE)
 #  
 
 ## ---- eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE, results='hide', fig.width=7, fig.height=7----
 #locations should be got from saved ver. in package
 #data(locations)
 
-plot_config_gdocs_emergences(locations)
+plot_config_gdocs_emergences()
 
 
-## ---- eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE, results='hide', fig.width=7, fig.height=7----
+## ---- eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE, results='hide', fig.width=7, fig.height=3----
 
-#TODO work out how to resolve repetition of code in plot_config_gdocs_emergences()
-
-  #for each location
-  for (i in 1:nrow(locations))
+  #for each vecloc combination
+  for (i in 1:nrow(vecbyloc))
   {
-    tmp <- locations$emergences[i]
-
-    #remove comma from middle and split in two
-    tmp2 <- unlist(strsplit(tmp, split = ","))
-    #remove brackets
-    tmp3 <- gsub('\\(','',tmp2)
-    tmp4 <- gsub('\\)','',tmp3)
-    
-    #this might not work if just one vector
-    vec_ids <- unlist(strsplit(locations$`vec_ids`[i], split = ","))
-    
-    #for each vector at this location
-    for (j in 1:length(tmp4))
-    {
       #expanding the emergence string
-      tmp5 <- expand_season(tmp4[j], return_tstep = 'weeks')
-      
-      #add plot title
-      
-      #run sim & plot
-      plot_sim(run_sim(num_tsteps=144,
-                       emergence=tmp5),
-               title=paste0(locations$loc_id[i],"_",vec_ids[j]))
-    }  
-    
+      tmp5 <- expand_season(vecbyloc$emer_string[i], return_tstep = 'weeks')
+
+      #run sim & just plot pop
+      plot_sim_pop( run_sim(num_tsteps=144,
+                    emergence=tmp5, survival=vecbyloc$survival[i]),
+         title=paste0(vecbyloc$id[i]," survival:",vecbyloc$survival[i]), axis_x=TRUE, leg_pos='topleft')
   }
 
+
+## ---- eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE, results='hide', fig.width=7, fig.height=4----
+
+  #for each vecloc combination
+  for (i in 1:nrow(vecbyloc))
+  {
+      #expanding the emergence string
+      tmp5 <- expand_season(vecbyloc$emer_string[i], return_tstep = 'weeks')
+
+      # plot_sim_pop( run_sim(num_tsteps=144,
+      #               emergence=tmp5, survival=vecbyloc$survival[i]),
+      #    title=paste0(vecbyloc$id[i]), axis_x=TRUE, leg_pos='topleft')
+      
+      #run sim
+      l_config2 <- config_plan(read_config(), t_strt=c(12*4, 24*4), t_stop=c(18*4,30*4),
+                          control_id=c('irs_pyr'))
+      plot_sim( run_sim(num_tsteps=144, emergence=tmp5, survival=vecbyloc$survival[i],
+                   l_config=l_config2,
+                   insecticide_kill=0.9, resist_freq_start = 0.05, resist_mech='metabolic',
+                   resist_incr=0.1, resist_decr = 0.02),           
+                   plot_emergence=TRUE, title=paste0(vecbyloc$id[i]), leg_pos='topleft' )
+      
+  }
 
 
 
