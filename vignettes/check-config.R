@@ -30,8 +30,8 @@ library(ggplot2)
 #  
 #  #cut first 2 rows which have junk in
 #  locations <- as.data.frame( locations[-c(1:2),] )
-#  #cut columns after 8 which contain non useful stuff
-#  locations <- locations[,c(1:8)]
+#  #cut columns after 9 which contain non useful stuff
+#  locations <- locations[,c(1:9)]
 #  #cut rows with NULL & NA in Vector ID column
 #  locations <- locations[ -which(is.na(locations["Vector IDs"]) | locations["Vector IDs"]=='NULL'), ]
 #  
@@ -91,10 +91,6 @@ plot_config_gdocs_emergences()
   {
       #expanding the emergence string
       tmp5 <- expand_season(vecbyloc$emer_string[i], return_tstep = 'weeks')
-
-      # plot_sim_pop( run_sim(num_tsteps=144,
-      #               emergence=tmp5, survival=vecbyloc$survival[i]),
-      #    title=paste0(vecbyloc$id[i]), axis_x=TRUE, leg_pos='topleft')
       
       #run sim
       l_config2 <- config_plan(read_config(), t_strt=c(12*4, 24*4), t_stop=c(18*4,30*4),
