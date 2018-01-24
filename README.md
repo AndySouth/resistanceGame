@@ -8,8 +8,15 @@ https://etchteam.wordpress.com/
    
     
 ### An early prototype UI
-https://andysouth.shinyapps.io/shinyGame3
+https://andysouth.shinyapps.io/shinyGame4
+
+
+### source code for the UI
+https://github.com/AndySouth/resistanceGame/tree/master/inst/shiny/shinyGame4
 
 
 ### A document showing how scenarios can be generated
-https://github.com/AndySouth/resistanceGame/blob/master/vignettes/IRM-prototype-game-scenarios2.pdf
+https://github.com/AndySouth/resistanceGame/blob/master/vignettes/IRM-seasonal-scenarios5.pdf
+
+
+
